@@ -11,7 +11,7 @@
 
 ## Description 
 
-[![Build Status](https://travis-ci.org/Deep-Web-Solutions-GmbH/wordpress-framework-utilities.svg?branch=master)](https://travis-ci.org/Deep-Web-Solutions-GmbH/wordpress-framework-utilities)
+[![Build Status](https://travis-ci.com/Deep-Web-Solutions-GmbH/wordpress-framework-utilities.svg?branch=master)](https://travis-ci.org/Deep-Web-Solutions-GmbH/wordpress-framework-utilities)
 
 A set of related utility classes to kick start WordPress development.
 

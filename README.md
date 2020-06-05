@@ -11,7 +11,7 @@
 
 ## Description 
 
-[![Build Status](https://travis-ci.com/Deep-Web-Solutions-GmbH/wordpress-framework-utilities.svg?branch=master)](https://travis-ci.org/Deep-Web-Solutions-GmbH/wordpress-framework-utilities)
+[![Build Status](https://travis-ci.com/deep-web-solutions/wordpress-framework-utilities.svg?branch=master)](https://travis-ci.com/deep-web-solutions/wordpress-framework-utilities)
 
 A set of related utility classes to kick start WordPress development.
 
@@ -25,5 +25,5 @@ A set of related utility classes to kick start WordPress development.
 ## Changelog 
 
 
-### 1.0.0 (May 1, 2020) 
+### 1.0.0 (September 1, 2020) 
 * First official release.

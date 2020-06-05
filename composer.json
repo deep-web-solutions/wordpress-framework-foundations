@@ -15,14 +15,14 @@
     },
     {
       "name": "Contributors",
-      "homepage": "https://github.com/Deep-Web-Solutions-GmbH/wordpress-framework-utilities/graphs/contributors"
+      "homepage": "https://github.com/deep-web-solutions/wordpress-framework-utilities/graphs/contributors"
     }
   ],
 
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/Deep-Web-Solutions-GmbH/wordpress-framework-bootstrapper"
+      "url": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper"
     }
   ],
   "require": {
@@ -37,6 +37,7 @@
     "phpcompatibility/php-compatibility": "*",
     "phpcompatibility/phpcompatibility-wp": "*",
     "wp-coding-standards/wpcs": "*",
+    "sllh/composer-versions-check": "*",
 
     "lucatume/wp-browser": "^2.4",
     "codeception/module-asserts": "^1.0",

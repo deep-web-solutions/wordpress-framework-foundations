@@ -1,6 +1,6 @@
 <?php
 /**
- * The DWS WordPress Framework Bootstrapper bootstrap file.
+ * The DWS WordPress Framework Utilities bootstrap file.
  *
  * @since               1.0.0
  * @version             1.0.0

@@ -44,7 +44,7 @@ define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_MIN_WP', '5.4' );
 // The following settings can be overwritten in a configuration file or could be set by other versions as well.
 defined( 'DWS_WP_FRAMEWORK_UTILITIES_NAME' ) || define( 'DWS_WP_FRAMEWORK_UTILITIES_NAME', DWS_WP_FRAMEWORK_WHITELABEL_NAME . ': Framework Utilities' );
 
-// Bootstrap the bootstrapper (maybe)!
+// Bootstrap (maybe)!
 $dws_utilities_version         = constant( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_VERSION' );
 $dws_utilities_min_php_version = constant( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_MIN_PHP' );
 $dws_utilities_min_wp_version  = constant( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_MIN_WP' );

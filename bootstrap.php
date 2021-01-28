@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // The conditional check makes the whole thing compatible with Composer-based WP management.
 file_exists( __DIR__ . '/vendor/autoload.php' ) && require_once __DIR__ . '/vendor/autoload.php';
 
-// Define helpers constants.
+// Define utilities constants.
 define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_NAME', dws_wp_framework_get_whitelabel_name() . ': Framework Helpers' );
 define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_VERSION', '1.0.0' );
 

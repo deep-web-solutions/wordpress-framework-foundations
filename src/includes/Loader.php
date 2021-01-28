@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
- * @package DeepWebSolutions\Framework\Utilities
+ * @package DeepWebSolutions\WP-Framework\Utilities
  */
 final class Loader {
 	// region FIELDS

@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
- * @package DeepWebSolutions\Framework\Utilities
+ * @package DeepWebSolutions\WP-Framework\Utilities
  */
 final class LoggerFactory extends Singleton {
 	// region PROPERTIES
@@ -54,7 +54,7 @@ final class LoggerFactory extends Singleton {
 	 * @version 1.0.0
 	 */
 	protected function __construct() {
-		static::$loggers['NullLogger'] = new NullLogger();
+		self::$loggers['NullLogger'] = new NullLogger();
 	}
 
 	// endregion
@@ -71,7 +71,7 @@ final class LoggerFactory extends Singleton {
 	 * @param   callable    $callable   The PHP callback required to instantiate it.
 	 */
 	public static function register_factory_callable( string $name, callable $callable ) : void {
-		static::$callables[ $name ] = $callable;
+		self::$callables[ $name ] = $callable;
 	}
 
 	/**
@@ -88,12 +88,12 @@ final class LoggerFactory extends Singleton {
 	public static function get_logger( string $name, array $arguments = array() ) : LoggerInterface {
 		$key = hash( 'md5', wp_json_encode( array_merge( array( 'name' => $name ), $arguments ) ) );
 
-		if ( ! isset( static::$loggers[ $key ] ) ) {
-			static::$loggers[ $key ] = static::$loggers['NullLogger'];
-			if ( is_callable( static::$callables[ $name ] ?? '' ) ) {
-				$logger = call_user_func( static::$callables[ $name ], ...$arguments );
+		if ( ! isset( self::$loggers[ $key ] ) ) {
+			self::$loggers[ $key ] = self::$loggers['NullLogger'];
+			if ( is_callable( self::$callables[ $name ] ?? '' ) ) {
+				$logger = call_user_func( self::$callables[ $name ], ...$arguments );
 				if ( $logger instanceof LoggerInterface ) {
-					static::$loggers[ $key ] = $logger;
+					self::$loggers[ $key ] = $logger;
 				} elseif ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					// Throwing an exception seems rather extreme.
 					error_log( "Failed to instantiate logger $name!!!" ); // @phpcs:ignore
@@ -101,7 +101,7 @@ final class LoggerFactory extends Singleton {
 			}
 		}
 
-		return static::$loggers[ $key ];
+		return self::$loggers[ $key ];
 	}
 
 	// endregion

@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
- * @package DeepWebSolutions\Framework\Utilities\Abstracts
+ * @package DeepWebSolutions\WP-Framework\Utilities\Abstracts
  */
 abstract class Singleton {
 	// region FIELDS
@@ -53,22 +53,18 @@ abstract class Singleton {
 	/**
 	 * Prevent serialization.
 	 *
-	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
-	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	private function __sleep() { }
+	public function __sleep() { }
 
 	/**
 	 * Prevent unserialization.
 	 *
-	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
-	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	private function __wakeup() { }
+	public function __wakeup() { }
 
 	// endregion
 
@@ -78,11 +74,11 @@ abstract class Singleton {
 	 * Returns a singleton instance of the calling class.
 	 *
 	 * @since   1.0.0
-	 * @version 2.0.0
+	 * @version 1.0.0
 	 *
 	 * @return  $this   The instance of the calling class.
 	 */
-	final public static function get_instance() {
+	final public static function get_instance(): object {
 		self::maybe_initialize_singleton( ...func_get_args() );
 		return self::$instances[ static::class ];
 	}
@@ -94,7 +90,7 @@ abstract class Singleton {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	final public static function maybe_initialize_singleton() {
+	final public static function maybe_initialize_singleton(): void {
 		if ( ! isset( self::$instances[ static::class ] ) ) {
 			self::$instances[ static::class ] = new static( ...func_get_args() );
 		}

@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities;
+namespace DeepWebSolutions\Framework\Utilities\Factories;
 
 use DeepWebSolutions\Framework\Utilities\Abstracts\Singleton;
 use Psr\Log\LoggerInterface;
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
- * @package DeepWebSolutions\WP-Framework\Utilities
+ * @package DeepWebSolutions\WP-Framework\Utilities\Factories
  */
 final class LoggerFactory extends Singleton {
 	// region PROPERTIES
@@ -70,7 +70,7 @@ final class LoggerFactory extends Singleton {
 	 * @param   string      $name       The name of the logger.
 	 * @param   callable    $callable   The PHP callback required to instantiate it.
 	 */
-	public static function register_factory_callable( string $name, callable $callable ) : void {
+	public static function register_factory_callable( string $name, callable $callable ): void {
 		self::$callables[ $name ] = $callable;
 	}
 
@@ -85,7 +85,7 @@ final class LoggerFactory extends Singleton {
 	 *
 	 * @return  LoggerInterface
 	 */
-	public static function get_logger( string $name, array $arguments = array() ) : LoggerInterface {
+	public static function get_logger( string $name, array $arguments = array() ): LoggerInterface {
 		$key = hash( 'md5', wp_json_encode( array_merge( array( 'name' => $name ), $arguments ) ) );
 
 		if ( ! isset( self::$loggers[ $key ] ) ) {

@@ -87,12 +87,33 @@ function dws_wp_framework_get_utilities_min_wp(): string {
 	return constant( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_MIN_WP' );
 }
 
+/**
+ * Registers the language files for the utilities' text domain.
+ *
+ * @since   1.0.0
+ * @version 1.0.0
+ */
+\add_action(
+	'init',
+	function() {
+		load_plugin_textdomain(
+			'dws-wp-framework-utilities',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/src/languages'
+		);
+	}
+);
+
 // Bootstrap the utilities (maybe)!
 if ( dws_wp_framework_check_php_wp_requirements_met( dws_wp_framework_get_utilities_min_php(), dws_wp_framework_get_utilities_min_wp() ) ) {
 	add_action(
 		'plugins_loaded',
 		function() {
-			define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_INIT', DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT );
+			define(
+				__NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_INIT',
+				defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT' ) && DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT &&
+				defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_HELPERS_INIT' ) && DWS_WP_FRAMEWORK_HELPERS_INIT
+			);
 		},
 		PHP_INT_MIN
 	);

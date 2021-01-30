@@ -1,21 +1,23 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities;
+namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Compatibility layer between the framework and WordPress' API for filters, actions, and shortcodes.
  *
- * Maintain a list of all hooks that are registered throughout the plugin, and register them with
+ * Maintain a list of all hooks that are registered throughout the plugin, and handles their registration with
  * the WordPress API after calling the run function.
+ *
+ * @see     https://github.com/DevinVinson/WordPress-Plugin-Boilerplate/blob/master/plugin-name/includes/class-plugin-name-loader.php
  *
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
- * @package DeepWebSolutions\WP-Framework\Utilities
+ * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-final class Loader {
+class Loader {
 	// region FIELDS
 
 	/**

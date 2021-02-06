@@ -2,7 +2,6 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Factories;
 
-use DeepWebSolutions\Framework\Utilities\Abstracts\Singleton;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -16,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Factories
  */
-final class LoggerFactory extends Singleton {
+final class LoggerFactory {
 	// region PROPERTIES
 
 	/**
@@ -47,8 +46,6 @@ final class LoggerFactory extends Singleton {
 
 	/**
 	 * LoggerFactory constructor.
-	 *
-	 * @noinspection PhpMissingParentConstructorInspection
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0

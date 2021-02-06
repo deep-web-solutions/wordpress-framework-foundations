@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Factories
  */
-final class LoggerFactory {
+class LoggerFactory {
 	// region PROPERTIES
 
 	/**
@@ -27,7 +27,7 @@ final class LoggerFactory {
 	 * @access  private
 	 * @var     LoggerInterface[]
 	 */
-	private array $loggers;
+	protected array $loggers;
 
 	/**
 	 * Collection of logger-instantiating callables.
@@ -38,7 +38,7 @@ final class LoggerFactory {
 	 * @access  private
 	 * @var     callable[]
 	 */
-	private array $callables;
+	protected array $callables;
 
 	// endregion
 
@@ -72,7 +72,8 @@ final class LoggerFactory {
 	}
 
 	/**
-	 * Returns a PSR-3 logger.
+	 * Returns a PSR-3 logger. The very first call should also include an array of arguments to be passed on to the callable
+	 * that creates the instance.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -83,14 +84,12 @@ final class LoggerFactory {
 	 * @return  LoggerInterface
 	 */
 	public function get_logger( string $name, array $arguments = array() ): LoggerInterface {
-		$key = hash( 'md5', wp_json_encode( array_merge( array( 'name' => $name ), $arguments ) ) );
-
-		if ( ! isset( $this->loggers[ $key ] ) ) {
-			$this->loggers[ $key ] = $this->loggers['NullLogger'];
+		if ( ! isset( $this->loggers[ $name ] ) ) {
+			$this->loggers[ $name ] = $this->loggers['NullLogger'];
 			if ( is_callable( $this->callables[ $name ] ?? '' ) ) {
 				$logger = call_user_func( $this->callables[ $name ], ...$arguments );
 				if ( $logger instanceof LoggerInterface ) {
-					$this->loggers[ $key ] = $logger;
+					$this->loggers[ $name ] = $logger;
 				} elseif ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					// Throwing an exception seems rather extreme.
 					error_log( "Failed to instantiate logger $name!!!" ); // @phpcs:ignore
@@ -98,7 +97,7 @@ final class LoggerFactory {
 			}
 		}
 
-		return $this->loggers[ $key ];
+		return $this->loggers[ $name ];
 	}
 
 	// endregion

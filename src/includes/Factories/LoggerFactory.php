@@ -27,7 +27,7 @@ final class LoggerFactory {
 	 * @access  private
 	 * @var     LoggerInterface[]
 	 */
-	private static array $loggers;
+	private array $loggers;
 
 	/**
 	 * Collection of logger-instantiating callables.
@@ -38,7 +38,7 @@ final class LoggerFactory {
 	 * @access  private
 	 * @var     callable[]
 	 */
-	private static array $callables;
+	private array $callables;
 
 	// endregion
 
@@ -50,8 +50,8 @@ final class LoggerFactory {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	protected function __construct() {
-		self::$loggers['NullLogger'] = new NullLogger();
+	public function __construct() {
+		$this->loggers['NullLogger'] = new NullLogger();
 	}
 
 	// endregion
@@ -67,8 +67,8 @@ final class LoggerFactory {
 	 * @param   string      $name       The name of the logger.
 	 * @param   callable    $callable   The PHP callback required to instantiate it.
 	 */
-	public static function register_factory_callable( string $name, callable $callable ): void {
-		self::$callables[ $name ] = $callable;
+	public function register_factory_callable( string $name, callable $callable ): void {
+		$this->callables[ $name ] = $callable;
 	}
 
 	/**
@@ -82,15 +82,15 @@ final class LoggerFactory {
 	 *
 	 * @return  LoggerInterface
 	 */
-	public static function get_logger( string $name, array $arguments = array() ): LoggerInterface {
+	public function get_logger( string $name, array $arguments = array() ): LoggerInterface {
 		$key = hash( 'md5', wp_json_encode( array_merge( array( 'name' => $name ), $arguments ) ) );
 
-		if ( ! isset( self::$loggers[ $key ] ) ) {
-			self::$loggers[ $key ] = self::$loggers['NullLogger'];
-			if ( is_callable( self::$callables[ $name ] ?? '' ) ) {
-				$logger = call_user_func( self::$callables[ $name ], ...$arguments );
+		if ( ! isset( $this->loggers[ $key ] ) ) {
+			$this->loggers[ $key ] = $this->loggers['NullLogger'];
+			if ( is_callable( $this->callables[ $name ] ?? '' ) ) {
+				$logger = call_user_func( $this->callables[ $name ], ...$arguments );
 				if ( $logger instanceof LoggerInterface ) {
-					self::$loggers[ $key ] = $logger;
+					$this->loggers[ $key ] = $logger;
 				} elseif ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					// Throwing an exception seems rather extreme.
 					error_log( "Failed to instantiate logger $name!!!" ); // @phpcs:ignore
@@ -98,7 +98,7 @@ final class LoggerFactory {
 			}
 		}
 
-		return self::$loggers[ $key ];
+		return $this->loggers[ $key ];
 	}
 
 	// endregion

@@ -102,7 +102,7 @@ class LoggingService {
 	 * @param   bool    $is_sensitive   Whether the log may contain any GDPR-sensitive information.
 	 * @param   array   $context        The context to pass along to the logger.
 	 */
-	public function log_event( string $log_level, string $message, string $logger = 'default', bool $is_sensitive = false, array $context = array() ) {
+	public function log_event( string $log_level, string $message, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ) {
 		$logger = $this->get_logger_factory()->get_logger( $logger );
 		if ( ! $is_sensitive || $this->includes_sensitive_messages() ) {
 			$logger->log( $log_level, $message, $context );
@@ -121,7 +121,7 @@ class LoggingService {
 	 *
 	 * @return  \Exception
 	 */
-	public function log_event_and_return_exception( string $log_level, string $exception, string $message, string $logger = 'default', bool $is_sensitive = false, array $context = array() ): \Exception {
+	public function log_event_and_return_exception( string $log_level, string $exception, string $message, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): \Exception {
 		$this->log_event( $logger, $log_level, $message, $is_sensitive, $context );
 		return new $exception( $message );
 	}
@@ -137,7 +137,7 @@ class LoggingService {
 	 * @param   bool    $is_sensitive   Whether the log may contain any GDPR-sensitive information.
 	 * @param   array   $context        The PSR3 context.
 	 */
-	public function log_event_and_doing_it_wrong( string $function, string $message, string $since_version, string $log_level = LogLevel::DEBUG, string $logger = 'default', bool $is_sensitive = false, array $context = array() ): void {
+	public function log_event_and_doing_it_wrong( string $function, string $message, string $since_version, string $log_level = LogLevel::DEBUG, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): void {
 		$this->log_event( $logger, $log_level, $message, $is_sensitive, $context );
 		_doing_it_wrong( $function, $message, $since_version ); // phpcs:ignore
 	}
@@ -156,7 +156,7 @@ class LoggingService {
 	 *
 	 * @return  \Exception
 	 */
-	public function log_event_and_doing_it_wrong_and_return_exception( string $function, string $message, string $since_version, string $exception, string $log_level = LogLevel::DEBUG, string $logger = 'default', bool $is_sensitive = false, array $context = array() ): \Exception {
+	public function log_event_and_doing_it_wrong_and_return_exception( string $function, string $message, string $since_version, string $exception, string $log_level = LogLevel::DEBUG, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): \Exception {
 		$this->log_event( $logger, $log_level, $message, $is_sensitive, $context );
 		_doing_it_wrong( $function, $message, $since_version ); // phpcs:ignore
 		return new $exception( $message );

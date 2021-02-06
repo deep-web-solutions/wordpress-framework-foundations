@@ -3,6 +3,7 @@
 namespace DeepWebSolutions\Framework\Utilities\Services;
 
 use DeepWebSolutions\Framework\Core\Abstracts\Functionality;
+use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
 use DeepWebSolutions\Framework\Helpers\Misc;
 use DeepWebSolutions\Framework\Utilities\Handlers\AdminNoticesHandler;
 
@@ -127,6 +128,9 @@ final class DependenciesCheckerService {
 			return $this->are_dependencies_fulfilled; // Memoized result.
 		}
 
+		/** @var AdminNoticesHandler $admin_notices_handler */ // phpcs:ignore
+		$admin_notices_handler = $this->functionality->get_plugin()->get_container()->get( AdminNoticesHandler::class );
+
 		// Start by assuming that the dependencies are fulfilled.
 		$this->are_dependencies_fulfilled = true;
 
@@ -134,18 +138,16 @@ final class DependenciesCheckerService {
 		if ( ! empty( $missing_php_extensions = $this->get_missing_php_extensions() ) ) { // phpcs:ignore
 			$this->are_dependencies_fulfilled = false;
 
-			/** @var AdminNoticesHandler $admin_notices_handler */ // phpcs:ignore
-			$admin_notices_handler = $this->functionality->get_plugin()->get_container()->get( AdminNoticesHandler::class );
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-					/* translators: 1. Plugin name, 2. Comma-separated list of missing PHP extensions. */
+					/* translators: 1. Plugin or functionality name, 2. Comma-separated list of missing PHP extensions. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s PHP extension to function. Contact your host or server administrator to install and configure the missing extension.',
 						'<strong>%1$s</strong> requires the following PHP extensions to function: %2$s. Contact your host or server administrator to install and configure the missing extensions.',
 						count( $missing_php_extensions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->functionality->get_plugin()->get_plugin_name() ),
+					esc_html( $this->get_functionality_name() ),
 					'<strong>' . implode( ', ', $missing_php_extensions ) . '</strong>'
 				),
 				'dws-missing-extensions-' . $this->functionality->get_root_id(),
@@ -160,18 +162,16 @@ final class DependenciesCheckerService {
 		if ( ! empty( $missing_php_functions = $this->get_missing_php_functions() ) ) { // phpcs:ignore
 			$this->are_dependencies_fulfilled = false;
 
-			/** @var AdminNoticesHandler $admin_notices_handler */ // phpcs:ignore
-			$admin_notices_handler = $this->functionality->get_plugin()->get_container()->get( AdminNoticesHandler::class );
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-					/* translators: 1. Plugin name, 2. Comma-separated list of missing PHP functions. */
+					/* translators: 1. Plugin name or functionality name, 2. Comma-separated list of missing PHP functions. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s PHP function to exist. Contact your host or server administrator to install and configure the missing function.',
 						'<strong>%1$s</strong> requires the following PHP functions to exist: %2$s. Contact your host or server administrator to install and configure the missing functions.',
 						count( $missing_php_functions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->functionality->get_plugin()->get_plugin_name() ),
+					esc_html( $this->get_functionality_name() ),
 					'<strong>' . implode( ', ', $missing_php_functions ) . '</strong>'
 				),
 				'dws-missing-functions-' . $this->functionality->get_root_id(),
@@ -184,53 +184,54 @@ final class DependenciesCheckerService {
 
 		// Check whether all PHP settings are compatible with the requirements.
 		if ( ! empty( $incompatible_php_settings = $this->get_incompatible_php_settings() ) ) { // phpcs:ignore
-			$this->are_dependencies_fulfilled = false;
+			// PHP settings work differently as far as dependencies go. Namely, the plugin/functionality will NOT run if an issue is detected,
+			// but a user with appropriate permission levels (probably whoever activates the plugin the first time around) may dismiss the shown notice
+			// and if that happens, the plugin will ignore the limitations and run anyway. So it's more of a soft-warning than a hard-error.
+			$notice_id                        = 'dws-incompatible-php-settings-' . $this->functionality->get_root_id() . '-' . md5( wp_json_encode( $incompatible_php_settings ) );
+			$this->are_dependencies_fulfilled = $admin_notices_handler->is_notice_dismissed( $notice_id, true );
 
-			$message = sprintf(
-				/* translators: Plugin name. */
-				__( '<strong>%s</strong> may behave unexpectedly because the following PHP configuration settings are required:', 'dws-wp-framework-utilities' ),
-				esc_html( $this->functionality->get_plugin()->get_plugin_name() )
-			) . '<ul>';
+			if ( false === $this->are_dependencies_fulfilled ) {
+				$message = sprintf(
+					/* translators: Plugin name or functionality name. */
+					__( '<strong>%s</strong> may behave unexpectedly because the following PHP configuration settings are expected:', 'dws-wp-framework-utilities' ),
+					esc_html( $this->get_functionality_name() )
+				) . '<ul>';
 
-			foreach ( $incompatible_php_settings as $setting => $values ) {
-				$setting_message = "<code>{$setting} = {$values['expected']}</code>";
-				if ( ! empty( $values['type'] ) ) {
-					switch ( $values['type'] ) {
-						case 'min':
-							$setting_message = sprintf(
-								/* translators: PHP settings value. */
-								__( '%s or higher', 'dws-wp-framework-utilities' ),
-								$setting_message
-							);
+				foreach ( $incompatible_php_settings as $setting => $values ) {
+					$setting_message = "<code>{$setting} = {$values['expected']}</code>";
+					if ( ! empty( $values['type'] ) ) {
+						switch ( $values['type'] ) {
+							case 'min':
+								$setting_message = sprintf(
+									/* translators: PHP settings value. */
+									__( '%s or higher', 'dws-wp-framework-utilities' ),
+									$setting_message
+								);
+						}
 					}
+
+					$message .= "<li>{$setting_message}</li>";
 				}
 
-				$message .= "<li>{$setting_message}</li>";
+				$message .= '</ul>' . __( 'Please contact your hosting provider or server administrator to configure these settings. If you dismiss this notice, the plugin will attempt to run despite this warning.', 'dws-wp-framework-utilities' );
+
+				$admin_notices_handler->add_global_admin_notice(
+					$message,
+					$notice_id,
+					array(
+						'capability' => 'activate_plugins',
+					)
+				);
 			}
-
-			$message .= '</ul>' . __( 'Please contact your hosting provider or server administrator to configure these settings.', 'dws-wp-framework-utilities' );
-
-			/** @var AdminNoticesHandler $admin_notices_handler */ // phpcs:ignore
-			$admin_notices_handler = $this->functionality->get_plugin()->get_container()->get( AdminNoticesHandler::class );
-			$admin_notices_handler->add_admin_notice(
-				$message,
-				'dws-incompatible-php-settings-' . $this->functionality->get_root_id(),
-				array(
-					'capability'  => 'activate_plugins',
-					'dismissible' => true,
-				)
-			);
 		}
 
 		// Check whether all required plugins are installed and active.
 		if ( ! empty( $missing_active_plugins = $this->get_missing_active_plugins() ) ) { // phpcs:ignore
 			$this->are_dependencies_fulfilled = false;
 
-			/** @var AdminNoticesHandler $admin_notices_handler */ // phpcs:ignore
-			$admin_notices_handler = $this->functionality->get_plugin()->get_container()->get( AdminNoticesHandler::class );
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-					/* translators: 1. Plugin name, 2. Comma-separated list of missing active plugins. */
+					/* translators: 1. Plugin name or functionality name, 2. Comma-separated list of missing active plugins. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s plugin to be installed and active. Please install and activate the plugin first.',
 						'<strong>%1$s</strong> requires the following plugins to be installed and active: %2$s. Please install and activate these plugins first.',
@@ -405,6 +406,26 @@ final class DependenciesCheckerService {
 	 */
 	public function get_dependent_active_plugins(): array {
 		return $this->active_plugins;
+	}
+
+	// endregion
+
+	// region HELPERS
+
+	/**
+	 * Returns the name of the functionality as it should appear in dependency admin notices.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string
+	 */
+	protected function get_functionality_name(): string {
+		$plugin_name = $this->functionality->get_plugin()->get_plugin_name();
+
+		return ( $this->functionality instanceof PluginBase )
+			? $plugin_name
+			: sprintf( '%s: %s', $plugin_name, $this->functionality->get_root_public_name() );
 	}
 
 	// endregion

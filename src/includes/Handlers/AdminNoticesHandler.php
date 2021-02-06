@@ -207,7 +207,7 @@ class AdminNoticesHandler {
 						action: 'dws_framework_utilities_<?php echo esc_js( $this->plugin->get_plugin_safe_slug() ); ?>_dismiss_notice',
 						notice_id: $( notice ).data( 'notice-id' ),
 						is_global: $( notice ).data( 'notice-global' ),
-						_wpnonce: <?php echo esc_js( wp_create_nonce( 'dws-dismiss-notice' ) ); ?>
+						_wpnonce: '<?php echo esc_js( wp_create_nonce( 'dws-dismiss-notice' ) ); ?>'
 					}
 				} );
 			} );
@@ -339,6 +339,23 @@ class AdminNoticesHandler {
 	}
 
 	/**
+	 * Checks whether a specific notice has been dismissed or not.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string      $notice_id  The ID of the notice to check the dismissed status for.
+	 * @param   bool        $global     Whether the notice is dismissible globally or not (aka dismissible per-user).
+	 * @param   int|null    $user_id    The ID of the user to check the dismissed status for.
+	 *
+	 * @return  bool    Whether the given notice has been dismissed by the given user or not.
+	 */
+	public function is_notice_dismissed( string $notice_id, bool $global = false, ?int $user_id = null ): bool {
+		$dismissed_notices = $this->get_dismissed_notices( $global, $user_id );
+		return isset( $dismissed_notices[ $notice_id ] ) && boolval( $dismissed_notices[ $notice_id ] );
+	}
+
+	/**
 	 * Marks a specific notice as dismissed for a specific user.
 	 *
 	 * @since   1.0.0
@@ -418,7 +435,7 @@ class AdminNoticesHandler {
 			esc_attr( implode( ' ', $classes ) ),
 			esc_attr( $this->plugin->get_plugin_slug() ),
 			esc_attr( $notice_id ),
-			esc_attr( $params['global'] ),
+			esc_attr( $params['global'] ? 1 : 0 ),
 			wp_kses_post( $message )
 		);
 	}
@@ -461,23 +478,6 @@ class AdminNoticesHandler {
 		}
 
 		return ! $this->is_notice_dismissed( $notice_id, $params['global'] );
-	}
-
-	/**
-	 * Checks whether a specific notice has been dismissed or not.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string      $notice_id  The ID of the notice to check the dismissed status for.
-	 * @param   bool        $global     Whether the notice is dismissible globally or not (aka dismissible per-user).
-	 * @param   int|null    $user_id    The ID of the user to check the dismissed status for.
-	 *
-	 * @return  bool    Whether the given notice has been dismissed by the given user or not.
-	 */
-	protected function is_notice_dismissed( string $notice_id, bool $global = false, ?int $user_id = null ): bool {
-		$dismissed_notices = $this->get_dismissed_notices( $global, $user_id );
-		return isset( $dismissed_notices[ $notice_id ] ) && boolval( $dismissed_notices[ $notice_id ] );
 	}
 
 	/**

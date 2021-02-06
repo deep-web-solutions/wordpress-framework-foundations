@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Utilities\Services;
 
 use DeepWebSolutions\Framework\Core\Abstracts\Functionality;
 use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
-use DeepWebSolutions\Framework\Helpers\Misc;
+use DeepWebSolutions\Framework\Helpers\PHP\Misc;
 use DeepWebSolutions\Framework\Utilities\Handlers\AdminNoticesHandler;
 
 defined( 'ABSPATH' ) || exit;
@@ -17,9 +17,9 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
- * @package DeepWebSolutions\WP-Framework\Utilities
+ * @package DeepWebSolutions\WP-Framework\Utilities\Services
  */
-final class DependenciesCheckerService {
+class DependenciesCheckerService {
 	// region FIELDS AND CONSTANTS
 
 	/**

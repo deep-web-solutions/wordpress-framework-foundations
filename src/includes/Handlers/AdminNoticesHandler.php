@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
 use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
-use DeepWebSolutions\Framework\Helpers\Assets;
+use DeepWebSolutions\Framework\Helpers\WordPress\Assets;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -97,9 +97,10 @@ class AdminNoticesHandler {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
+	 * @access  protected
 	 * @var     bool
 	 */
-	private bool $outputted_user_admin_notices = false;
+	protected bool $has_outputted_admin_notices = false;
 
 	// endregion
 
@@ -145,23 +146,20 @@ class AdminNoticesHandler {
 				continue;
 			}
 
-			foreach ( $notices[ $type ] as $notice_id => $message ) {
-				if ( empty( $message ) ) {
+			foreach ( $notices[ $type ] as $notice_id => $notice ) {
+				if ( empty( $notice['message'] ) ) {
 					unset( $notices[ $type ][ $notice_id ] );
 					continue;
-				} elseif ( ! $this->should_display_notice( $notice_id ) ) {
+				} elseif ( ! $this->should_display_notice( $notice_id, $notice['params'] ) ) {
 					unset( $notices[ $type ][ $notice_id ] );
 					continue;
 				}
 
-				$this->outputted_user_admin_notices = true;
+				$this->has_outputted_admin_notices = true;
 				$this->output_admin_notice(
-					$message,
+					$notice['message'],
 					$notice_id,
-					array(
-						'type'        => $type,
-						'dismissible' => true,
-					)
+					$notice['params'],
 				);
 			}
 		}
@@ -178,92 +176,10 @@ class AdminNoticesHandler {
 	public function output_dynamic_admin_notices(): void {
 		foreach ( $this->dynamic_admin_notices as $type => $notices ) {
 			foreach ( $notices as $notice_id => $notice ) {
+				$this->has_outputted_admin_notices = true; // At least one message got outputted.
 				$this->output_admin_notice( $notice['message'], $notice_id, $notice['params'] );
 			}
 		}
-	}
-
-	/**
-	 * Intercepts an AJAX request for dismissing a given notice.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 */
-	public function handle_ajax_dismiss(): void {
-		if ( wp_verify_nonce( $_POST['nonce'], 'dws-dismiss-notice' ) ) {
-			$this->dismiss_notice( $_POST['notice_id'] );
-		}
-	}
-
-	// endregion
-
-	// region METHODS
-
-	/**
-	 * Registers a dynamic notice that will be displayed to all eligible users that have not dismissed it yet.
-	 *
-	 * @param   string  $message    The message that should be displayed to the current user on the next page load.
-	 * @param   string  $notice_id  A unique message ID that helps us avoid displaying duplicates.
-	 * @param   array   $params     {
-	 *      Optional parameters.
-	 *
-	 *      @type string      type           The type of notice to display.
-	 *      @type bool        dismissible    Whether the notice is dismissible or not.
-	 *      @type string|null capability     The capability that a user must possess to be displayed the notice. Null if it doesn't apply.
-	 * }
-	 */
-	public function add_admin_notice( string $message, string $notice_id, array $params = array() ) {
-		$params = wp_parse_args(
-			$params,
-			array(
-				'type'        => self::ERROR,
-				'dismissible' => true,
-				'capability'  => null,
-			)
-		);
-
-		if ( $this->should_display_notice( $notice_id, $params ) ) {
-			$this->dynamic_admin_notices[ $params['type'] ][ $notice_id ] = array(
-				'message' => $message,
-				'params'  => $params,
-			);
-		}
-	}
-
-	/**
-	 * Adds a message to the current user's meta data that will be displayed to the user on the next page load until they
-	 * manually dismiss it.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string  $message    The message that should be displayed to the current user on the next page load.
-	 * @param   string  $notice_id  A unique message ID that helps us avoid displaying duplicates.
-	 * @param   array   $params     {
-	 *      Optional parameters.
-	 *
-	 *      @type string type   The type of notice to display.
-	 * }
-	 */
-	public function add_admin_notice_to_user( string $message, string $notice_id, array $params = array() ): void {
-		$params = wp_parse_args(
-			$params,
-			array(
-				'type' => self::ERROR,
-			)
-		);
-
-		$user_id = get_current_user_id();
-		$notices = get_user_meta( $user_id, $this->get_user_notices_meta_key(), true );
-
-		if ( ! is_array( $notices ) ) {
-			$notices = array();
-		}
-
-		$notices[ $params['type'] ]               = isset( $notices[ $params['type'] ] ) ? $notices[ $params['type'] ] : array();
-		$notices[ $params['type'] ][ $notice_id ] = $message;
-
-		update_user_meta( $user_id, $this->get_user_notices_meta_key(), $notices );
 	}
 
 	/**
@@ -273,7 +189,7 @@ class AdminNoticesHandler {
 	 * @version 1.0.0
 	 */
 	public function output_admin_notice_dismiss_js(): void {
-		if ( empty( $this->dynamic_admin_notices ) && false === $this->outputted_user_admin_notices ) {
+		if ( false === $this->has_outputted_admin_notices ) {
 			return; // No notices were outputted.
 		}
 
@@ -290,7 +206,8 @@ class AdminNoticesHandler {
 					data: {
 						action: 'dws_framework_utilities_<?php echo esc_js( $this->plugin->get_plugin_safe_slug() ); ?>_dismiss_notice',
 						notice_id: $( notice ).data( 'notice-id' ),
-						nonce: <?php echo esc_js( wp_create_nonce( 'dws-dismiss-notice' ) ); ?>
+						is_global: $( notice ).data( 'notice-global' ),
+						_wpnonce: <?php echo esc_js( wp_create_nonce( 'dws-dismiss-notice' ) ); ?>
 					}
 				} );
 			} );
@@ -302,23 +219,146 @@ class AdminNoticesHandler {
 	}
 
 	/**
+	 * Intercepts an AJAX request for dismissing a given notice.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function handle_ajax_dismiss(): void {
+		if ( check_ajax_referer( 'dws-dismiss-notice' ) ) {
+			$notice_id = filter_input( INPUT_POST, 'notice_id', FILTER_SANITIZE_STRING );
+			$is_global = filter_input( INPUT_POST, 'is_global', FILTER_VALIDATE_BOOLEAN );
+			$this->dismiss_notice( $notice_id, $is_global );
+			wp_die();
+		}
+	}
+
+	// endregion
+
+	// region METHODS
+
+	/**
+	 * Registers a dynamic notice that will be displayed to all eligible users that have not dismissed it yet, if applicable.
+	 *
+	 * @param   string  $message    The message that should be displayed to the eligible users.
+	 * @param   string  $notice_id  A unique message ID that helps us avoid displaying duplicates.
+	 * @param   array   $params     {
+	 *      Optional parameters.
+	 *
+	 *      @type string      type           The type of notice to display.
+	 *      @type bool        dismissible    Whether the notice is dismissible or not.
+	 *      @type bool        global         Whether the notice's dismissed status is handled globally or per-eligible-user.
+	 *      @type string|null capability     The capability that a user must possess to be displayed the notice. Null if it doesn't apply.
+	 * }
+	 */
+	public function add_admin_notice( string $message, string $notice_id, array $params = array() ) {
+		$params = wp_parse_args(
+			$params,
+			array(
+				'type'        => self::ERROR,
+				'dismissible' => true,
+				'global'      => false,
+				'capability'  => null,
+			)
+		);
+
+		if ( $this->should_display_notice( $notice_id, $params ) ) {
+			$this->dynamic_admin_notices[ $params['type'] ][ $notice_id ] = array(
+				'message' => $message,
+				'params'  => $params,
+			);
+		}
+	}
+
+	/**
+	 * Registers a dynamic, globally-dismissible notice that will be displayed to all eligible users until any one of them dismisses it.
+	 * Basically just a helper wrapper around AdminNoticesHandler::add_admin_notice().
+	 *
+	 * @param   string  $message    The message that should be displayed to the eligible users.
+	 * @param   string  $notice_id  A unique message ID that helps us avoid displaying duplicates.
+	 * @param   array   $params     {
+	 *      Optional parameters.
+	 *
+	 *      @type string      type           The type of notice to display.
+	 *      @type string|null capability     The capability that a user must possess to be displayed the notice. Null if it doesn't apply.
+	 * }
+	 */
+	public function add_global_admin_notice( string $message, string $notice_id, array $params = array() ) {
+		$this->add_admin_notice(
+			$message,
+			$notice_id,
+			array_merge(
+				array(
+					'global'      => true,
+					'dismissible' => true,
+				),
+				$params
+			)
+		);
+	}
+
+	/**
+	 * Adds a message to the current user's meta data that will be displayed to the user on the next page load until they
+	 * manually dismiss it.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $message    The message that should be displayed to the current user on the next page load.
+	 * @param   string  $notice_id  A unique message ID that helps us avoid displaying duplicates.
+	 * @param   array   $params     {
+	 *      Optional parameters.
+	 *
+	 *      @type string type           The type of notice to display.
+	 *      @type bool   dismissible    Whether the notice is dismissible or not.
+	 * }
+	 */
+	public function add_admin_notice_to_user( string $message, string $notice_id, array $params = array() ): void {
+		$params = wp_parse_args(
+			$params,
+			array(
+				'type'        => self::ERROR,
+				'dismissible' => true,
+			)
+		);
+
+		$user_id = get_current_user_id();
+		$notices = get_user_meta( $user_id, $this->get_user_notices_meta_key(), true );
+
+		if ( ! is_array( $notices ) ) {
+			$notices = array();
+		}
+
+		$notices[ $params['type'] ]               = isset( $notices[ $params['type'] ] ) ? $notices[ $params['type'] ] : array();
+		$notices[ $params['type'] ][ $notice_id ] = array(
+			'message' => $message,
+			'params'  => $params,
+		);
+
+		update_user_meta( $user_id, $this->get_user_notices_meta_key(), $notices );
+	}
+
+	/**
 	 * Marks a specific notice as dismissed for a specific user.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param   string      $notice_id  The ID of the notice to dismiss.
+	 * @param   bool        $global     Whether the notice dismiss status is global or not (aka per-user).
 	 * @param   int|null    $user_id    The ID of the user to dismiss the notice for.
 	 */
-	public function dismiss_notice( string $notice_id, ?int $user_id = null ): void {
-		if ( is_null( $user_id ) ) {
-			$user_id = get_current_user_id();
+	public function dismiss_notice( string $notice_id, bool $global = false, ?int $user_id = null ): void {
+		$user_id           = $user_id ?? get_current_user_id();
+		$dismissed_notices = $this->get_dismissed_notices( $global, $user_id );
+
+		if ( true === $global ) {
+			$dismissed_notices[ $notice_id ] = $user_id; // Set the user who dismissed the global notice. Might be useful.
+			update_option( $this->get_dismissed_notices_meta_key(), $dismissed_notices );
+		} else {
+			$dismissed_notices[ $notice_id ] = true; // We obviously know the user id. Just set the dismissed status to true.
+			update_user_meta( $user_id, $this->get_dismissed_notices_meta_key(), $dismissed_notices );
 		}
-
-		$dismissed_notices               = $this->get_dismissed_notices( $user_id );
-		$dismissed_notices[ $notice_id ] = true;
-
-		update_user_meta( $user_id, $this->get_dismissed_notices_meta_key(), $dismissed_notices );
 
 		/**
 		 * Fires when a user dismisses an admin notice.
@@ -326,10 +366,11 @@ class AdminNoticesHandler {
 		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
-		 * @param   string  $notice_id  The unique ID of a notice.
+		 * @param   string  $notice_id  The unique ID of the dismissed notice.
+		 * @paarm   bool    $global     Whether the notice was dismissed globally or not (aka per-user).
 		 * @param   int     $user_id    The ID of the user dismissing the notice.
 		 */
-		do_action( 'dws_' . $this->plugin->get_plugin_safe_slug() . '_dismiss_notice', $notice_id, $user_id );
+		do_action( 'dws_' . $this->plugin->get_plugin_safe_slug() . '_dismissed_notice', $notice_id, $global, $user_id );
 	}
 
 	// endregion
@@ -349,6 +390,7 @@ class AdminNoticesHandler {
 	 *
 	 *      @type string      type           The type of notice to display.
 	 *      @type bool        dismissible    Whether the notice is dismissible or not.
+	 *      @type bool        global         Whether the notice's dismissed status is handled globally or per-eligible-user.
 	 * }
 	 */
 	protected function output_admin_notice( string $message, string $notice_id, array $params = array() ): void {
@@ -357,6 +399,7 @@ class AdminNoticesHandler {
 			array(
 				'type'        => self::ERROR,
 				'dismissible' => true,
+				'global'      => false,
 			)
 		);
 
@@ -371,10 +414,11 @@ class AdminNoticesHandler {
 		}
 
 		echo sprintf(
-			'<div class="%1$s" data-plugin-slug="%2$s" data-notice-id="%3$s"><p>%4$s</p></div>',
+			'<div class="%1$s" data-plugin-slug="%2$s" data-notice-id="%3$s" data-notice-global="%4$s"><p>%5$s</p></div>',
 			esc_attr( implode( ' ', $classes ) ),
 			esc_attr( $this->plugin->get_plugin_slug() ),
 			esc_attr( $notice_id ),
+			esc_attr( $params['global'] ),
 			wp_kses_post( $message )
 		);
 	}
@@ -386,7 +430,13 @@ class AdminNoticesHandler {
 	 * @version 1.0.0
 	 *
 	 * @param   string  $notice_id  The ID of the notice to check for.
-	 * @param   array   $params     The parameters of the notice.
+	 * @param   array   $params     {
+	 *      Optional parameters.
+	 *
+	 *      @type bool        dismissible    Whether the notice is dismissible or not.
+	 *      @type bool        global         Whether the notice's dismissed status is handled globally or per-eligible-user.
+	 *      @type string|null capability     The capability that a user must possess to be displayed the notice. Null if it doesn't apply.
+	 * }
 	 *
 	 * @return  bool    True if the notice should be displayed, false otherwise.
 	 */
@@ -394,8 +444,9 @@ class AdminNoticesHandler {
 		$params = wp_parse_args(
 			$params,
 			array(
-				'capability'  => null,
 				'dismissible' => true,
+				'global'      => false,
+				'capability'  => null,
 			)
 		);
 
@@ -409,22 +460,23 @@ class AdminNoticesHandler {
 			return true;
 		}
 
-		return ! $this->is_notice_dismissed( $notice_id );
+		return ! $this->is_notice_dismissed( $notice_id, $params['global'] );
 	}
 
 	/**
-	 * Checks whether a specific notice has been dismissed by a specific user or not.
+	 * Checks whether a specific notice has been dismissed or not.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param   string      $notice_id  The ID of the notice to check the dismissed status for.
+	 * @param   bool        $global     Whether the notice is dismissible globally or not (aka dismissible per-user).
 	 * @param   int|null    $user_id    The ID of the user to check the dismissed status for.
 	 *
 	 * @return  bool    Whether the given notice has been dismissed by the given user or not.
 	 */
-	protected function is_notice_dismissed( string $notice_id, ?int $user_id = null ): bool {
-		$dismissed_notices = $this->get_dismissed_notices( $user_id );
+	protected function is_notice_dismissed( string $notice_id, bool $global = false, ?int $user_id = null ): bool {
+		$dismissed_notices = $this->get_dismissed_notices( $global, $user_id );
 		return isset( $dismissed_notices[ $notice_id ] ) && boolval( $dismissed_notices[ $notice_id ] );
 	}
 
@@ -434,16 +486,15 @@ class AdminNoticesHandler {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
+	 * @param   bool        $global     Whether the notice is dismissible globally or not (aka dismissible per-user).
 	 * @param   int|null    $user_id    The user ID that the dismissed notices are being searched for.
 	 *
 	 * @return  array
 	 */
-	protected function get_dismissed_notices( ?int $user_id = null ): array {
-		if ( is_null( $user_id ) ) {
-			$user_id = get_current_user_id();
-		}
-
-		$dismissed_notices = get_user_meta( $user_id, $this->get_dismissed_notices_meta_key(), true );
+	protected function get_dismissed_notices( bool $global = false, ?int $user_id = null ): array {
+		$dismissed_notices = ( true === $global )
+			? get_option( $this->get_dismissed_notices_meta_key(), array() )
+			: get_user_meta( $user_id ?? get_current_user_id(), $this->get_dismissed_notices_meta_key(), true );
 
 		return is_array( $dismissed_notices )
 			? $dismissed_notices : array();

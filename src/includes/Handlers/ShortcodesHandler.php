@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
+use DeepWebSolutions\Framework\Utilities\Traits\Runnable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable as IRunnable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,9 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class ShortcodesHandler implements Runnable {
+class ShortcodesHandler implements IRunnable {
+	use Runnable;
+
 	// region FIELDS
 
 	/**
@@ -33,22 +35,6 @@ class ShortcodesHandler implements Runnable {
 	 * @var     array   $shortcodes
 	 */
 	private array $shortcodes = array();
-
-	// endregion
-
-	// region MAGIC METHODS
-
-	/**
-	 * HooksHandler constructor.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   PluginBase      $plugin     Instance of the current plugin.
-	 */
-	public function __construct( PluginBase $plugin ) {
-
-	}
 
 	// endregion
 
@@ -85,7 +71,7 @@ class ShortcodesHandler implements Runnable {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	public function run() {
+	public function run(): void {
 		foreach ( $this->shortcodes as $hook ) {
 			if ( empty( $hook['component'] ) ) {
 				add_shortcode( $hook['hook'], $hook['callback'] );

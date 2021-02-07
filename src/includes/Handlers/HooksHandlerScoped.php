@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class LoaderScoped {
+class HooksHandlerScoped {
 	// region FIELDS
 
 	/**

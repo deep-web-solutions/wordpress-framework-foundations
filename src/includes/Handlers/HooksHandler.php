@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Utilities\Handlers;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Compatibility layer between the framework and WordPress' API for filters, actions, and shortcodes.
+ * Compatibility layer between the framework and WordPress' API for filters and actions.
  *
  * Maintain a list of all hooks that are registered throughout the plugin, and handles their registration with
  * the WordPress API after calling the run function.
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class Loader {
+class HooksHandler {
 	// region FIELDS
 
 	/**
@@ -41,17 +41,6 @@ class Loader {
 	 * @var     array   $filters
 	 */
 	private array $filters = array();
-
-	/**
-	 * The shortcodes registered with WordPress that can be used after the plugin loads.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  private
-	 * @var     array   $shortcodes
-	 */
-	private array $shortcodes = array();
 
 	// endregion
 
@@ -127,31 +116,6 @@ class Loader {
 	}
 
 	/**
-	 * Add a new shortcode to the collection to be registered with WordPress.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string          $tag            The name of the WordPress shortcode that is being registered.
-	 * @param   object|null     $component      A reference to the instance of the object on which the shortcode is defined.
-	 * @param   string          $callback       The name of the function definition on the $component.
-	 */
-	public function add_shortcode( string $tag, $component, string $callback ) : void {
-		$this->shortcodes = $this->add( $this->shortcodes, $tag, $component, $callback, -1, -1 );
-	}
-
-	/**
-	 * Remove a shortcode from the collection to be registered with WordPress.
-	 *
-	 * @param   string          $tag            The name of the WordPress shortcode that is being deregistered.
-	 * @param   object|null     $component      A reference to the instance of the object on which the shortcode is defined.
-	 * @param   string          $callback       The name of the function definition on the $component.
-	 */
-	public function remove_shortcode( string $tag, $component, string $callback ) : void {
-		$this->shortcodes = $this->remove( $this->shortcodes, $tag, $component, $callback, -1, -1 );
-	}
-
-	/**
 	 * Register the filters, actions, and shortcodes with WordPress.
 	 *
 	 * @since   1.0.0
@@ -171,14 +135,6 @@ class Loader {
 				add_action( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
 			} else {
 				add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
-			}
-		}
-
-		foreach ( $this->shortcodes as $hook ) {
-			if ( empty( $hook['component'] ) ) {
-				add_shortcode( $hook['hook'], $hook['callback'] );
-			} else {
-				add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
 			}
 		}
 	}

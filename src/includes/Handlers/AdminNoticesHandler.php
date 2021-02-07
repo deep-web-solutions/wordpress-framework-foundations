@@ -109,13 +109,13 @@ class AdminNoticesHandler {
 	/**
 	 * AdminNoticesHandler constructor.
 	 *
+	 * @param   PluginBase  $plugin     Instance of the current plugin.
+	 * @param   HooksHandler      $loader     Instance of the hooks and shortcodes loader.
+	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @param   PluginBase  $plugin     Instance of the current plugin.
-	 * @param   Loader      $loader     Instance of the hooks and shortcodes loader.
 	 */
-	public function __construct( PluginBase $plugin, Loader $loader ) {
+	public function __construct( PluginBase $plugin, HooksHandler $loader ) {
 		$this->plugin = $plugin;
 
 		// Output the admin notices.

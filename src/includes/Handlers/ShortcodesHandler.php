@@ -2,6 +2,9 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
+use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -17,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class ShortcodesHandler {
+class ShortcodesHandler implements Runnable {
 	// region FIELDS
 
 	/**
@@ -33,6 +36,22 @@ class ShortcodesHandler {
 
 	// endregion
 
+	// region MAGIC METHODS
+
+	/**
+	 * HooksHandler constructor.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   PluginBase      $plugin     Instance of the current plugin.
+	 */
+	public function __construct( PluginBase $plugin ) {
+
+	}
+
+	// endregion
+
 	// region METHODS
 
 	/**
@@ -45,7 +64,7 @@ class ShortcodesHandler {
 	 * @param   object|null     $component      A reference to the instance of the object on which the shortcode is defined.
 	 * @param   string          $callback       The name of the function definition on the $component.
 	 */
-	public function add_shortcode( string $tag, $component, string $callback ) : void {
+	public function add_shortcode( string $tag, ?object $component, string $callback ): void {
 		$this->shortcodes = $this->add( $this->shortcodes, $tag, $component, $callback );
 	}
 
@@ -56,7 +75,7 @@ class ShortcodesHandler {
 	 * @param   object|null     $component      A reference to the instance of the object on which the shortcode is defined.
 	 * @param   string          $callback       The name of the function definition on the $component.
 	 */
-	public function remove_shortcode( string $tag, $component, string $callback ) : void {
+	public function remove_shortcode( string $tag, ?object $component, string $callback ): void {
 		$this->shortcodes = $this->remove( $this->shortcodes, $tag, $component, $callback );
 	}
 
@@ -95,7 +114,7 @@ class ShortcodesHandler {
 	 *
 	 * @return   array      The collection of shortcodes registered with WordPress.
 	 */
-	private function add( array $hooks, string $hook, $component, string $callback ) : array {
+	private function add( array $hooks, string $hook, ?object $component, string $callback ): array {
 		$hooks[] = array(
 			'hook'      => $hook,
 			'component' => $component,
@@ -120,7 +139,7 @@ class ShortcodesHandler {
 	 *
 	 * @return   array      The collection of shortcodes registered with WordPress.
 	 */
-	private function remove( array $hooks, string $hook, $component, string $callback ) : array {
+	private function remove( array $hooks, string $hook, ?object $component, string $callback ): array {
 		foreach ( $hooks as $index => $hook_info ) {
 			if ( $hook_info['hook'] === $hook && $hook_info['component'] === $component && $hook_info['callback'] === $callback ) {
 				unset( $hooks[ $index ] );

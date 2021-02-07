@@ -2,6 +2,9 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
+use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -17,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class HooksHandler {
+class HooksHandler implements Runnable {
 	// region FIELDS
 
 	/**
@@ -44,6 +47,22 @@ class HooksHandler {
 
 	// endregion
 
+	// region MAGIC METHODS
+
+	/**
+	 * HooksHandler constructor.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   PluginBase      $plugin     Instance of the current plugin.
+	 */
+	public function __construct( PluginBase $plugin ) {
+
+	}
+
+	// endregion
+
 	// region METHODS
 
 	/**
@@ -58,7 +77,7 @@ class HooksHandler {
 	 * @param    int            $priority       Optional. he priority at which the function should be fired. Default is 10.
 	 * @param    int            $accepted_args  Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
-	public function add_action( string $hook, $component, string $callback, int $priority = 10, int $accepted_args = 1 ) : void {
+	public function add_action( string $hook, ?object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void {
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
@@ -69,18 +88,13 @@ class HooksHandler {
 	 * @version  1.0.0
 	 *
 	 * @param    string         $hook           The name of the WordPress action that is being deregistered.
-	 * @param    object         $component      A reference to the instance of the object on which the action is defined.
-	 * @param    string|null    $callback       The name of the function definition on the $component.
+	 * @param    object|null    $component      A reference to the instance of the object on which the action is defined.
+	 * @param    string         $callback       The name of the function definition on the $component.
 	 * @param    int            $priority       Optional. he priority at which the function should be fired. Default is 10.
 	 * @param    int            $accepted_args  Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
-	public function remove_action( string $hook, $component, string $callback, int $priority = 10, int $accepted_args = 1 ) : void {
+	public function remove_action( string $hook, ?object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void {
 		$this->actions = $this->remove( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
-		foreach ( $GLOBALS['dws_framework_core_loaders'] as $loader ) {
-			if ( $loader !== $this ) {
-				$loader->remove_action( $hook, $component, $callback, $priority, $accepted_args );
-			}
-		}
 	}
 
 	/**
@@ -95,7 +109,7 @@ class HooksHandler {
 	 * @param   int             $priority       Optional. he priority at which the function should be fired. Default is 10.
 	 * @param   int             $accepted_args  Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
-	public function add_filter( string $hook, $component, string $callback, int $priority = 10, int $accepted_args = 1 ) : void {
+	public function add_filter( string $hook, ?object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void {
 		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
@@ -111,7 +125,7 @@ class HooksHandler {
 	 * @param    int            $priority       Optional. he priority at which the function should be fired. Default is 10.
 	 * @param    int            $accepted_args  Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
-	public function remove_filter( string $hook, $component, string $callback, int $priority = 10, int $accepted_args = 1 ) : void {
+	public function remove_filter( string $hook, ?object $component, string $callback, int $priority = 10, int $accepted_args = 1 ): void {
 		$this->filters = $this->remove( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
@@ -160,7 +174,7 @@ class HooksHandler {
 	 *
 	 * @return   array      The collection of actions and filters registered with WordPress.
 	 */
-	private function add( array $hooks, string $hook, $component, string $callback, int $priority, int $accepted_args ) : array {
+	protected function add( array $hooks, string $hook, ?object $component, string $callback, int $priority, int $accepted_args ): array {
 		$hooks[] = array(
 			'hook'          => $hook,
 			'component'     => $component,
@@ -189,7 +203,7 @@ class HooksHandler {
 	 *
 	 * @return   array      The collection of actions and filters registered with WordPress.
 	 */
-	private function remove( array $hooks, string $hook, $component, string $callback, int $priority, int $accepted_args ) : array {
+	protected function remove( array $hooks, string $hook, ?object $component, string $callback, int $priority, int $accepted_args ) : array {
 		foreach ( $hooks as $index => $hook_info ) {
 			if ( $hook_info['hook'] === $hook && $hook_info['component'] === $component && $hook_info['callback'] === $callback && $hook_info['priority'] === $priority && $hook_info['accepted_args'] === $accepted_args ) {
 				unset( $hooks[ $index ] );

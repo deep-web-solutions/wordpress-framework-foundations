@@ -188,7 +188,7 @@ class DependenciesCheckerService {
 			// but a user with appropriate permission levels (probably whoever activates the plugin the first time around) may dismiss the shown notice
 			// and if that happens, the plugin will ignore the limitations and run anyway. So it's more of a soft-warning than a hard-error.
 			$notice_id                        = 'dws-incompatible-php-settings-' . $this->functionality->get_root_id() . '-' . md5( wp_json_encode( $incompatible_php_settings ) );
-			$this->are_dependencies_fulfilled = $admin_notices_handler->is_notice_dismissed( $notice_id, true );
+			$this->are_dependencies_fulfilled = $this->are_dependencies_fulfilled && $admin_notices_handler->is_notice_dismissed( $notice_id, true );
 
 			if ( false === $this->are_dependencies_fulfilled ) {
 				$message = sprintf(

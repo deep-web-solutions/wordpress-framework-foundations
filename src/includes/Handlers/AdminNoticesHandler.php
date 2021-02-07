@@ -3,6 +3,7 @@
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
 use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
+use DeepWebSolutions\Framework\Core\Traits\Setup\Hooks;
 use DeepWebSolutions\Framework\Helpers\WordPress\Assets;
 
 defined( 'ABSPATH' ) || exit;
@@ -18,6 +19,8 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
 class AdminNoticesHandler {
+    use Hooks;
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -110,22 +113,28 @@ class AdminNoticesHandler {
 	 * AdminNoticesHandler constructor.
 	 *
 	 * @param   PluginBase  $plugin     Instance of the current plugin.
-	 * @param   HooksHandler      $loader     Instance of the hooks and shortcodes loader.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	public function __construct( PluginBase $plugin, HooksHandler $loader ) {
+	public function __construct( PluginBase $plugin ) {
 		$this->plugin = $plugin;
-
-		// Output the admin notices.
-		$loader->add_action( 'admin_notices', $this, 'output_user_admin_notices' );
-		$loader->add_action( 'admin_notices', $this, 'output_dynamic_admin_notices' );
-		$loader->add_action( 'admin_footer', $this, 'output_admin_notice_dismiss_js' );
-
-		// AJAX handler for dismissing a notice.
-		$loader->add_action( 'wp_ajax_dws_framework_utilities_' . $this->plugin->get_plugin_safe_slug() . '_dismiss_notice', $this, 'handle_ajax_dismiss' );
+		$this->plugin->get_container()->call( array( $this, 'setup_hooks' ) );
 	}
+
+	// endregion
+
+    // region INHERITED FUNCTIONS
+
+    protected function define_hooks( HooksHandler $hooks_handler ): void {
+	    // Output the admin notices.
+	    $hooks_handler->add_action( 'admin_notices', $this, 'output_user_admin_notices' );
+	    $hooks_handler->add_action( 'admin_notices', $this, 'output_dynamic_admin_notices' );
+	    $hooks_handler->add_action( 'admin_footer', $this, 'output_admin_notice_dismiss_js' );
+
+	    // AJAX handler for dismissing a notice.
+	    $hooks_handler->add_action( 'wp_ajax_dws_framework_utilities_' . $this->plugin->get_plugin_safe_slug() . '_dismiss_notice', $this, 'handle_ajax_dismiss' );
+    }
 
 	// endregion
 
@@ -525,4 +534,7 @@ class AdminNoticesHandler {
 	}
 
 	// endregion
+	public function setup(): void {
+		// TODO: Implement setup() method.
+	}
 }

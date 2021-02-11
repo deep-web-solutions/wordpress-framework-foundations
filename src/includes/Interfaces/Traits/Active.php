@@ -63,7 +63,7 @@ trait Active {
 	 *
 	 * @return  bool
 	 */
-	protected function maybe_check_dependencies( AdminNoticesHandler $admin_notices_handler ): bool {
+	public function maybe_check_dependencies( AdminNoticesHandler $admin_notices_handler ): bool {
 		if ( in_array( Dependencies::class, Misc::class_uses_deep( $this ), true ) && method_exists( $this, 'get_dependencies_service' ) ) {
 			/** @var DependenciesService $dependencies_service */ // phpcs:ignore
 			$dependencies_service = $this->get_dependencies_service();

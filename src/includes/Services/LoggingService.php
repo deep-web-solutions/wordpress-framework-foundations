@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Services;
 
-use DeepWebSolutions\Framework\Utilities\Factories\LoggerFactory;
+use DeepWebSolutions\Framework\Utilities\Factories\Traits\Logger;
 use Psr\Log\LogLevel;
 
 defined( 'ABSPATH' ) || exit;
@@ -16,18 +16,9 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Utilities\Services
  */
 class LoggingService {
-	// region FIELDS AND CONSTANTS
+	use Logger;
 
-	/**
-	 * Logger factory for retrieving loggers.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  private
-	 * @var     LoggerFactory
-	 */
-	protected LoggerFactory $logger_factory;
+	// region FIELDS AND CONSTANTS
 
 	/**
 	 * Whether to include sensitive information in the logs or not.
@@ -50,29 +41,15 @@ class LoggingService {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   LoggerFactory   $logger_factory     The logger factory instance.
 	 * @param   bool            $include_sensitive  Whether the logs should include sensitive information or not.
 	 */
-	public function __construct( LoggerFactory $logger_factory, bool $include_sensitive = false ) {
-		$this->logger_factory    = $logger_factory;
+	public function __construct( bool $include_sensitive = false ) {
 		$this->include_sensitive = $include_sensitive;
 	}
 
 	// endregion
 
 	// region GETTERS
-
-	/**
-	 * Gets the logger factory instance.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  LoggerFactory
-	 */
-	public function get_logger_factory(): LoggerFactory {
-		return $this->logger_factory;
-	}
 
 	/**
 	 * Gets whether the logs will include any sensitive information or not.

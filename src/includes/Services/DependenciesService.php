@@ -2,10 +2,12 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Services;
 
-use DeepWebSolutions\Framework\Core\Abstracts\Functionality;
-use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
 use DeepWebSolutions\Framework\Helpers\PHP\Misc;
+use DeepWebSolutions\Framework\Helpers\WordPress\Traits\Filesystem;
 use DeepWebSolutions\Framework\Utilities\Handlers\AdminNoticesHandler;
+use DeepWebSolutions\Framework\Utilities\Handlers\Traits\AdminNotices;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Identifiable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,63 +21,55 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Services
  */
-class DependenciesCheckerService {
+class DependenciesService {
+	use Filesystem;
+	use AdminNotices;
+
 	// region FIELDS AND CONSTANTS
 
 	/**
-	 * List of PHP extensions that must be present for functionality to setup.
+	 * List of PHP extensions that must be present for identifiable to setup.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     string[]
 	 */
-	private array $php_extensions = array();
+	protected array $php_extensions = array();
 
 	/**
-	 * List of PHP functions that must be present for functionality to setup.
+	 * List of PHP functions that must be present for identifiable to setup.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     string[]
 	 */
-	private array $php_functions = array();
+	protected array $php_functions = array();
 
 	/**
-	 * List of PHP settings that must be present for functionality to setup.
+	 * List of PHP settings that must be present for identifiable to setup.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     string[]
 	 */
-	private array $php_settings = array();
+	protected array $php_settings = array();
 
 	/**
-	 * List of WP plugins that must be present and active for functionality to setup.
+	 * List of WP plugins that must be present and active for identifiable to setup.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     string[]
 	 */
-	private array $active_plugins = array();
-
-	/**
-	 * The functionality instance having these dependencies.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  private
-	 * @var     Functionality|null
-	 */
-	private ?Functionality $functionality = null;
+	protected array $active_plugins = array();
 
 	/**
 	 * Whether the set dependencies are fulfilled or not.
@@ -83,9 +77,21 @@ class DependenciesCheckerService {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
+	 * @access  protected
 	 * @var     bool|null
 	 */
-	private ?bool $are_dependencies_fulfilled = null;
+	protected ?bool $are_dependencies_fulfilled = null;
+
+	/**
+	 * The identifiable instance having these dependencies.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     Identifiable
+	 */
+	protected Identifiable $identifiable;
 
 	// endregion
 
@@ -97,11 +103,11 @@ class DependenciesCheckerService {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   Functionality   $functionality      The functionality the dependencies are checked for.
+	 * @param   Identifiable    $identifiable       The identifiable the dependencies are checked for.
 	 * @param   array           $configuration      Dependencies configuration.
 	 */
-	public function __construct( Functionality $functionality, array $configuration ) {
-		$this->functionality = $functionality;
+	public function __construct( Identifiable $identifiable, array $configuration ) {
+		$this->identifiable = $identifiable;
 
 		$this->php_extensions = $configuration['php_extensions'] ?? array();
 		$this->php_functions  = $configuration['php_functions'] ?? array();
@@ -111,46 +117,38 @@ class DependenciesCheckerService {
 
 	// endregion
 
-	// region METHODS
+	// region INHERITED METHODS
 
 	/**
-	 * Checks whether the dependencies are fulfilled or not.
+	 * Checks whether the dependencies are fulfilled or not and registers admin notices accordingly.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @noinspection PhpDocMissingThrowsInspection
-	 *
-	 * @return  bool
+	 * @param   AdminNoticesHandler     $admin_notices_handler      Instance of the admin notices handler to register notices with.
 	 */
-	public function are_dependencies_fulfilled(): bool {
-		if ( ! is_null( $this->are_dependencies_fulfilled ) ) {
-			return $this->are_dependencies_fulfilled; // Memoized result.
-		}
-
-		/** @var AdminNoticesHandler $admin_notices_handler */ // phpcs:ignore
-		$admin_notices_handler = $this->functionality->get_plugin()->get_container()->get( AdminNoticesHandler::class );
-
+	protected function register_admin_notices( AdminNoticesHandler $admin_notices_handler ): void {
 		// Start by assuming that the dependencies are fulfilled.
 		$this->are_dependencies_fulfilled = true;
 
 		// Check whether all required PHP extensions are present.
-		if ( ! empty( $missing_php_extensions = $this->get_missing_php_extensions() ) ) { // phpcs:ignore
+		$missing_php_extensions = $this->get_missing_php_extensions();
+		if ( ! empty( $missing_php_extensions ) ) {
 			$this->are_dependencies_fulfilled = false;
 
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-					/* translators: 1. Plugin or functionality name, 2. Comma-separated list of missing PHP extensions. */
+					/* translators: 1. Plugin or identifiable name, 2. Comma-separated list of missing PHP extensions. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s PHP extension to function. Contact your host or server administrator to install and configure the missing extension.',
 						'<strong>%1$s</strong> requires the following PHP extensions to function: %2$s. Contact your host or server administrator to install and configure the missing extensions.',
 						count( $missing_php_extensions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_functionality_name() ),
+					esc_html( $this->get_identifiable_name() ),
 					'<strong>' . implode( ', ', $missing_php_extensions ) . '</strong>'
 				),
-				'dws-missing-extensions-' . $this->functionality->get_root_id(),
+				'dws-missing-extensions-' . $this->identifiable->get_instance_id(),
 				array(
 					'capability'  => 'activate_plugins',
 					'dismissible' => false,
@@ -159,22 +157,23 @@ class DependenciesCheckerService {
 		}
 
 		// Check whether all required PHP functions are present.
-		if ( ! empty( $missing_php_functions = $this->get_missing_php_functions() ) ) { // phpcs:ignore
+		$missing_php_functions = $this->get_missing_php_functions();
+		if ( ! empty( $missing_php_functions ) ) {
 			$this->are_dependencies_fulfilled = false;
 
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-					/* translators: 1. Plugin name or functionality name, 2. Comma-separated list of missing PHP functions. */
+					/* translators: 1. Plugin name or identifiable name, 2. Comma-separated list of missing PHP functions. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s PHP function to exist. Contact your host or server administrator to install and configure the missing function.',
 						'<strong>%1$s</strong> requires the following PHP functions to exist: %2$s. Contact your host or server administrator to install and configure the missing functions.',
 						count( $missing_php_functions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_functionality_name() ),
+					esc_html( $this->get_identifiable_name() ),
 					'<strong>' . implode( ', ', $missing_php_functions ) . '</strong>'
 				),
-				'dws-missing-functions-' . $this->functionality->get_root_id(),
+				'dws-missing-functions-' . $this->identifiable->get_instance_id(),
 				array(
 					'capability'  => 'activate_plugins',
 					'dismissible' => false,
@@ -183,18 +182,19 @@ class DependenciesCheckerService {
 		}
 
 		// Check whether all PHP settings are compatible with the requirements.
-		if ( ! empty( $incompatible_php_settings = $this->get_incompatible_php_settings() ) ) { // phpcs:ignore
-			// PHP settings work differently as far as dependencies go. Namely, the plugin/functionality will NOT run if an issue is detected,
+		$incompatible_php_settings = $this->get_incompatible_php_settings();
+		if ( ! empty( $incompatible_php_settings ) ) {
+			// PHP settings work differently as far as dependencies go. Namely, the plugin/identifiable will NOT run if an issue is detected,
 			// but a user with appropriate permission levels (probably whoever activates the plugin the first time around) may dismiss the shown notice
 			// and if that happens, the plugin will ignore the limitations and run anyway. So it's more of a soft-warning than a hard-error.
-			$notice_id                        = 'dws-incompatible-php-settings-' . $this->functionality->get_root_id() . '-' . md5( wp_json_encode( $incompatible_php_settings ) );
+			$notice_id                        = 'dws-incompatible-php-settings-' . $this->identifiable->get_instance_id() . '-' . md5( wp_json_encode( $incompatible_php_settings ) );
 			$this->are_dependencies_fulfilled = $this->are_dependencies_fulfilled && $admin_notices_handler->is_notice_dismissed( $notice_id, true );
 
 			if ( false === $this->are_dependencies_fulfilled ) {
 				$message = sprintf(
-					/* translators: Plugin name or functionality name. */
+					/* translators: Plugin name or identifiable name. */
 					__( '<strong>%s</strong> may behave unexpectedly because the following PHP configuration settings are expected:', 'dws-wp-framework-utilities' ),
-					esc_html( $this->get_functionality_name() )
+					esc_html( $this->get_identifiable_name() )
 				) . '<ul>';
 
 				foreach ( $incompatible_php_settings as $setting => $values ) {
@@ -203,7 +203,7 @@ class DependenciesCheckerService {
 						switch ( $values['type'] ) {
 							case 'min':
 								$setting_message = sprintf(
-									/* translators: PHP settings value. */
+								/* translators: PHP settings value. */
 									__( '%s or higher', 'dws-wp-framework-utilities' ),
 									$setting_message
 								);
@@ -226,27 +226,48 @@ class DependenciesCheckerService {
 		}
 
 		// Check whether all required plugins are installed and active.
-		if ( ! empty( $missing_active_plugins = $this->get_missing_active_plugins() ) ) { // phpcs:ignore
+		$missing_active_plugins = $this->get_missing_active_plugins();
+		if ( ! empty( $missing_active_plugins ) ) {
 			$this->are_dependencies_fulfilled = false;
 
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-					/* translators: 1. Plugin name or functionality name, 2. Comma-separated list of missing active plugins. */
+					/* translators: 1. Plugin name or identifiable name, 2. Comma-separated list of missing active plugins. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s plugin to be installed and active. Please install and activate the plugin first.',
 						'<strong>%1$s</strong> requires the following plugins to be installed and active: %2$s. Please install and activate these plugins first.',
 						count( $missing_active_plugins ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->functionality->get_plugin()->get_plugin_name() ),
-					'<strong>' . implode( ', ', $missing_active_plugins ) . '</strong>'
+					esc_html( $this->get_identifiable_name() ),
+					'<strong>' . $this->format_plugins_list( $missing_active_plugins ) . '</strong>'
 				),
-				'dws-missing-or-inactive-plugins-' . $this->functionality->get_root_id(),
+				'dws-missing-or-inactive-plugins-' . $this->identifiable->get_instance_id(),
 				array(
 					'capability'  => 'activate_plugins',
 					'dismissible' => false,
 				)
 			);
+		}
+	}
+
+	// endregion
+
+	// region METHODS
+
+	/**
+	 * Returns whether the dependencies are fulfilled or not.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   AdminNoticesHandler     $admin_notices_handler  Instance of the admin notices handler to register notices with.
+	 *
+	 * @return  bool
+	 */
+	public function are_dependencies_fulfilled( AdminNoticesHandler $admin_notices_handler ): bool {
+		if ( is_null( $this->are_dependencies_fulfilled ) ) {
+			$this->register_admin_notices( $admin_notices_handler );
 		}
 
 		return $this->are_dependencies_fulfilled;
@@ -342,14 +363,36 @@ class DependenciesCheckerService {
 	public function get_missing_active_plugins(): array {
 		$missing_plugins = array();
 
-		foreach ( $this->get_dependent_active_plugins() as $dependent_active_plugin => $dependent_active_plugin_name ) {
-			$is_active = in_array( $dependent_active_plugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ); // phpcs:ignore
-			if ( is_multisite() && ! $is_active ) {
-				$is_active = isset( get_site_option( 'active_sitewide_plugins', array() )[ $dependent_active_plugin ] );
+		foreach ( $this->get_dependent_active_plugins() as $dependent_active_plugin => $dependent_active_plugin_config ) {
+			if ( isset( $dependent_active_plugin_config['active_checker'] ) && is_callable( $dependent_active_plugin_config['active_checker'] ) ) {
+				$is_active = boolval( call_user_func( $dependent_active_plugin_config['active_checker'] ) );
+			} else {
+				$is_active = in_array( $dependent_active_plugin, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ); // phpcs:ignore
+				if ( is_multisite() && ! $is_active ) {
+					$is_active = isset( get_site_option( 'active_sitewide_plugins', array() )[ $dependent_active_plugin ] );
+				}
 			}
 
 			if ( ! $is_active ) {
-				$missing_plugins[ $dependent_active_plugin ] = $dependent_active_plugin_name;
+				$missing_plugins[ $dependent_active_plugin ] = $dependent_active_plugin_config;
+			} elseif ( isset( $dependent_active_plugin_config['min_version'] ) ) {
+				if ( isset( $dependent_active_plugin_config['version_checker'] ) && is_callable( $dependent_active_plugin_config['version_checker'] ) ) {
+					$version = call_user_func( $dependent_active_plugin_config['version_checker'] );
+				} else {
+					$wp_filesystem = $this->get_wp_filesystem();
+					$version       = '0.0.0';
+
+					if ( $wp_filesystem ) {
+						$plugin_data = get_file_data( trailingslashit( $wp_filesystem->wp_plugins_dir() ) . $dependent_active_plugin, array( 'Version' => 'Version' ) );
+						if ( isset( $plugin_data['Version'] ) ) {
+							$version = $plugin_data['Version'];
+						}
+					}
+				}
+
+				if ( version_compare( $dependent_active_plugin_config['min_version'], $version, '<' ) ) {
+					$missing_plugins[ $dependent_active_plugin ] = $dependent_active_plugin_config + array( 'version' => $version );
+				}
 			}
 		}
 
@@ -402,7 +445,7 @@ class DependenciesCheckerService {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @return  string[]
+	 * @return  array
 	 */
 	public function get_dependent_active_plugins(): array {
 		return $this->active_plugins;
@@ -413,19 +456,54 @@ class DependenciesCheckerService {
 	// region HELPERS
 
 	/**
-	 * Returns the name of the functionality as it should appear in dependency admin notices.
+	 * Returns the name of the identifiable as it should appear in dependency admin notices.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return  string
 	 */
-	protected function get_functionality_name(): string {
-		$plugin_name = $this->functionality->get_plugin()->get_plugin_name();
+	protected function get_identifiable_name(): string {
+		$plugin_name = $this->identifiable->get_plugin()->get_plugin_name();
 
-		return ( $this->functionality instanceof PluginBase )
+		return ( $this->identifiable instanceof Plugin )
 			? $plugin_name
-			: sprintf( '%s: %s', $plugin_name, $this->functionality->get_root_public_name() );
+			: sprintf( '%s: %s', $plugin_name, $this->identifiable->get_instance_public_name() );
+	}
+
+	/**
+	 * Formats the list of missing plugin dependencies in a human-friendly way.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   array   $missing_plugins    List of missing plugin dependencies.
+	 *
+	 * @return  string
+	 */
+	protected function format_plugins_list( array $missing_plugins ): string {
+		$formatted_plugin_names = array();
+
+		foreach ( $missing_plugins as $missing_plugin ) {
+			$formatted_plugin_name = $missing_plugin['name'];
+
+			if ( isset( $missing_plugin['min_version'] ) ) {
+				$formatted_plugin_name .= " {$missing_plugin['min_version']}+";
+			}
+
+			if ( isset( $missing_plugin['version'] ) ) {
+				$formatted_version = sprintf(
+					/* translators: %s: Installed version of the dependant plugin */
+					__( '(You\'re running version %s)', 'dws-wp-framework-utilities' ),
+					$missing_plugin['version']
+				);
+				$formatted_plugin_name .= '<em>(' . esc_html( $formatted_version ) . ')</em>';
+			}
+
+			$formatted_plugin_names[] = $formatted_plugin_name;
+		}
+
+		return join( ', ', $formatted_plugin_names );
 	}
 
 	// endregion

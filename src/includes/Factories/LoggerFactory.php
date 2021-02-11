@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Factories;
 
+use DeepWebSolutions\Framework\Helpers\WordPress\Requests;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -24,7 +25,7 @@ class LoggerFactory {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     LoggerInterface[]
 	 */
 	protected array $loggers;
@@ -35,7 +36,7 @@ class LoggerFactory {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     callable[]
 	 */
 	protected array $callables;
@@ -90,7 +91,7 @@ class LoggerFactory {
 				$logger = call_user_func( $this->callables[ $name ], ...$arguments );
 				if ( $logger instanceof LoggerInterface ) {
 					$this->loggers[ $name ] = $logger;
-				} elseif ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				} elseif ( Requests::has_debug() ) {
 					// Throwing an exception seems rather extreme.
 					error_log( "Failed to instantiate logger $name!!!" ); // @phpcs:ignore
 				}

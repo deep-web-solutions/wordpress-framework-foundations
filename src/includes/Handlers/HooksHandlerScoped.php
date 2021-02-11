@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
+use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -15,30 +17,8 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class HooksHandlerScoped {
+class HooksHandlerScoped extends HooksHandler implements Runnable {
 	// region FIELDS
-
-	/**
-	 * The array of actions registered with WordPress.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  private
-	 * @var     array   $actions    The actions registered with WordPress to fire when the plugin loads.
-	 */
-	private array $actions;
-
-	/**
-	 * The array of filters registered with WordPress.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  private
-	 * @var     array   $filters    The filters registered with WordPress to fire when the plugin loads.
-	 */
-	private array $filters;
 
 	/**
 	 * The hook on which the actions and filters should be registered.
@@ -48,7 +28,7 @@ class HooksHandlerScoped {
 	 *
 	 * @var     array   $start
 	 */
-	private array $start;
+	protected array $start;
 
 	/**
 	 * The hook on which the actions and filters should be un-registered.
@@ -58,7 +38,17 @@ class HooksHandlerScoped {
 	 *
 	 * @var     array   $end
 	 */
-	private array $end;
+	protected array $end;
+
+	/**
+	 * Whether the current instance has been run already or not.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @var     bool
+	 */
+	protected bool $is_run;
 
 	// endregion
 
@@ -74,8 +64,61 @@ class HooksHandlerScoped {
 	 * @param   array   $end    The hook on which the actions and filters should be un-registered.
 	 */
 	protected function __construct( array $start = array(), array $end = array() ) {
+		$this->parse_scope( $start, $end );
 		$this->initialize();
-		$this->set_scope( $start, $end );
+	}
+
+	// endregion
+
+	// region INHERITED FUNCTIONS
+
+	/**
+	 * Register the filters and actions with WordPress.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function run(): void {
+		if ( false === $this->is_run ) {
+			if ( is_string( $this->start['hook'] ) && ! empty( $this->start['hook'] ) ) {
+				if ( 'action' === $this->start['type'] ) {
+					$this->array_walk_add_action( $this->start );
+				} else {
+					$this->array_walk_add_filter( $this->start );
+				}
+			}
+			if ( is_string( $this->end['hook'] ) && ! empty( $this->end['hook'] ) ) {
+				if ( 'action' === $this->end['type'] ) {
+					$this->array_walk_add_action( $this->end );
+				} else {
+					$this->array_walk_add_filter( $this->end );
+				}
+			}
+
+			$this->is_run = true;
+		} else {
+			array_walk( $this->filters['added'], array( $this, 'array_walk_add_filter' ) );
+			$this->filters['removed'] = array_filter( $this->filters['removed'], array( $this, 'array_walk_remove_filter' ) );
+
+			array_walk( $this->actions['added'], array( $this, 'array_walk_add_action' ) );
+			$this->actions['removed'] = array_filter( $this->actions['removed'], array( $this, 'array_walk_remove_action' ) );
+		}
+	}
+
+	/**
+	 * Undo what the 'run' function did above.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function reset(): void {
+		array_walk( $this->filters['added'], array( $this, 'array_walk_remove_filter' ) );
+		array_walk( $this->filters['removed'], array( $this, 'array_walk_add_filter' ) );
+
+		array_walk( $this->actions['added'], array( $this, 'array_walk_remove_action' ) );
+		array_walk( $this->actions['removed'], array( $this, 'array_walk_add_action' ) );
+
+		$this->initialize();
 	}
 
 	// endregion
@@ -210,36 +253,6 @@ class HooksHandlerScoped {
 		$this->filters['removed'] = $this->remove( $this->filters['removed'], $hook, $component, $callback, $priority, $accepted_args );
 	}
 
-	/**
-	 * Register the filters and actions with WordPress.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 */
-	public function run(): void {
-		array_walk( $this->filters['added'], array( $this, 'array_walk_add_filter' ) );
-		$this->filters['removed'] = array_filter( $this->filters['removed'], array( $this, 'array_walk_remove_filter' ) );
-
-		array_walk( $this->actions['added'], array( $this, 'array_walk_add_action' ) );
-		$this->actions['removed'] = array_filter( $this->actions['removed'], array( $this, 'array_walk_remove_action' ) );
-	}
-
-	/**
-	 * Undo what the 'run' function did above.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 */
-	public function reset(): void {
-		array_walk( $this->filters['added'], array( $this, 'array_walk_remove_filter' ) );
-		array_walk( $this->filters['removed'], array( $this, 'array_walk_add_filter' ) );
-
-		array_walk( $this->actions['added'], array( $this, 'array_walk_remove_action' ) );
-		array_walk( $this->actions['removed'], array( $this, 'array_walk_add_action' ) );
-
-		$this->initialize();
-	}
-
 	// endregion
 
 	// region HELPERS
@@ -250,7 +263,7 @@ class HooksHandlerScoped {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	private function initialize(): void {
+	protected function initialize(): void {
 		$this->actions = array(
 			'added'   => array(),
 			'removed' => array(),
@@ -259,6 +272,7 @@ class HooksHandlerScoped {
 			'added'   => array(),
 			'removed' => array(),
 		);
+		$this->is_run  = false;
 
 		if ( isset( $this->start['hook'] ) && is_string( $this->start['hook'] ) && ! empty( $this->start['hook'] ) ) {
 			if ( 'action' === $this->start['type'] ) {
@@ -277,7 +291,7 @@ class HooksHandlerScoped {
 	}
 
 	/**
-	 * Registers the appropriate methods on the start and end hooks, respectively.
+	 * Parses the start and end hooks parameters.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -285,7 +299,7 @@ class HooksHandlerScoped {
 	 * @param   array   $start  The hook on which the actions and filters should be registered.
 	 * @param   array   $end    The hook on which the actions and filters should be un-registered.
 	 */
-	private function set_scope( array $start, array $end ): void {
+	protected function parse_scope( array $start, array $end ): void {
 		$this->start = array_merge(
 			wp_parse_args( $start, self::get_scope_hook_defaults() ),
 			array(
@@ -302,21 +316,6 @@ class HooksHandlerScoped {
 				'accepted_args' => 0,
 			)
 		);
-
-		if ( is_string( $this->start['hook'] ) && ! empty( $this->start['hook'] ) ) {
-			if ( 'action' === $this->start['type'] ) {
-				$this->array_walk_add_action( $this->start );
-			} else {
-				$this->array_walk_add_filter( $this->start );
-			}
-		}
-		if ( is_string( $this->end['hook'] ) && ! empty( $this->end['hook'] ) ) {
-			if ( 'action' === $this->end['type'] ) {
-				$this->array_walk_add_action( $this->end );
-			} else {
-				$this->array_walk_add_filter( $this->end );
-			}
-		}
 	}
 
 	/**
@@ -329,7 +328,7 @@ class HooksHandlerScoped {
 	 *
 	 * @return  bool    Whether registration was successful or not.
 	 */
-	private function array_walk_add_filter( array $hook ): bool {
+	protected function array_walk_add_filter( array $hook ): bool {
 		if ( empty( $hook['component'] ) ) {
 			return add_filter( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
 		} else {
@@ -347,7 +346,7 @@ class HooksHandlerScoped {
 	 *
 	 * @return  bool    Whether un-registration was successful or not.
 	 */
-	private function array_walk_remove_filter( array $hook ): bool {
+	protected function array_walk_remove_filter( array $hook ): bool {
 		if ( empty( $hook['component'] ) ) {
 			return remove_filter( $hook['hook'], $hook['callback'], $hook['priority'] );
 		} else {
@@ -365,7 +364,7 @@ class HooksHandlerScoped {
 	 *
 	 * @return  bool    Whether registration was successful or not.
 	 */
-	private function array_walk_add_action( array $hook ): bool {
+	protected function array_walk_add_action( array $hook ): bool {
 		if ( empty( $hook['component'] ) ) {
 			return add_action( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
 		} else {
@@ -383,68 +382,12 @@ class HooksHandlerScoped {
 	 *
 	 * @return  bool    Whether un-registration was successful or not.
 	 */
-	private function array_walk_remove_action( array $hook ): bool {
+	protected function array_walk_remove_action( array $hook ): bool {
 		if ( empty( $hook['component'] ) ) {
 			return remove_action( $hook['hook'], $hook['callback'], $hook['priority'] );
 		} else {
 			return remove_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'] );
 		}
-	}
-
-	/**
-	 * A utility function that is used to register the actions and hooks into a single collection.
-	 *
-	 * @since    1.0.0
-	 * @version  1.0.0
-	 *
-	 * @access   private
-	 *
-	 * @param    array          $hooks          The collection of hooks that is being registered (that is, actions or filters).
-	 * @param    string         $hook           The name of the WordPress filter that is being registered.
-	 * @param    object|null    $component      A reference to the instance of the object on which the filter is defined.
-	 * @param    string         $callback       The name of the function definition on the $component.
-	 * @param    int            $priority       The priority at which the function should be fired.
-	 * @param    int            $accepted_args  The number of arguments that should be passed to the $callback.
-	 *
-	 * @return   array      The collection of actions and filters registered with WordPress.
-	 */
-	private function add( array $hooks, string $hook, ?object $component, string $callback, int $priority, int $accepted_args ): array {
-		$hooks[] = array(
-			'hook'          => $hook,
-			'component'     => $component,
-			'callback'      => $callback,
-			'priority'      => $priority,
-			'accepted_args' => $accepted_args,
-		);
-		return $hooks;
-	}
-
-	/**
-	 * A utility function that is used to remove the actions and hooks from the single collection.
-	 *
-	 * @since    1.0.0
-	 * @version  1.0.0
-	 *
-	 * @access   private
-	 *
-	 * @param    array          $hooks          The collection of hooks that is being registered (that is, actions or filters).
-	 * @param    string         $hook           The name of the WordPress filter that is being registered.
-	 * @param    object|null    $component      A reference to the instance of the object on which the filter is defined.
-	 * @param    string         $callback       The name of the function definition on the $component.
-	 * @param    int            $priority       The priority at which the function should be fired.
-	 * @param    int            $accepted_args  The number of arguments that should be passed to the $callback.
-	 *
-	 * @return   array      The collection of actions and filters registered with WordPress.
-	 */
-	private function remove( array $hooks, string $hook, ?object $component, string $callback, int $priority, int $accepted_args ): array {
-		foreach ( $hooks as $index => $hook_info ) {
-			if ( $hook_info['hook'] === $hook && $hook_info['component'] === $component && $hook_info['callback'] === $callback && $hook_info['priority'] === $priority && $hook_info['accepted_args'] === $accepted_args ) {
-				unset( $hooks[ $index ] );
-				break;
-			}
-		}
-
-		return $hooks;
 	}
 
 	/**
@@ -455,7 +398,7 @@ class HooksHandlerScoped {
 	 *
 	 * @return  array
 	 */
-	private static function get_scope_hook_defaults(): array {
+	protected static function get_scope_hook_defaults(): array {
 		return array(
 			'hook'     => '',
 			'type'     => 'action',

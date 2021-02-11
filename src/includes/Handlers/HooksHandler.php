@@ -2,8 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Utilities\Traits\Runnable;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable as IRunnable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,32 +19,70 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class HooksHandler implements IRunnable {
-	use Runnable;
-
+class HooksHandler implements Runnable {
 	// region FIELDS
 
 	/**
-	 * The actions registered with WordPress to fire when the plugin loads.
+	 * The actions registered with WordPress to fire when the handler runs.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     array   $actions
 	 */
-	private array $actions = array();
+	protected array $actions = array();
 
 	/**
-	 * The filters registered with WordPress to fire when the plugin loads.
+	 * The filters registered with WordPress to fire when the handler runs.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     array   $filters
 	 */
-	private array $filters = array();
+	protected array $filters = array();
+
+	// endregion
+
+	// region INHERITED FUNCTIONS
+
+	/**
+	 * Register the filters and actions with WordPress.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function run(): void {
+		foreach ( $this->filters as $hook ) {
+			if ( empty( $hook['component'] ) ) {
+				add_filter( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
+			} else {
+				add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+			}
+		}
+		foreach ( $this->actions as $hook ) {
+			if ( empty( $hook['component'] ) ) {
+				add_action( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
+			} else {
+				add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+			}
+		}
+
+		$this->reset();
+	}
+
+	/**
+	 * Resets the filters and actions buffers.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function reset(): void {
+		$this->filters = array();
+		$this->actions = array();
+	}
 
 	// endregion
 
@@ -115,30 +152,6 @@ class HooksHandler implements IRunnable {
 		$this->filters = $this->remove( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
 	}
 
-	/**
-	 * Register the filters, actions, and shortcodes with WordPress.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 */
-	public function run(): void {
-		foreach ( $this->filters as $hook ) {
-			if ( empty( $hook['component'] ) ) {
-				add_filter( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
-			} else {
-				add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
-			}
-		}
-
-		foreach ( $this->actions as $hook ) {
-			if ( empty( $hook['component'] ) ) {
-				add_action( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
-			} else {
-				add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
-			}
-		}
-	}
-
 	// endregion
 
 	// region HELPERS
@@ -149,7 +162,7 @@ class HooksHandler implements IRunnable {
 	 * @since    1.0.0
 	 * @version  1.0.0
 	 *
-	 * @access   private
+	 * @access   protected
 	 *
 	 * @param    array          $hooks          The collection of hooks that is being registered (that is, actions or filters).
 	 * @param    string         $hook           The name of the WordPress filter that is being registered.
@@ -178,7 +191,7 @@ class HooksHandler implements IRunnable {
 	 * @since    1.0.0
 	 * @version  1.0.0
 	 *
-	 * @access   private
+	 * @access   protected
 	 *
 	 * @param    array          $hooks          The collection of hooks that is being registered (that is, actions or filters).
 	 * @param    string         $hook           The name of the WordPress filter that is being registered.

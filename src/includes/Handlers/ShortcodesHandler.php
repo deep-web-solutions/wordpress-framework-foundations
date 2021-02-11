@@ -2,8 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Utilities\Traits\Runnable;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable as IRunnable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,21 +19,51 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
-class ShortcodesHandler implements IRunnable {
-	use Runnable;
-
+class ShortcodesHandler implements Runnable {
 	// region FIELDS
 
 	/**
-	 * The shortcodes registered with WordPress that can be used after the plugin loads.
+	 * The shortcodes registered with WordPress that can be used after the handler runs.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @access  private
+	 * @access  protected
 	 * @var     array   $shortcodes
 	 */
-	private array $shortcodes = array();
+	protected array $shortcodes = array();
+
+	// endregion
+
+	// region INHERITED FUNCTIONS
+
+	/**
+	 * Register the filters, actions, and shortcodes with WordPress.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function run(): void {
+		foreach ( $this->shortcodes as $hook ) {
+			if ( empty( $hook['component'] ) ) {
+				add_shortcode( $hook['hook'], $hook['callback'] );
+			} else {
+				add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
+			}
+		}
+
+		$this->reset();
+	}
+
+	/**
+	 * Resets the shortcodes buffers.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function reset(): void {
+		$this->shortcodes = array();
+	}
 
 	// endregion
 
@@ -65,22 +94,6 @@ class ShortcodesHandler implements IRunnable {
 		$this->shortcodes = $this->remove( $this->shortcodes, $tag, $component, $callback );
 	}
 
-	/**
-	 * Register the filters, actions, and shortcodes with WordPress.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 */
-	public function run(): void {
-		foreach ( $this->shortcodes as $hook ) {
-			if ( empty( $hook['component'] ) ) {
-				add_shortcode( $hook['hook'], $hook['callback'] );
-			} else {
-				add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
-			}
-		}
-	}
-
 	// endregion
 
 	// region HELPERS
@@ -91,7 +104,7 @@ class ShortcodesHandler implements IRunnable {
 	 * @since    1.0.0
 	 * @version  1.0.0
 	 *
-	 * @access   private
+	 * @access   protected
 	 *
 	 * @param    array          $hooks          The collection of shortcodes that is being registered.
 	 * @param    string         $hook           The name of the WordPress shortcode that is being registered.
@@ -100,7 +113,7 @@ class ShortcodesHandler implements IRunnable {
 	 *
 	 * @return   array      The collection of shortcodes registered with WordPress.
 	 */
-	private function add( array $hooks, string $hook, ?object $component, string $callback ): array {
+	protected function add( array $hooks, string $hook, ?object $component, string $callback ): array {
 		$hooks[] = array(
 			'hook'      => $hook,
 			'component' => $component,
@@ -116,7 +129,7 @@ class ShortcodesHandler implements IRunnable {
 	 * @since    1.0.0
 	 * @version  1.0.0
 	 *
-	 * @access   private
+	 * @access   protected
 	 *
 	 * @param    array          $hooks          The collection of shortcodes that is being unregistered.
 	 * @param    string         $hook           The name of the WordPress shortcode that is being unregistered.
@@ -125,7 +138,7 @@ class ShortcodesHandler implements IRunnable {
 	 *
 	 * @return   array      The collection of shortcodes registered with WordPress.
 	 */
-	private function remove( array $hooks, string $hook, ?object $component, string $callback ): array {
+	protected function remove( array $hooks, string $hook, ?object $component, string $callback ): array {
 		foreach ( $hooks as $index => $hook_info ) {
 			if ( $hook_info['hook'] === $hook && $hook_info['component'] === $component && $hook_info['callback'] === $callback ) {
 				unset( $hooks[ $index ] );

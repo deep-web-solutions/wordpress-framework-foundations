@@ -2,8 +2,9 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Core\Abstracts\PluginBase;
 use DeepWebSolutions\Framework\Helpers\WordPress\Assets;
+use DeepWebSolutions\Framework\Utilities\Handlers\Traits\Hooks;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,6 +19,8 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers
  */
 class AdminNoticesHandler {
+	use Hooks;
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -65,17 +68,6 @@ class AdminNoticesHandler {
 	public const INFO = 'info';
 
 	/**
-	 * Instance of the current plugin.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  protected
-	 * @var     PluginBase|null
-	 */
-	protected ?PluginBase $plugin = null;
-
-	/**
 	 * Collection of dynamically generated admin notices.
 	 *
 	 * @since   1.0.0
@@ -102,6 +94,17 @@ class AdminNoticesHandler {
 	 */
 	protected bool $has_outputted_admin_notices = false;
 
+	/**
+	 * Instance of the current plugin that the framework is bundled with.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     Plugin
+	 */
+	protected Plugin $plugin;
+
 	// endregion
 
 	// region MAGIC METHODS
@@ -109,15 +112,33 @@ class AdminNoticesHandler {
 	/**
 	 * AdminNoticesHandler constructor.
 	 *
-	 * @param   PluginBase      $plugin             Instance of the current plugin.
+	 * @param   Plugin          $plugin             Instance of the current plugin.
 	 * @param   HooksHandler    $hooks_handler      Instance of the hooks handler.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	public function __construct( PluginBase $plugin, HooksHandler $hooks_handler ) {
+	public function __construct( Plugin $plugin, HooksHandler $hooks_handler ) {
 		$this->plugin = $plugin;
+		$this->register_hooks( $hooks_handler );
+	}
 
+	// endregion
+
+	// region INHERITED FUNCTIONS
+
+	/**
+	 * Register hooks with the hooks handler.
+	 *
+	 * @param   HooksHandler    $hooks_handler      Instance of the hooks handler.
+	 *
+	 * @version 1.0.0
+	 *
+	 * @see     Hooks::register_hooks()
+	 *
+	 * @since   1.0.0
+	 */
+	protected function register_hooks( HooksHandler $hooks_handler ): void {
 		// Output the admin notices.
 		$hooks_handler->add_action( 'admin_notices', $this, 'output_user_admin_notices' );
 		$hooks_handler->add_action( 'admin_notices', $this, 'output_dynamic_admin_notices' );

@@ -92,16 +92,6 @@ trait Plugin {
 	 */
 	protected string $plugin_slug;
 
-	/**
-	 * The system path to the main WP plugin file.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @var     string
-	 */
-	protected string $plugin_file_path;
-
 	// endregion
 
 	// region GETTERS
@@ -200,18 +190,6 @@ trait Plugin {
 	 */
 	public function get_plugin_safe_slug(): string {
 		return strtolower( str_replace( '-', '_', $this->get_plugin_slug() ) );
-	}
-
-	/**
-	 * Gets the path to the main WP plugin file.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  string
-	 */
-	public function get_plugin_file_path(): string {
-		return $this->plugin_file_path;
 	}
 
 	// endregion

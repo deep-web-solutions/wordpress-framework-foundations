@@ -98,47 +98,43 @@ class AssetsHandler implements Runnable {
 	 */
 	public function run(): void {
 		$this->styles = Requests::is_request( Requests::FRONTEND_REQUEST ) ? $this->styles['public'] : $this->styles['admin'];
-		foreach ( $this->styles as $styles ) {
-			foreach ( $styles['register'] as $style ) {
-				wp_register_style(
-					$style['handle'],
-					$style['src'],
-					$style['deps'],
-					$style['ver'],
-					$style['media'],
-				);
-			}
-			foreach ( $styles['enqueue'] as $style ) {
-				wp_enqueue_style(
-					$style['handle'],
-					$style['src'],
-					$style['deps'],
-					$style['ver'],
-					$style['media'],
-				);
-			}
+		foreach ( $this->styles['register'] as $style ) {
+			wp_register_style(
+				$style['handle'],
+				$style['src'],
+				$style['deps'],
+				$style['ver'],
+				$style['media'],
+			);
+		}
+		foreach ( $this->styles['enqueue'] as $style ) {
+			wp_enqueue_style(
+				$style['handle'],
+				$style['src'],
+				$style['deps'],
+				$style['ver'],
+				$style['media'],
+			);
 		}
 
 		$this->scripts = Requests::is_request( Requests::FRONTEND_REQUEST ) ? $this->scripts['public'] : $this->scripts['admin'];
-		foreach ( $this->scripts as $scripts ) {
-			foreach ( $scripts['register'] as $script ) {
-				wp_register_script(
-					$script['handle'],
-					$script['src'],
-					$script['deps'],
-					$script['ver'],
-					$script['in_footer'],
-				);
-			}
-			foreach ( $scripts['enqueue'] as $script ) {
-				wp_enqueue_script(
-					$script['handle'],
-					$script['src'],
-					$script['deps'],
-					$script['ver'],
-					$script['in_footer'],
-				);
-			}
+		foreach ( $this->scripts['register'] as $script ) {
+			wp_register_script(
+				$script['handle'],
+				$script['src'],
+				$script['deps'],
+				$script['ver'],
+				$script['in_footer'],
+			);
+		}
+		foreach ( $this->scripts['enqueue'] as $script ) {
+			wp_enqueue_script(
+				$script['handle'],
+				$script['src'],
+				$script['deps'],
+				$script['ver'],
+				$script['in_footer'],
+			);
 		}
 	}
 

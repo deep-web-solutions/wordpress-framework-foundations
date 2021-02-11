@@ -497,7 +497,7 @@ class DependenciesService {
 					__( 'You\'re running version %s', 'dws-wp-framework-utilities' ),
 					$missing_plugin['version']
 				);
-				$formatted_plugin_name .= '<em>(' . esc_html( $formatted_version ) . ')</em>';
+				$formatted_plugin_name .= ' <em>(' . esc_html( $formatted_version ) . ')</em>';
 			}
 
 			$formatted_plugin_names[] = $formatted_plugin_name;

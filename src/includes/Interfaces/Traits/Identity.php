@@ -91,38 +91,4 @@ trait Identity {
 	}
 
 	// endregion
-
-	// region SETTERS
-
-	/**
-	 * Using classes should use this to set the plugin instance of the framework.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   Pluginable  $plugin     The value to be set.
-	 */
-	abstract public function set_plugin( Pluginable $plugin ): void;
-
-	/**
-	 * Using classes should use this to set a unique persistent ID of the using class instance.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string  $instance_id    The value to be set.
-	 */
-	abstract public function set_instance_id( string $instance_id ): void;
-
-	/**
-	 * Using classes should use this to set the public name of the using class instance.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string  $instance_public_name   The value to be set.
-	 */
-	abstract public function set_instance_public_name( string $instance_public_name ): void;
-
-	// endregion
 }

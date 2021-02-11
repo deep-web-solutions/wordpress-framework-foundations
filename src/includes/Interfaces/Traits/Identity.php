@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Interfaces\Traits;
 
+use DeepWebSolutions\Framework\Utilities\Interfaces\Pluginable;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -14,6 +16,17 @@ defined( 'ABSPATH' ) || exit;
  */
 trait Identity {
 	// region FIELDS AND CONSTANTS
+
+	/**
+	 * The instance of the plugin to which this object "belongs".
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     Pluginable
+	 */
+	protected Pluginable $plugin;
 
 	/**
 	 * The unique persistent ID of the using class instance.
@@ -42,6 +55,18 @@ trait Identity {
 	// region GETTERS
 
 	/**
+	 * Gets the plugin instance of the framework.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  Pluginable
+	 */
+	public function get_plugin(): Pluginable {
+		return $this->plugin;
+	}
+
+	/**
 	 * Gets the ID of the using class.
 	 *
 	 * @since   1.0.0
@@ -68,6 +93,16 @@ trait Identity {
 	// endregion
 
 	// region SETTERS
+
+	/**
+	 * Using classes should use this to set the plugin instance of the framework.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   Pluginable  $plugin     The value to be set.
+	 */
+	abstract public function set_plugin( Pluginable $plugin ): void;
 
 	/**
 	 * Using classes should use this to set a unique persistent ID of the using class instance.

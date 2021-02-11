@@ -7,7 +7,7 @@ use DeepWebSolutions\Framework\Helpers\WordPress\Traits\Filesystem;
 use DeepWebSolutions\Framework\Utilities\Handlers\AdminNoticesHandler;
 use DeepWebSolutions\Framework\Utilities\Handlers\Traits\AdminNotices;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Identifiable;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Plugin;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Pluginable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -466,7 +466,7 @@ class DependenciesService {
 	protected function get_identifiable_name(): string {
 		$plugin_name = $this->identifiable->get_plugin()->get_plugin_name();
 
-		return ( $this->identifiable instanceof Plugin )
+		return ( $this->identifiable instanceof Pluginable )
 			? $plugin_name
 			: sprintf( '%s: %s', $plugin_name, $this->identifiable->get_instance_public_name() );
 	}

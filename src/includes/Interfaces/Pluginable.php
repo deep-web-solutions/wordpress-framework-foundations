@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.de>
  * @package DeepWebSolutions\WP-Framework\Utilities\Interfaces
  */
-interface Plugin {
+interface Pluginable {
 	/**
 	 * Implementing class should return the plugin version here.
 	 *

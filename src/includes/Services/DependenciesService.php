@@ -390,7 +390,7 @@ class DependenciesService {
 					}
 				}
 
-				if ( version_compare( $dependent_active_plugin_config['min_version'], $version, '<' ) ) {
+				if ( version_compare( $dependent_active_plugin_config['min_version'], $version, '>' ) ) {
 					$missing_plugins[ $dependent_active_plugin ] = $dependent_active_plugin_config + array( 'version' => $version );
 				}
 			}
@@ -494,7 +494,7 @@ class DependenciesService {
 			if ( isset( $missing_plugin['version'] ) ) {
 				$formatted_version = sprintf(
 					/* translators: %s: Installed version of the dependant plugin */
-					__( '(You\'re running version %s)', 'dws-wp-framework-utilities' ),
+					__( 'You\'re running version %s', 'dws-wp-framework-utilities' ),
 					$missing_plugin['version']
 				);
 				$formatted_plugin_name .= '<em>(' . esc_html( $formatted_version ) . ')</em>';

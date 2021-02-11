@@ -16,10 +16,10 @@ interface Identifiable {
 	/**
 	 * Returns the plugin instance that the implementing class instance belongs to.
 	 *
-	 * @return  Pluginable
-	 *@version 1.0.0
-	 *
 	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  Pluginable
 	 */
 	public function get_plugin(): Pluginable;
 

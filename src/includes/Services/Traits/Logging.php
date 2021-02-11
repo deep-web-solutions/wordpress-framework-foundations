@@ -40,7 +40,7 @@ trait Logging {
 	 *
 	 * @return  LoggingService
 	 */
-	public function get_logging_service(): LoggingService {
+	protected function get_logging_service(): LoggingService {
 		return $this->logging_service ?? new LoggingService();
 	}
 
@@ -56,7 +56,7 @@ trait Logging {
 	 *
 	 * @param   LoggingService      $logging_service     The logging service instance to use from now on.
 	 */
-	public function set_logger_factory( LoggingService $logging_service ): void {
+	public function set_logging_service( LoggingService $logging_service ): void {
 		$this->logging_service = $logging_service;
 	}
 

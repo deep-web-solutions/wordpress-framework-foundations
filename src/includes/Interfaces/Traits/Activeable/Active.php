@@ -62,7 +62,7 @@ trait Active {
 	 * @return  bool
 	 */
 	protected function maybe_check_is_active_local(): bool {
-		if ( in_array( ActiveLocal::class, Misc::class_uses_deep( $this ), true ) && method_exists( $this, 'is_active_local' ) ) {
+		if ( in_array( ActiveLocal::class, Misc::class_uses_deep_list( $this ), true ) && method_exists( $this, 'is_active_local' ) ) {
 			return $this->is_active_local();
 		}
 
@@ -79,14 +79,20 @@ trait Active {
 	 */
 	protected function maybe_check_is_active_traits(): bool {
 		foreach ( class_uses( $this ) as $used_trait ) {
-			if ( array_search( Activeable::class, Misc::class_uses_deep( $used_trait ), true ) !== false ) {
-				$trait_boom  = explode( '\\', $used_trait );
-				$method_name = 'is_active' . strtolower( preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) );
+			if ( array_search( Activeable::class, Misc::class_uses_deep_list( $used_trait ), true ) !== false ) {
+				foreach ( Misc::class_uses_deep( $used_trait ) as $trait_name => $used_traits ) {
+					if ( array_search( Activeable::class, $used_traits, true ) !== false ) {
+						$trait_boom  = explode( '\\', $trait_name );
+						$method_name = 'is_active' . strtolower( preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) );
 
-				if ( method_exists( $this, $method_name ) ) {
-					$result = $this->{$method_name}();
-					if ( false === $result ) {
-						return false;
+						if ( method_exists( $this, $method_name ) ) {
+							$result = $this->{$method_name}();
+							if ( false === $result ) {
+								return false;
+							}
+						}
+
+						break;
 					}
 				}
 			}

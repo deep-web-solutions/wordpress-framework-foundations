@@ -256,6 +256,22 @@ class AdminNoticesHandler {
 
 	// endregion
 
+	// region GETTERS
+
+	/**
+	 * Returns the plugin instance that the handler is tied to.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  Pluginable
+	 */
+	public function get_plugin(): Pluginable {
+		return $this->plugin;
+	}
+
+	// endregion
+
 	// region METHODS
 
 	/**

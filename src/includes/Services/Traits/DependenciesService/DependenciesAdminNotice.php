@@ -4,6 +4,7 @@ namespace DeepWebSolutions\Framework\Utilities\Services\Traits\DependenciesServi
 
 use DeepWebSolutions\Framework\Utilities\Handlers\AdminNoticesHandler;
 use DeepWebSolutions\Framework\Utilities\Handlers\Traits\AdminNotices;
+use DeepWebSolutions\Framework\Utilities\Traits\IsActive\Dependencies\DependenciesRequired;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,6 +19,7 @@ defined( 'ABSPATH' ) || exit;
 trait DependenciesAdminNotice {
 	use Dependencies;
 	use AdminNotices;
+	use DependenciesRequired;
 
 	// region METHODS
 

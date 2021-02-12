@@ -146,7 +146,7 @@ class DependenciesService {
 	public function get_missing_php_extensions( string $type ): array {
 		static $missing_php_extensions = array();
 
-		if ( isset( $missing_php_extensions[ $type ] ) ) {
+		if ( ! isset( $missing_php_extensions[ $type ] ) ) {
 			$missing_php_extensions[ $type ] = array_filter(
 				array_map(
 					function( $php_extension ) {
@@ -173,7 +173,7 @@ class DependenciesService {
 	public function get_missing_php_functions( string $type ): array {
 		static $missing_php_functions = array();
 
-		if ( isset( $missing_php_functions[ $type ] ) ) {
+		if ( ! isset( $missing_php_functions[ $type ] ) ) {
 			$missing_php_functions[ $type ] = array_filter(
 				array_map(
 					function( $php_function ) {
@@ -247,7 +247,7 @@ class DependenciesService {
 	public function get_missing_active_plugins( string $type ): array {
 		static $missing_plugins = array();
 
-		if ( isset( $missing_plugins[ $type ] ) ) {
+		if ( ! isset( $missing_plugins[ $type ] ) ) {
 			$missing_plugins[ $type ] = array();
 
 			foreach ( $this->get_active_plugins( $type ) as $active_plugin => $active_plugin_config ) {

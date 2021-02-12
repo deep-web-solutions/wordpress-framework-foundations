@@ -56,7 +56,7 @@ trait DependenciesAdminNotice {
 		if ( ! empty( $missing_php_extensions ) ) {
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-				/* translators: 1. Plugin or identifiable name, 2. Comma-separated list of missing PHP extensions. */
+					/* translators: 1. Plugin or identifiable name, 2. Comma-separated list of missing PHP extensions. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s PHP extension to function. Contact your host or server administrator to install and configure the missing extension.',
 						'<strong>%1$s</strong> requires the following PHP extensions to function: %2$s. Contact your host or server administrator to install and configure the missing extensions.',
@@ -122,7 +122,7 @@ trait DependenciesAdminNotice {
 		if ( ! empty( $missing_php_functions ) ) {
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-				/* translators: 1. Plugin name or identifiable name, 2. Comma-separated list of missing PHP functions. */
+					/* translators: 1. Plugin name or identifiable name, 2. Comma-separated list of missing PHP functions. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s PHP function to exist. Contact your host or server administrator to install and configure the missing function.',
 						'<strong>%1$s</strong> requires the following PHP functions to exist: %2$s. Contact your host or server administrator to install and configure the missing functions.',
@@ -198,7 +198,7 @@ trait DependenciesAdminNotice {
 					switch ( $values['type'] ) {
 						case 'min':
 							$setting_message = sprintf(
-							/* translators: PHP settings value. */
+								/* translators: PHP settings value. */
 								__( '%s or higher', 'dws-wp-framework-utilities' ),
 								$setting_message
 							);
@@ -248,7 +248,7 @@ trait DependenciesAdminNotice {
 						switch ( $values['type'] ) {
 							case 'min':
 								$setting_message = sprintf(
-								/* translators: PHP settings value. */
+									/* translators: PHP settings value. */
 									__( '%s or higher', 'dws-wp-framework-utilities' ),
 									$setting_message
 								);
@@ -284,7 +284,7 @@ trait DependenciesAdminNotice {
 		if ( ! empty( $missing_active_plugins ) ) {
 			$admin_notices_handler->add_admin_notice(
 				sprintf(
-				/* translators: 1. Plugin name or identifiable name, 2. Comma-separated list of missing active plugins. */
+					/* translators: 1. Plugin name or identifiable name, 2. Comma-separated list of missing active plugins. */
 					_n(
 						'<strong>%1$s</strong> requires the %2$s plugin to be installed and active. Please install and activate the plugin first.',
 						'<strong>%1$s</strong> requires the following plugins to be installed and active: %2$s. Please install and activate these plugins first.',

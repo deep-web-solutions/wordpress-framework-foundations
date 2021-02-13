@@ -7,7 +7,7 @@ use DeepWebSolutions\Framework\Helpers\PHP\Misc;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Trait for working with the Activationable interface.
+ * Trait for working with the Activeable interface.
  *
  * @since   1.0.0
  * @version 1.0.0

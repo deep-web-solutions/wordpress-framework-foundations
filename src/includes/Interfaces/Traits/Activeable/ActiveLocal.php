@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Utilities\Interfaces\Traits\Activeable;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Abstract trait that other traits should use to denote that they want their own is_active logic called.
+ * Abstract trait that classes should use to denote that they want their own is_active logic called.
  *
  * @since   1.0.0
  * @version 1.0.0

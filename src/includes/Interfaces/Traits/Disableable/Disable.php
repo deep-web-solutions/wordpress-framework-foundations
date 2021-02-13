@@ -66,7 +66,7 @@ trait Disable {
 			return $this->is_disabled_local();
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -87,8 +87,8 @@ trait Disable {
 
 						if ( method_exists( $this, $method_name ) ) {
 							$result = $this->{$method_name}();
-							if ( false === $result ) {
-								return false;
+							if ( true === $result ) {
+								return true;
 							}
 						}
 
@@ -98,7 +98,7 @@ trait Disable {
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	// endregion

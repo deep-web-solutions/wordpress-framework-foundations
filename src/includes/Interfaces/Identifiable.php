@@ -24,7 +24,7 @@ interface Identifiable {
 	public function get_plugin(): Pluginable;
 
 	/**
-	 * Returns a hopefully unique ID of the implementing class' instance.
+	 * Implementing class should return a hopefully unique ID of the instance.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -34,7 +34,7 @@ interface Identifiable {
 	public function get_instance_id(): string;
 
 	/**
-	 * Returns a public name of the implementing class instance for potential user-friendliness.
+	 * Implementing class should return a public name of the instance for potential user-friendliness.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -42,4 +42,14 @@ interface Identifiable {
 	 * @return  string
 	 */
 	public function get_instance_public_name(): string;
+
+	/**
+	 * Implementing class must ensure this returns a PHP-friendly version of the instance's public name.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string
+	 */
+	public function get_instance_safe_public_name(): string;
 }

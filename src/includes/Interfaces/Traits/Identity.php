@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Interfaces\Traits;
 
+use DeepWebSolutions\Framework\Helpers\PHP\Strings;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Pluginable;
 
 defined( 'ABSPATH' ) || exit;
@@ -88,6 +89,24 @@ trait Identity {
 	 */
 	public function get_instance_public_name(): string {
 		return $this->instance_public_name;
+	}
+
+	/**
+	 * Gets a PHP-friendly version of the public name of the using class.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string
+	 */
+	public function get_instance_safe_public_name(): string {
+		return strtolower(
+			str_replace(
+				array( ' ', '-' ),
+				array( '_', '_' ),
+				Strings::remove_non_alphanumeric_characters( $this->get_instance_public_name() )
+			)
+		);
 	}
 
 	// endregion

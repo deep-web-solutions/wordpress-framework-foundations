@@ -13,8 +13,10 @@
  * Plugin Name:         DWS WordPress Framework Utilities
  * Description:         A set of related utility classes to kick start WordPress development.
  * Version:             1.0.0
+ * Requires at least:   5.5
+ * Requires PHP:        7.4
  * Author:              Deep Web Solutions GmbH
- * Author URI:          https://www.deep-web-solutions.de
+ * Author URI:          https://www.deep-web-solutions.com
  * License:             GPL-3.0+
  * License URI:         http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:         dws-wp-framework-utilities
@@ -32,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 file_exists( __DIR__ . '/vendor/autoload.php' ) && require_once __DIR__ . '/vendor/autoload.php';
 
 // Define utilities constants.
-define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_NAME', dws_wp_framework_get_whitelabel_name() . ': Framework Helpers' );
+define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_NAME', dws_wp_framework_get_whitelabel_name() . ': Framework Utilities' );
 define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_VERSION', '1.0.0' );
 
 /**
@@ -61,7 +63,7 @@ function dws_wp_framework_get_utilities_version(): string {
 
 // Define minimum environment requirements.
 define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_MIN_PHP', '7.4' );
-define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_MIN_WP', '5.2' );
+define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_MIN_WP', '5.5' );
 
 /**
  * Returns the minimum PHP version required to run the Bootstrapper of the framework's utilities within the context of the current plugin.

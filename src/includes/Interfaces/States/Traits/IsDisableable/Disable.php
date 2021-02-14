@@ -60,12 +60,8 @@ trait Disable {
 	 * @return  bool
 	 */
 	protected function maybe_check_is_disabled_traits(): bool {
-		foreach ( class_uses( $this ) as $used_trait ) {
-			if ( false === array_search( Disableable::class, Misc::class_uses_deep_list( $used_trait ), true ) ) {
-				continue;
-			}
-
-			foreach ( Misc::class_uses_deep( $used_trait ) as $trait_name => $recursive_used_traits ) {
+		if ( false !== array_search( Disableable::class, Misc::class_uses_deep_list( $this ), true ) ) {
+			foreach ( Misc::class_uses_deep( $this ) as $trait_name => $recursive_used_traits ) {
 				if ( false === array_search( Disableable::class, $recursive_used_traits, true ) ) {
 					continue;
 				}
@@ -79,8 +75,6 @@ trait Disable {
 						return true;
 					}
 				}
-
-				break;
 			}
 		}
 

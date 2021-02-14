@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Runnable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -46,9 +46,9 @@ class ShortcodesHandler implements Runnable {
 	public function run(): void {
 		foreach ( $this->shortcodes as $hook ) {
 			if ( empty( $hook['component'] ) ) {
-				add_shortcode( $hook['hook'], $hook['callback'] );
+				add_shortcode( $hook['tag'], $hook['callback'] );
 			} else {
-				add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
+				add_shortcode( $hook['tag'], array( $hook['component'], $hook['callback'] ) );
 			}
 		}
 
@@ -101,52 +101,50 @@ class ShortcodesHandler implements Runnable {
 	/**
 	 * A utility function that is used to register the shortcodes into a single collection.
 	 *
-	 * @since    1.0.0
-	 * @version  1.0.0
+	 * @since   1.0.0
+	 * @version 1.0.0
 	 *
-	 * @access   protected
+	 * @param   array           $shortcodes     The collection of shortcodes that is being registered.
+	 * @param   string          $tag            The name of the WordPress shortcode that is being registered.
+	 * @param   object|null     $component      A reference to the instance of the object on which the shortcode is defined.
+	 * @param   string          $callback       The name of the function definition on the $component.
 	 *
-	 * @param    array          $hooks          The collection of shortcodes that is being registered.
-	 * @param    string         $hook           The name of the WordPress shortcode that is being registered.
-	 * @param    object|null    $component      A reference to the instance of the object on which the shortcode is defined.
-	 * @param    string         $callback       The name of the function definition on the $component.
-	 *
-	 * @return   array      The collection of shortcodes registered with WordPress.
+	 * @access  protected
+	 * @return  array      The collection of shortcodes registered with WordPress.
 	 */
-	protected function add( array $hooks, string $hook, ?object $component, string $callback ): array {
-		$hooks[] = array(
-			'hook'      => $hook,
+	protected function add( array $shortcodes, string $tag, ?object $component, string $callback ): array {
+		$shortcodes[] = array(
+			'tag'       => $tag,
 			'component' => $component,
 			'callback'  => $callback,
 		);
 
-		return $hooks;
+		return $shortcodes;
 	}
 
 	/**
 	 * A utility function that is used to remove the shortcodes from the single collection.
 	 *
-	 * @since    1.0.0
-	 * @version  1.0.0
+	 * @since   1.0.0
+	 * @version 1.0.0
 	 *
-	 * @access   protected
+	 * @param   array           $shortcodes     The collection of shortcodes that is being unregistered.
+	 * @param   string          $tag            The name of the WordPress shortcode that is being unregistered.
+	 * @param   object|null     $component      A reference to the instance of the object on which the shortcode is defined.
+	 * @param   string          $callback       The name of the function definition on the $component.
 	 *
-	 * @param    array          $hooks          The collection of shortcodes that is being unregistered.
-	 * @param    string         $hook           The name of the WordPress shortcode that is being unregistered.
-	 * @param    object|null    $component      A reference to the instance of the object on which the shortcode is defined.
-	 * @param    string         $callback       The name of the function definition on the $component.
-	 *
-	 * @return   array      The collection of shortcodes registered with WordPress.
+	 * @access  protected
+	 * @return  array      The collection of shortcodes registered with WordPress.
 	 */
-	protected function remove( array $hooks, string $hook, ?object $component, string $callback ): array {
-		foreach ( $hooks as $index => $hook_info ) {
-			if ( $hook_info['hook'] === $hook && $hook_info['component'] === $component && $hook_info['callback'] === $callback ) {
-				unset( $hooks[ $index ] );
+	protected function remove( array $shortcodes, string $tag, ?object $component, string $callback ): array {
+		foreach ( $shortcodes as $index => $hook_info ) {
+			if ( $hook_info['tag'] === $tag && $hook_info['component'] === $component && $hook_info['callback'] === $callback ) {
+				unset( $shortcodes[ $index ] );
 				break;
 			}
 		}
 
-		return $hooks;
+		return $shortcodes;
 	}
 
 	// endregion

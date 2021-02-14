@@ -1,9 +1,9 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities\Interfaces\Traits;
+namespace DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Traits;
 
 use DeepWebSolutions\Framework\Helpers\PHP\Strings;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Pluginable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Pluginable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Utilities\Handlers\Traits
+ * @package DeepWebSolutions\WP-Framework\Utilities\Interfaces\Resources\Traits
  */
 trait Identity {
 	// region FIELDS AND CONSTANTS

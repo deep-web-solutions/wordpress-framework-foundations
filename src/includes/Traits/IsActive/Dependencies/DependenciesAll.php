@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Traits\IsActive\Dependencies;
 
+use DeepWebSolutions\Framework\Utilities\Interfaces\States\Traits\IsActiveable\Activeable;
 use DeepWebSolutions\Framework\Utilities\Services\Traits\DependenciesService\Dependencies as UtilitiesDependencies;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Traits\Activeable\Activeable;
 
 defined( 'ABSPATH' ) || exit;
 

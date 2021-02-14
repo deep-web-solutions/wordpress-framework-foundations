@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Runnable;
 
 defined( 'ABSPATH' ) || exit;
 

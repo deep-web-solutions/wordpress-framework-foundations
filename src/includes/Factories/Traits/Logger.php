@@ -24,7 +24,7 @@ trait Logger {
 	 * @version 1.0.0
 	 *
 	 * @access  protected
-	 * @var     LoggerFactory
+	 * @var     LoggerFactory|null
 	 */
 	protected ?LoggerFactory $logger_factory = null;
 

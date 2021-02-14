@@ -28,7 +28,7 @@ class LoggerFactory {
 	 * @access  protected
 	 * @var     LoggerInterface[]
 	 */
-	protected array $loggers;
+	protected array $loggers = array();
 
 	/**
 	 * Collection of logger-instantiating callables.
@@ -39,7 +39,7 @@ class LoggerFactory {
 	 * @access  protected
 	 * @var     callable[]
 	 */
-	protected array $callables;
+	protected array $callables = array();
 
 	// endregion
 

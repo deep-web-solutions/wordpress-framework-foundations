@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
 use DeepWebSolutions\Framework\Helpers\WordPress\Assets;
 use DeepWebSolutions\Framework\Utilities\Handlers\Traits\Hooks;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Pluginable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Pluginable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -112,7 +112,7 @@ class AdminNoticesHandler {
 	/**
 	 * AdminNoticesHandler constructor.
 	 *
-	 * @param   Pluginable          $plugin             Instance of the current plugin.
+	 * @param   Pluginable      $plugin             Instance of the current plugin.
 	 * @param   HooksHandler    $hooks_handler      Instance of the hooks handler.
 	 *
 	 * @since   1.0.0

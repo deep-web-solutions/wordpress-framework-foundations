@@ -7,7 +7,7 @@ use DeepWebSolutions\Framework\Helpers\WordPress\Assets as AssetsHelpers;
 use DeepWebSolutions\Framework\Helpers\WordPress\Requests;
 use DeepWebSolutions\Framework\Helpers\WordPress\Traits\Filesystem;
 use DeepWebSolutions\Framework\Utilities\Handlers\Traits\Hooks;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Runnable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Runnable;
 
 defined( 'ABSPATH' ) || exit;
 

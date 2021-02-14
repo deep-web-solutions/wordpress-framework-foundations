@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Utilities\Handlers\Traits;
 
 use DeepWebSolutions\Framework\Helpers\WordPress\Traits\Assets as AssetsHelpers;
 use DeepWebSolutions\Framework\Utilities\Handlers\AssetsHandler;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Identifiable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Identifiable;
 
 defined( 'ABSPATH' ) || exit;
 

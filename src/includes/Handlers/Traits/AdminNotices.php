@@ -3,8 +3,8 @@
 namespace DeepWebSolutions\Framework\Utilities\Handlers\Traits;
 
 use DeepWebSolutions\Framework\Utilities\Handlers\AdminNoticesHandler;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Identifiable;
-use DeepWebSolutions\Framework\Utilities\Interfaces\Pluginable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Identifiable;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Pluginable;
 
 defined( 'ABSPATH' ) || exit;
 

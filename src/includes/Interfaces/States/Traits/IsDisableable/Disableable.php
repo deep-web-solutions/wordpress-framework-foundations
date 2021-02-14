@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities\Interfaces\Traits\Disableable;
+namespace DeepWebSolutions\Framework\Utilities\Interfaces\States\Traits\IsDisableable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Utilities\Handlers\Traits\Disableable
+ * @package DeepWebSolutions\WP-Framework\Utilities\Interfaces\States\Traits\IsDisableable
  */
 trait Disableable {
 	/**

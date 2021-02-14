@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities\Interfaces;
+namespace DeepWebSolutions\Framework\Utilities\Interfaces\States;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,9 +10,9 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Utilities\Interfaces
+ * @package DeepWebSolutions\WP-Framework\Utilities\Interfaces\States
  */
-interface Activeable {
+interface IsActiveable {
 	/**
 	 * Should define logic for determining whether the implementing class is active or not.
 	 *

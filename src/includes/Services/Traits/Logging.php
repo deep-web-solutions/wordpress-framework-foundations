@@ -24,9 +24,9 @@ trait Logging {
 	 * @version 1.0.0
 	 *
 	 * @access  protected
-	 * @var     LoggingService
+	 * @var     LoggingService|null
 	 */
-	protected LoggingService $logging_service;
+	protected ?LoggingService $logging_service = null;
 
 	// endregion
 

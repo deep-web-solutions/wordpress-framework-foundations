@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\ResetFailure;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\RunFailure;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Runnable;
 
 defined( 'ABSPATH' ) || exit;
@@ -53,8 +55,10 @@ class HooksHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  RunFailure|null
 	 */
-	public function run(): void {
+	public function run(): ?RunFailure {
 		foreach ( $this->filters as $hook ) {
 			if ( empty( $hook['component'] ) ) {
 				add_filter( $hook['hook'], $hook['callback'], $hook['priority'], $hook['accepted_args'] );
@@ -71,6 +75,7 @@ class HooksHandler implements Runnable {
 		}
 
 		$this->reset();
+		return null;
 	}
 
 	/**
@@ -78,10 +83,13 @@ class HooksHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  ResetFailure|null
 	 */
-	public function reset(): void {
+	public function reset(): ?ResetFailure {
 		$this->filters = array();
 		$this->actions = array();
+		return null;
 	}
 
 	// endregion

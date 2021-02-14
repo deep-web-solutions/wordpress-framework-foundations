@@ -7,6 +7,8 @@ use DeepWebSolutions\Framework\Helpers\WordPress\Assets as AssetsHelpers;
 use DeepWebSolutions\Framework\Helpers\WordPress\Requests;
 use DeepWebSolutions\Framework\Helpers\WordPress\Traits\Filesystem;
 use DeepWebSolutions\Framework\Utilities\Handlers\Traits\Hooks;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\ResetFailure;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\RunFailure;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Runnable;
 
 defined( 'ABSPATH' ) || exit;
@@ -95,8 +97,10 @@ class AssetsHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  RunFailure|null
 	 */
-	public function run(): void {
+	public function run(): ?RunFailure {
 		$this->styles = Requests::is_request( Requests::FRONTEND_REQUEST ) ? $this->styles['public'] : $this->styles['admin'];
 		foreach ( $this->styles['register'] as $style ) {
 			wp_register_style(
@@ -136,6 +140,9 @@ class AssetsHandler implements Runnable {
 				$script['in_footer'],
 			);
 		}
+
+		$this->reset();
+		return null;
 	}
 
 	/**
@@ -143,8 +150,10 @@ class AssetsHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  ResetFailure|null
 	 */
-	public function reset(): void {
+	public function reset(): ?ResetFailure {
 		$this->styles  = array(
 			'public' => array(
 				'register' => array(),
@@ -165,6 +174,8 @@ class AssetsHandler implements Runnable {
 				'enqueue'  => array(),
 			),
 		);
+
+		return null;
 	}
 
 	// endregion

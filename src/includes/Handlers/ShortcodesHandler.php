@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\ResetFailure;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\RunFailure;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Runnable;
 
 defined( 'ABSPATH' ) || exit;
@@ -42,8 +44,10 @@ class ShortcodesHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  RunFailure|null
 	 */
-	public function run(): void {
+	public function run(): ?RunFailure {
 		foreach ( $this->shortcodes as $hook ) {
 			if ( empty( $hook['component'] ) ) {
 				add_shortcode( $hook['tag'], $hook['callback'] );
@@ -53,6 +57,7 @@ class ShortcodesHandler implements Runnable {
 		}
 
 		$this->reset();
+		return null;
 	}
 
 	/**
@@ -60,9 +65,12 @@ class ShortcodesHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  ResetFailure|null
 	 */
-	public function reset(): void {
+	public function reset(): ?ResetFailure {
 		$this->shortcodes = array();
+		return null;
 	}
 
 	// endregion

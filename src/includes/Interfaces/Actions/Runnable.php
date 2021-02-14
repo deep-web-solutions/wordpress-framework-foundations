@@ -2,6 +2,9 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Interfaces\Actions;
 
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\ResetFailure;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\RunFailure;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -20,7 +23,7 @@ interface Runnable {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	public function run(): void;
+	public function run(): ?RunFailure;
 
 	/**
 	 * Should be called when the implementing class should be set in a "clean-slate" state. After calling this function,
@@ -29,5 +32,5 @@ interface Runnable {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	public function reset(): void;
+	public function reset(): ?ResetFailure;
 }

@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Handlers;
 
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\ResetFailure;
+use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Exceptions\RunFailure;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Actions\Runnable;
 
 defined( 'ABSPATH' ) || exit;
@@ -77,8 +79,10 @@ class HooksHandlerScoped extends HooksHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  RunFailure|null
 	 */
-	public function run(): void {
+	public function run(): ?RunFailure {
 		if ( false === $this->is_run ) {
 			if ( is_string( $this->start['hook'] ) && ! empty( $this->start['hook'] ) ) {
 				if ( 'action' === $this->start['type'] ) {
@@ -103,6 +107,8 @@ class HooksHandlerScoped extends HooksHandler implements Runnable {
 			array_walk( $this->actions['added'], array( $this, 'array_walk_add_action' ) );
 			$this->actions['removed'] = array_filter( $this->actions['removed'], array( $this, 'array_walk_remove_action' ) );
 		}
+
+		return null;
 	}
 
 	/**
@@ -110,8 +116,10 @@ class HooksHandlerScoped extends HooksHandler implements Runnable {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  ResetFailure|null
 	 */
-	public function reset(): void {
+	public function reset(): ?ResetFailure {
 		array_walk( $this->filters['added'], array( $this, 'array_walk_remove_filter' ) );
 		array_walk( $this->filters['removed'], array( $this, 'array_walk_add_filter' ) );
 
@@ -119,6 +127,7 @@ class HooksHandlerScoped extends HooksHandler implements Runnable {
 		array_walk( $this->actions['removed'], array( $this, 'array_walk_add_action' ) );
 
 		$this->initialize();
+		return null;
 	}
 
 	// endregion

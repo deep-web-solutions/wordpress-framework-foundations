@@ -110,4 +110,44 @@ trait Identity {
 	}
 
 	// endregion
+
+	// region SETTERS
+
+	/**
+	 * Set the plugin of the current class instance.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   Pluginable  $plugin The value to be set.
+	 */
+	public function set_plugin( Pluginable $plugin ): void {
+		$this->plugin = $plugin;
+	}
+
+	/**
+	 * Set the ID of the current class instance.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $instance_id    The value to be set.
+	 */
+	public function set_instance_id( string $instance_id ): void {
+		$this->instance_id = $instance_id;
+	}
+
+	/**
+	 * Set the public name of the current class instance.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $instance_public_name   The value to be set.
+	 */
+	public function set_instance_public_name( string $instance_public_name ): void {
+		$this->instance_public_name = $instance_public_name;
+	}
+
+	// endregion
 }

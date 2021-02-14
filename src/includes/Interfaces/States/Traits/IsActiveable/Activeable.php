@@ -13,11 +13,5 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Utilities\Interfaces\States\Traits\IsActiveable
  */
 trait Activeable {
-	/**
-	 * Executed in the 'is_active' function of classes that use an inheriting trait.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 */
-	abstract public function is_active(): bool;
+	/* empty on purpose */
 }

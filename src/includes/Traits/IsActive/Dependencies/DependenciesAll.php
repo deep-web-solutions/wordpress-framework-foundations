@@ -17,9 +17,7 @@ defined( 'ABSPATH' ) || exit;
  */
 trait DependenciesAll {
 	use UtilitiesDependencies;
-	use Activeable {
-		is_active as is_active_dependencies_all;
-	}
+	use Activeable;
 
 	/**
 	 * If the using class is Activeable, prevent its activation if both optional and required dependencies are not fulfilled.

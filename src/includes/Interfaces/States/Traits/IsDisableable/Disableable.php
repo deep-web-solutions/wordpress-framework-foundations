@@ -13,11 +13,5 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Utilities\Interfaces\States\Traits\IsDisableable
  */
 trait Disableable {
-	/**
-	 * Executed in the 'is_disabled' function of classes that use an inheriting trait.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 */
-	abstract public function is_disabled(): bool;
+	/* empty on purpose */
 }

@@ -287,6 +287,7 @@ class AdminNoticesHandler {
 	 *      @type bool        dismissible    Whether the notice is dismissible or not.
 	 *      @type bool        global         Whether the notice's dismissed status is handled globally or per-eligible-user.
 	 *      @type string|null capability     The capability that a user must possess to be displayed the notice. Null if it doesn't apply.
+	 *      @type bool        html           Whether the notice message contains HTML or just plain text.
 	 * }
 	 */
 	public function add_admin_notice( string $message, string $notice_id, array $params = array() ) {
@@ -297,6 +298,7 @@ class AdminNoticesHandler {
 				'dismissible' => true,
 				'global'      => false,
 				'capability'  => null,
+				'html'        => false,
 			)
 		);
 
@@ -319,6 +321,7 @@ class AdminNoticesHandler {
 	 *
 	 *      @type string      type           The type of notice to display.
 	 *      @type string|null capability     The capability that a user must possess to be displayed the notice. Null if it doesn't apply.
+	 *      @type bool        html           Whether the notice message contains HTML or just plain text.
 	 * }
 	 */
 	public function add_global_admin_notice( string $message, string $notice_id, array $params = array() ) {
@@ -349,6 +352,7 @@ class AdminNoticesHandler {
 	 *
 	 *      @type string type           The type of notice to display.
 	 *      @type bool   dismissible    Whether the notice is dismissible or not.
+	 *      @type bool   html           Whether the notice message contains HTML or just plain text.
 	 * }
 	 */
 	public function add_admin_notice_to_user( string $message, string $notice_id, array $params = array() ): void {
@@ -357,6 +361,7 @@ class AdminNoticesHandler {
 			array(
 				'type'        => self::ERROR,
 				'dismissible' => true,
+				'html'        => false,
 			)
 		);
 
@@ -446,6 +451,7 @@ class AdminNoticesHandler {
 	 *      @type string      type           The type of notice to display.
 	 *      @type bool        dismissible    Whether the notice is dismissible or not.
 	 *      @type bool        global         Whether the notice's dismissed status is handled globally or per-eligible-user.
+	 *      @type bool        html           Whether the notice message contains HTML or just plain text.
 	 * }
 	 */
 	protected function output_admin_notice( string $message, string $notice_id, array $params = array() ): void {
@@ -455,6 +461,7 @@ class AdminNoticesHandler {
 				'type'        => self::ERROR,
 				'dismissible' => true,
 				'global'      => false,
+				'html'        => false,
 			)
 		);
 
@@ -468,8 +475,11 @@ class AdminNoticesHandler {
 			$classes[] = 'is-dismissible';
 		}
 
+		$template = '<div class="%1$s" data-plugin-slug="%2$s" data-plugin-safe-slug="%3$s" data-notice-id="%4$s" data-notice-global="%5$s">%6$s</div>';
+		$template = $params['html'] ? str_replace( '%6$s', '<p>%6$s</p>', $template ) : $template;
+
 		echo sprintf(
-			'<div class="%1$s" data-plugin-slug="%2$s" data-plugin-safe-slug="%3$s" data-notice-id="%4$s" data-notice-global="%5$s"><p>%6$s</p></div>',
+			$template,
 			esc_attr( implode( ' ', $classes ) ),
 			esc_attr( $this->plugin->get_plugin_slug() ),
 			esc_attr( $this->plugin->get_plugin_safe_slug() ),

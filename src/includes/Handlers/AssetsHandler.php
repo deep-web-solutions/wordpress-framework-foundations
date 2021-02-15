@@ -40,6 +40,17 @@ class AssetsHandler implements Runnable {
 	protected array $styles = array();
 
 	/**
+	 * The CSS content to be added inline to enqueued styles.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     array
+	 */
+	protected array $styles_inline = array();
+
+	/**
 	 * The scripts to be registered with WordPress when the handler runs.
 	 *
 	 * @since   1.0.0
@@ -49,6 +60,28 @@ class AssetsHandler implements Runnable {
 	 * @var     array       $scripts
 	 */
 	protected array $scripts = array();
+
+	/**
+	 * The JS content to be added inline to enqueued scripts.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     array
+	 */
+	protected array $scripts_inline = array();
+
+	/**
+	 * The localization objects for scripts to be registered with WordPress when the handler runs.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     array       $scripts
+	 */
+	protected array $scripts_localization = array();
 
 	// endregion
 
@@ -120,6 +153,12 @@ class AssetsHandler implements Runnable {
 				$style['media'],
 			);
 		}
+		foreach ( $this->styles_inline as $style ) {
+			wp_add_inline_style(
+				$style['handle'],
+				$style['data']
+			);
+		}
 
 		$this->scripts = Requests::is_request( Requests::FRONTEND_REQUEST ) ? $this->scripts['public'] : $this->scripts['admin'];
 		foreach ( $this->scripts['register'] as $script ) {
@@ -138,6 +177,20 @@ class AssetsHandler implements Runnable {
 				$script['deps'],
 				$script['ver'],
 				$script['in_footer'],
+			);
+		}
+		foreach ( $this->scripts_inline as $script ) {
+			wp_add_inline_script(
+				$script['handle'],
+				$script['data'],
+				$script['position']
+			);
+		}
+		foreach ( $this->scripts_localization as $localization ) {
+			wp_localize_script(
+				$localization['handle'],
+				$localization['object_name'],
+				$localization['object']
 			);
 		}
 
@@ -175,6 +228,11 @@ class AssetsHandler implements Runnable {
 			),
 		);
 
+		$this->scripts_inline = array();
+		$this->styles_inline  = array();
+
+		$this->scripts_localization = array();
+
 		return null;
 	}
 
@@ -195,7 +253,7 @@ class AssetsHandler implements Runnable {
 	 * @param   string  $media                  The media query that the CSS asset should be active at.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function register_public_style( string $handle, string $relative_path, string $fallback_version, array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function register_public_style( string $handle, string $relative_path, string $fallback_version, array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->styles['public']['register'] = $this->add_style( $this->styles['public']['register'], $handle, $relative_path, $fallback_version, $deps, $media, $constant_name );
 	}
 
@@ -224,7 +282,7 @@ class AssetsHandler implements Runnable {
 	 * @param   string  $media                  The media query that the CSS asset should be active at.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function enqueue_public_style( string $handle, string $relative_path = '', string $fallback_version = '', array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function enqueue_public_style( string $handle, string $relative_path = '', string $fallback_version = '', array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->styles['public']['enqueue'] = $this->add_style( $this->styles['public']['enqueue'], $handle, $relative_path, $fallback_version, $deps, $media, $constant_name );
 	}
 
@@ -253,7 +311,7 @@ class AssetsHandler implements Runnable {
 	 * @param   string  $media                  The media query that the CSS asset should be active at.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function register_admin_style( string $handle, string $relative_path, string $fallback_version, array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function register_admin_style( string $handle, string $relative_path, string $fallback_version, array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->styles['admin']['register'] = $this->add_style( $this->styles['admin']['register'], $handle, $relative_path, $fallback_version, $deps, $media, $constant_name );
 	}
 
@@ -282,7 +340,7 @@ class AssetsHandler implements Runnable {
 	 * @param   string  $media                  The media query that the CSS asset should be active at.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function enqueue_admin_style( string $handle, string $relative_path, string $fallback_version, array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function enqueue_admin_style( string $handle, string $relative_path, string $fallback_version, array $deps = array(), string $media = 'all', string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->styles['admin']['enqueue'] = $this->add_style( $this->styles['admin']['enqueue'], $handle, $relative_path, $fallback_version, $deps, $media, $constant_name );
 	}
 
@@ -299,6 +357,22 @@ class AssetsHandler implements Runnable {
 	}
 
 	/**
+	 * Registers CSS code that should be outputted after a specific handle whenever that style is enqueued.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $handle     The handle of the asset that the inline data should be outputted after.
+	 * @param   string  $data       The data to output inline.
+	 */
+	public function add_inline_style( string $handle, string $data ) {
+		$this->styles_inline[] = array(
+			'handle' => $handle,
+			'data'   => $data,
+		);
+	}
+
+	/**
 	 * Registers a public-facing script.
 	 *
 	 * @since   1.0.0
@@ -311,7 +385,7 @@ class AssetsHandler implements Runnable {
 	 * @param   bool    $in_footer              Whether the script asset should be loaded in the footer or the header of the page.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function register_public_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function register_public_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->scripts['public']['register'] = $this->add_script( $this->scripts['public']['register'], $handle, $relative_path, $fallback_version, $deps, $in_footer, $constant_name );
 	}
 
@@ -323,7 +397,7 @@ class AssetsHandler implements Runnable {
 	 *
 	 * @param   string  $handle     The handle of the asset that should be removed.
 	 */
-	public function deregister_public_script( string $handle ) {
+	public function deregister_public_script( string $handle ): void {
 		$this->scripts['public']['register'] = $this->remove( $this->scripts['public']['register'], $handle );
 	}
 
@@ -340,7 +414,7 @@ class AssetsHandler implements Runnable {
 	 * @param   bool    $in_footer              Whether the script asset should be loaded in the footer or the header of the page.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function enqueue_public_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function enqueue_public_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->scripts['public']['enqueue'] = $this->add_script( $this->scripts['public']['enqueue'], $handle, $relative_path, $fallback_version, $deps, $in_footer, $constant_name );
 	}
 
@@ -352,7 +426,7 @@ class AssetsHandler implements Runnable {
 	 *
 	 * @param   string  $handle     The handle of the asset that should be removed.
 	 */
-	public function dequeue_public_script( string $handle ) {
+	public function dequeue_public_script( string $handle ): void {
 		$this->scripts['public']['enqueue'] = $this->remove( $this->scripts['public']['enqueue'], $handle );
 	}
 
@@ -369,7 +443,7 @@ class AssetsHandler implements Runnable {
 	 * @param   bool    $in_footer              Whether the script asset should be loaded in the footer or the header of the page.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function register_admin_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function register_admin_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->scripts['admin']['register'] = $this->add_script( $this->scripts['admin']['register'], $handle, $relative_path, $fallback_version, $deps, $in_footer, $constant_name );
 	}
 
@@ -381,7 +455,7 @@ class AssetsHandler implements Runnable {
 	 *
 	 * @param   string  $handle     The handle of the asset that should be removed.
 	 */
-	public function deregister_admin_script( string $handle ) {
+	public function deregister_admin_script( string $handle ): void {
 		$this->scripts['admin']['register'] = $this->remove( $this->scripts['admin']['register'], $handle );
 	}
 
@@ -398,7 +472,7 @@ class AssetsHandler implements Runnable {
 	 * @param   bool    $in_footer              Whether the script asset should be loaded in the footer or the header of the page.
 	 * @param   string  $constant_name          The name of the constant to check for truthful values in case the assets should be loaded in a minified state.
 	 */
-	public function enqueue_admin_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ) {
+	public function enqueue_admin_script( string $handle, string $relative_path, string $fallback_version, array $deps = array(), bool $in_footer = true, string $constant_name = 'SCRIPT_DEBUG' ): void {
 		$this->scripts['admin']['enqueue'] = $this->add_script( $this->scripts['admin']['enqueue'], $handle, $relative_path, $fallback_version, $deps, $in_footer, $constant_name );
 	}
 
@@ -410,8 +484,44 @@ class AssetsHandler implements Runnable {
 	 *
 	 * @param   string  $handle     The handle of the asset that should be removed.
 	 */
-	public function dequeue_admin_script( string $handle ) {
+	public function dequeue_admin_script( string $handle ): void {
 		$this->scripts['admin']['enqueue'] = $this->remove( $this->scripts['admin']['enqueue'], $handle );
+	}
+
+	/**
+	 * Registers JS code that should be outputted before/after a specific handle whenever that script is enqueued.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $handle     The handle of the asset that the inline data should be outputted after.
+	 * @param   string  $data       The data to output inline.
+	 * @param   string  $position   Whether to output the data after or before the actual script. Default after.
+	 */
+	public function add_inline_script( string $handle, string $data, string $position = 'after' ) {
+		$this->scripts_inline[] = array(
+			'handle'   => $handle,
+			'data'     => $data,
+			'position' => $position,
+		);
+	}
+
+	/**
+	 * Registers a JS variable that should be outputted before the script of a specific handle is outputted whenever enqueued.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $handle         The handle of the asset that the inline data should be outputted before.
+	 * @param   string  $object_name    The name of the JS object holding the data.
+	 * @param   array   $data           The data to assign to the outputted JS object.
+	 */
+	public function localize_script( string $handle, string $object_name, array $data ) {
+		$this->scripts_localization[] = array(
+			'handle'      => $handle,
+			'object_name' => $object_name,
+			'object'      => $data,
+		);
 	}
 
 	// endregion

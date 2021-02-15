@@ -17,6 +17,55 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Utilities\Handlers\Traits
  */
 trait AdminNotices {
+	// region FIELDS AND CONSTANTS
+
+	/**
+	 * Admin notices handler for registering admin notices.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     AdminNoticesHandler
+	 */
+	protected AdminNoticesHandler $admin_notices_handler;
+
+	// endregion
+
+	// region GETTERS
+
+	/**
+	 * Gets the admin notices handler instance.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  AdminNoticesHandler
+	 */
+	public function get_admin_notices_handler(): AdminNoticesHandler {
+		return $this->admin_notices_handler;
+	}
+
+	// endregion
+
+	// region SETTERS
+
+	/**
+	 * Sets the admin notices handler.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   AdminNoticesHandler     $admin_notices_handler  Instance of the admin notices handler.
+	 */
+	public function set_admin_notices_handler( AdminNoticesHandler $admin_notices_handler ): void {
+		$this->admin_notices_handler = $admin_notices_handler;
+	}
+
+	// endregion
+
+	// region METHODS
+
 	/**
 	 * Using classes should define their admin notices in here.
 	 *
@@ -26,6 +75,10 @@ trait AdminNotices {
 	 * @param   AdminNoticesHandler     $admin_notices_handler      Instance of the admin notices handler.
 	 */
 	abstract protected function register_admin_notices( AdminNoticesHandler $admin_notices_handler ): void;
+
+	// endregion
+
+	// region HELPERS
 
 	/**
 	 * Returns a name for the notice-registering object, as descriptive as possible.
@@ -82,4 +135,6 @@ trait AdminNotices {
 			)
 		);
 	}
+
+	// endregion
 }

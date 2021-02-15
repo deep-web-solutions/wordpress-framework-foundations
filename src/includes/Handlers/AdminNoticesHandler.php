@@ -476,10 +476,10 @@ class AdminNoticesHandler {
 		}
 
 		$template = '<div class="%1$s" data-plugin-slug="%2$s" data-plugin-safe-slug="%3$s" data-notice-id="%4$s" data-notice-global="%5$s">%6$s</div>';
-		$template = $params['html'] ? str_replace( '%6$s', '<p>%6$s</p>', $template ) : $template;
+		$template = ( ! $params['html'] ) ? str_replace( '%6$s', '<p>%6$s</p>', $template ) : $template;
 
 		echo sprintf(
-			$template,
+			$template, // phpcs:ignore
 			esc_attr( implode( ' ', $classes ) ),
 			esc_attr( $this->plugin->get_plugin_slug() ),
 			esc_attr( $this->plugin->get_plugin_safe_slug() ),

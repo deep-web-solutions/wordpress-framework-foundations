@@ -644,7 +644,7 @@ class AssetsHandler implements Runnable {
 				$full_path = Files::generate_full_path( $wp_filesystem->abspath(), $relative_path );
 				$extension = pathinfo( $full_path, PATHINFO_EXTENSION );
 
-				$minified_relative_path = str_replace( $extension, "{$suffix}{$extension}", $relative_path );
+				$minified_relative_path = str_replace( ".{$extension}", "{$suffix}.{$extension}", $relative_path );
 				$minified_full_path     = Files::generate_full_path( $wp_filesystem->abspath(), $minified_relative_path );
 
 				if ( $wp_filesystem->is_file( $minified_full_path ) ) {

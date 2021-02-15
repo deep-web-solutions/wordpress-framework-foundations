@@ -250,8 +250,9 @@ class AdminNoticesHandler {
 			$notice_id = filter_input( INPUT_POST, 'notice_id', FILTER_SANITIZE_STRING );
 			$is_global = filter_input( INPUT_POST, 'is_global', FILTER_VALIDATE_BOOLEAN );
 			$this->dismiss_notice( $notice_id, $is_global );
-			wp_die();
 		}
+
+		wp_die();
 	}
 
 	// endregion
@@ -468,9 +469,10 @@ class AdminNoticesHandler {
 		}
 
 		echo sprintf(
-			'<div class="%1$s" data-plugin-slug="%2$s" data-notice-id="%3$s" data-notice-global="%4$s"><p>%5$s</p></div>',
+			'<div class="%1$s" data-plugin-slug="%2$s" data-plugin-safe-slug="%3$s" data-notice-id="%4$s" data-notice-global="%5$s"><p>%6$s</p></div>',
 			esc_attr( implode( ' ', $classes ) ),
 			esc_attr( $this->plugin->get_plugin_slug() ),
+			esc_attr( $this->plugin->get_plugin_safe_slug() ),
 			esc_attr( $notice_id ),
 			esc_attr( $params['global'] ? 1 : 0 ),
 			wp_kses_post( $message )

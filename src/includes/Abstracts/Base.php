@@ -88,7 +88,7 @@ abstract class Base implements Identifiable {
 		$has_get_getter = method_exists( $this, "get_{$name}" ) || method_exists( $this, 'get' . ucfirst( $name ) );
 		$has_is_getter  = method_exists( $this, "is_{$name}" ) || method_exists( $this, 'is' . ucfirst( $name ) );
 		if ( $has_get_getter || $has_is_getter ) {
-			/** @noinspection PhpUnhandledExceptionInspection */ // phpcs:ignore
+			/* @noinspection PhpUnhandledExceptionInspection */
 			throw $this->get_logging_service()->log_event_and_return_exception(
 				LogLevel::DEBUG,
 				ReadOnlyProperty::class,
@@ -97,7 +97,7 @@ abstract class Base implements Identifiable {
 			);
 		}
 
-		/** @noinspection PhpUnhandledExceptionInspection */ // phpcs:ignore
+		/* @noinspection PhpUnhandledExceptionInspection */
 		throw $this->get_logging_service()->log_event_and_return_exception(
 			LogLevel::DEBUG,
 			InexistentProperty::class,

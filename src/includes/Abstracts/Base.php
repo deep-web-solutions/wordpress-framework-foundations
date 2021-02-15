@@ -58,8 +58,9 @@ abstract class Base implements Identifiable {
 
 		return $this->get_logging_service()->log_event_and_return_exception(
 			LogLevel::DEBUG,
-			InexistentProperty::class,
 			sprintf( 'Inexistent property: %s', $name ),
+			InexistentProperty::class,
+			null,
 			'framework'
 		);
 	}
@@ -91,8 +92,9 @@ abstract class Base implements Identifiable {
 			/* @noinspection PhpUnhandledExceptionInspection */
 			throw $this->get_logging_service()->log_event_and_return_exception(
 				LogLevel::DEBUG,
-				ReadOnlyProperty::class,
 				sprintf( 'Property %s is ready-only', $name ),
+				ReadOnlyProperty::class,
+				null,
 				'framework'
 			);
 		}
@@ -100,8 +102,9 @@ abstract class Base implements Identifiable {
 		/* @noinspection PhpUnhandledExceptionInspection */
 		throw $this->get_logging_service()->log_event_and_return_exception(
 			LogLevel::DEBUG,
-			InexistentProperty::class,
 			sprintf( 'Inexistent property: %s', $name ),
+			InexistentProperty::class,
+			null,
 			'framework'
 		);
 	}

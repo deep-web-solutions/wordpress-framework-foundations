@@ -3,6 +3,7 @@
 namespace DeepWebSolutions\Framework\Utilities\Services;
 
 use DeepWebSolutions\Framework\Utilities\Factories\Traits\Logger;
+use Exception;
 use Psr\Log\LogLevel;
 
 defined( 'ABSPATH' ) || exit;
@@ -105,37 +106,39 @@ class LoggingService {
 	/**
 	 * Logs an event with an appropriate level and returns an exception with the same message.
 	 *
-	 * @param   string  $log_level      The PSR3 log level.
-	 * @param   string  $exception      The exception to instantiate.
-	 * @param   string  $message        The message to log/return as exception.
-	 * @param   string  $logger         The logger to log the event with.
-	 * @param   bool    $is_sensitive   Whether the log may contain any GDPR-sensitive information.
-	 * @param   array   $context        The PSR3 context.
+	 * @param   string          $log_level              The PSR3 log level.
+	 * @param   string          $message                The message to log/return as exception.
+	 * @param   string          $exception              The exception to instantiate.
+	 * @param   Exception|null  $original_exception     The original exception that was thrown. If not applicable, null.
+	 * @param   string          $logger                 The logger to log the event with.
+	 * @param   bool            $is_sensitive           Whether the log may contain any GDPR-sensitive information.
+	 * @param   array           $context                The PSR3 context.
 	 *
-	 * @return  \Exception
+	 * @return  Exception
 	 */
-	public function log_event_and_return_exception( string $log_level, string $exception, string $message, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): \Exception {
+	public function log_event_and_return_exception( string $log_level, string $message, string $exception, Exception $original_exception = null, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): Exception {
 		$this->log_event( $logger, $log_level, $message, $is_sensitive, $context );
-		return new $exception( $message );
+		return new $exception( $message, $original_exception ? $original_exception->getCode() : 0, $original_exception );
 	}
 
 	/**
 	 * Logs an event with an appropriate level, runs a '_doing_it_wrong' call, and returns an exception with the same message.
 	 *
-	 * @param   string  $function       The function being used incorrectly.
-	 * @param   string  $message        The message to log/return as exception.
-	 * @param   string  $since_version  The plugin version that introduced this warning message.
-	 * @param   string  $exception      The exception to instantiate.
-	 * @param   string  $log_level      The PSR3 log level.
-	 * @param   string  $logger         The logger to log the event with.
-	 * @param   bool    $is_sensitive   Whether the log may contain any GDPR-sensitive information.
-	 * @param   array   $context        The PSR3 context.
+	 * @param   string          $function               The function being used incorrectly.
+	 * @param   string          $message                The message to log/return as exception.
+	 * @param   string          $since_version          The plugin version that introduced this warning message.
+	 * @param   string          $exception              The exception to instantiate.
+	 * @param   Exception|null  $original_exception     The original exception that was thrown. If not applicable, null.
+	 * @param   string          $log_level              The PSR3 log level.
+	 * @param   string          $logger                 The logger to log the event with.
+	 * @param   bool            $is_sensitive           Whether the log may contain any GDPR-sensitive information.
+	 * @param   array           $context                The PSR3 context.
 	 *
-	 * @return  \Exception
+	 * @return  Exception
 	 */
-	public function log_event_and_doing_it_wrong_and_return_exception( string $function, string $message, string $since_version, string $exception, string $log_level = LogLevel::DEBUG, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): \Exception {
+	public function log_event_and_doing_it_wrong_and_return_exception( string $function, string $message, string $since_version, string $exception, Exception $original_exception = null, string $log_level = LogLevel::DEBUG, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): Exception {
 		$this->log_event_and_doing_it_wrong( $function, $message, $since_version, $log_level, $logger, $is_sensitive, $context );
-		return new $exception( $message );
+		return new $exception( $message, $original_exception ? $original_exception->getCode() : 0, $original_exception );
 	}
 
 	// endregion

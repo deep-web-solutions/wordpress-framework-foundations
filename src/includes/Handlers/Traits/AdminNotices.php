@@ -86,15 +86,16 @@ trait AdminNotices {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   AdminNoticesHandler     $admin_notices_handler      Instance of the admin notices handler.
+	 * @param   object|null     $class  The instance that acts as the registrant.
 	 *
 	 * @return  string
 	 */
-	protected function get_registrant_name( AdminNoticesHandler $admin_notices_handler ): string {
-		$plugin_name = $admin_notices_handler->get_plugin()->get_plugin_name();
+	protected function get_registrant_name( ?object $class = null ): string {
+		$class       = is_null( $class ) ? $this : $class;
+		$plugin_name = $this->admin_notices_handler->get_plugin()->get_plugin_name();
 
-		return ( $this instanceof Identifiable )
-			? sprintf( '%s: %s', $plugin_name, $this->get_instance_public_name() )
+		return ( $class instanceof Identifiable )
+			? sprintf( '%s: %s', $plugin_name, $class->get_instance_public_name() )
 			: $plugin_name;
 	}
 

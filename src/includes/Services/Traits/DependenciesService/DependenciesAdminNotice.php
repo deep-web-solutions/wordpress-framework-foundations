@@ -65,7 +65,7 @@ trait DependenciesAdminNotice {
 						count( $missing_php_extensions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_registrant_name( $admin_notices_handler ) ),
+					esc_html( $this->get_registrant_name() ),
 					'<strong>' . implode( ', ', $missing_php_extensions ) . '</strong>'
 				),
 				$this->get_notice_id( 'missing-php-extensions' ),
@@ -100,7 +100,7 @@ trait DependenciesAdminNotice {
 						count( $missing_php_extensions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_registrant_name( $admin_notices_handler ) ),
+					esc_html( $this->get_registrant_name() ),
 					'<strong>' . implode( ', ', $missing_php_extensions ) . '</strong>'
 				),
 				$notice_id,
@@ -131,7 +131,7 @@ trait DependenciesAdminNotice {
 						count( $missing_php_functions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_registrant_name( $admin_notices_handler ) ),
+					esc_html( $this->get_registrant_name() ),
 					'<strong>' . implode( ', ', $missing_php_functions ) . '</strong>'
 				),
 				$this->get_notice_id( 'missing-functions' ),
@@ -166,7 +166,7 @@ trait DependenciesAdminNotice {
 						count( $missing_php_functions ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_registrant_name( $admin_notices_handler ) ),
+					esc_html( $this->get_registrant_name() ),
 					'<strong>' . implode( ', ', $missing_php_functions ) . '</strong>'
 				),
 				$notice_id,
@@ -191,7 +191,7 @@ trait DependenciesAdminNotice {
 			$message = sprintf(
 				/* translators: Plugin name or identifiable name. */
 				__( '<strong>%s</strong> cannot run because the following PHP configuration settings are expected:', 'dws-wp-framework-utilities' ),
-				esc_html( $this->get_registrant_name( $admin_notices_handler ) )
+				esc_html( $this->get_registrant_name() )
 			) . '<ul>';
 
 			foreach ( $incompatible_php_settings as $setting => $values ) {
@@ -241,7 +241,7 @@ trait DependenciesAdminNotice {
 				$message = sprintf(
 					/* translators: Plugin name or identifiable name. */
 					__( '<strong>%s</strong> may behave unexpectedly because the following PHP configuration settings are expected:', 'dws-wp-framework-utilities' ),
-					esc_html( $this->get_registrant_name( $admin_notices_handler ) )
+					esc_html( $this->get_registrant_name() )
 				) . '<ul>';
 
 				foreach ( $incompatible_php_settings as $setting => $values ) {
@@ -293,7 +293,7 @@ trait DependenciesAdminNotice {
 						count( $missing_active_plugins ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_registrant_name( $admin_notices_handler ) ),
+					esc_html( $this->get_registrant_name() ),
 					'<strong>' . $this->format_plugins_list( $missing_active_plugins ) . '</strong>'
 				),
 				$this->get_notice_id( 'missing-active-plugins' ),
@@ -328,7 +328,7 @@ trait DependenciesAdminNotice {
 						count( $missing_active_plugins ),
 						'dws-wp-framework-utilities'
 					),
-					esc_html( $this->get_registrant_name( $admin_notices_handler ) ),
+					esc_html( $this->get_registrant_name() ),
 					'<strong>' . $this->format_plugins_list( $missing_active_plugins ) . '</strong>'
 				),
 				$notice_id,

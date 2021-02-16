@@ -174,7 +174,9 @@ class AdminNoticesHandler {
 				} elseif ( ! $this->should_display_notice( $notice_id, $notice['params'] ) ) {
 					unset( $notices[ $type ][ $notice_id ] );
 					continue;
-				}
+				} elseif ( ! boolval( $notice['params']['persistent'] ) ) {
+					unset( $notices[ $type ][ $notice_id ] );
+                }
 
 				$this->has_outputted_admin_notices = true;
 				$this->output_admin_notice(
@@ -353,6 +355,7 @@ class AdminNoticesHandler {
 	 *      @type string type           The type of notice to display.
 	 *      @type bool   dismissible    Whether the notice is dismissible or not.
 	 *      @type bool   html           Whether the notice message contains HTML or just plain text.
+	 *      @type bool   persistent     Whether the notice should show up until manually dismissed or whether it should auto-dismiss on display.
 	 * }
 	 */
 	public function add_admin_notice_to_user( string $message, string $notice_id, array $params = array() ): void {
@@ -362,6 +365,7 @@ class AdminNoticesHandler {
 				'type'        => self::ERROR,
 				'dismissible' => true,
 				'html'        => false,
+				'persistent'  => false,
 			)
 		);
 

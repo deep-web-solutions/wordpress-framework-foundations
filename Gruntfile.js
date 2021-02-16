@@ -66,5 +66,5 @@ module.exports = function( grunt ) {
 		}
 	);
 
-	grunt.registerTask( 'default', ['makepot', 'potomo'] );
+	grunt.registerTask( 'i18n', ['makepot', 'potomo'] );
 }

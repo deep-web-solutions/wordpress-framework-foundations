@@ -176,7 +176,7 @@ class AdminNoticesHandler {
 					continue;
 				} elseif ( ! boolval( $notice['params']['persistent'] ) ) {
 					unset( $notices[ $type ][ $notice_id ] );
-                }
+				}
 
 				$this->has_outputted_admin_notices = true;
 				$this->output_admin_notice(

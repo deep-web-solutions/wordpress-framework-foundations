@@ -73,8 +73,7 @@ class LoggerFactory {
 	}
 
 	/**
-	 * Returns a PSR-3 logger. The very first call should also include an array of arguments to be passed on to the callable
-	 * that creates the instance.
+	 * Returns a PSR-3 logger.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0

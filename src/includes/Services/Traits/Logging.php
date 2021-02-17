@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Services\Traits;
 
+use DeepWebSolutions\Framework\Utilities\Factories\LoggerFactory;
 use DeepWebSolutions\Framework\Utilities\Services\LoggingService;
 
 defined( 'ABSPATH' ) || exit;
@@ -41,7 +42,7 @@ trait Logging {
 	 * @return  LoggingService
 	 */
 	protected function get_logging_service(): LoggingService {
-		return $this->logging_service ?? new LoggingService();
+		return $this->logging_service ?? new LoggingService( new LoggerFactory() );
 	}
 
 	// endregion

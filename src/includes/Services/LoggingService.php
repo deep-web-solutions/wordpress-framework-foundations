@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Utilities\Services;
 
+use DeepWebSolutions\Framework\Utilities\Factories\LoggerFactory;
 use DeepWebSolutions\Framework\Utilities\Factories\Traits\Logger;
 use Exception;
 use Psr\Log\LogLevel;
@@ -42,9 +43,11 @@ class LoggingService {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
+	 * @param   LoggerFactory   $logger_factory     Instance of the logger factory.
 	 * @param   bool            $include_sensitive  Whether the logs should include sensitive information or not.
 	 */
-	public function __construct( bool $include_sensitive = false ) {
+	public function __construct( LoggerFactory $logger_factory, bool $include_sensitive = false ) {
+		$this->set_logger_factory( $logger_factory );
 		$this->include_sensitive = $include_sensitive;
 	}
 

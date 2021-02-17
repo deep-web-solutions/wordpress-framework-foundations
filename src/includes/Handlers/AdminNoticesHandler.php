@@ -5,6 +5,7 @@ namespace DeepWebSolutions\Framework\Utilities\Handlers;
 use DeepWebSolutions\Framework\Helpers\WordPress\Assets;
 use DeepWebSolutions\Framework\Utilities\Handlers\Traits\Hooks;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Pluginable;
+use DeepWebSolutions\Framework\Utilities\Traits\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,6 +21,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class AdminNoticesHandler {
 	use Hooks;
+	use Plugin;
 
 	// region FIELDS AND CONSTANTS
 
@@ -94,17 +96,6 @@ class AdminNoticesHandler {
 	 */
 	protected bool $has_outputted_admin_notices = false;
 
-	/**
-	 * Instance of the current plugin that the framework is bundled with.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  protected
-	 * @var     Pluginable
-	 */
-	protected Pluginable $plugin;
-
 	// endregion
 
 	// region MAGIC METHODS
@@ -119,7 +110,7 @@ class AdminNoticesHandler {
 	 * @version 1.0.0
 	 */
 	public function __construct( Pluginable $plugin, HooksHandler $hooks_handler ) {
-		$this->plugin = $plugin;
+		$this->set_plugin( $plugin );
 		$this->register_hooks( $hooks_handler );
 	}
 
@@ -255,22 +246,6 @@ class AdminNoticesHandler {
 		}
 
 		wp_die();
-	}
-
-	// endregion
-
-	// region GETTERS
-
-	/**
-	 * Returns the plugin instance that the handler is tied to.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  Pluginable
-	 */
-	public function get_plugin(): Pluginable {
-		return $this->plugin;
 	}
 
 	// endregion

@@ -80,15 +80,14 @@ class LoggerFactory {
 	 * @version 1.0.0
 	 *
 	 * @param   string  $name       The name of the logger. Must match with the name used when registering the callback.
-	 * @param   array   $arguments  The arguments that should be passed on to the callback, encapsulated in an array.
 	 *
 	 * @return  LoggerInterface
 	 */
-	public function get_logger( string $name, array $arguments = array() ): LoggerInterface {
+	public function get_logger( string $name ): LoggerInterface {
 		if ( ! isset( $this->loggers[ $name ] ) ) {
 			$this->loggers[ $name ] = $this->loggers['NullLogger'];
 			if ( is_callable( $this->callables[ $name ] ?? '' ) ) {
-				$logger = call_user_func( $this->callables[ $name ], ...$arguments );
+				$logger = call_user_func( $this->callables[ $name ] );
 				if ( $logger instanceof LoggerInterface ) {
 					$this->loggers[ $name ] = $logger;
 				} elseif ( Requests::has_debug() ) {

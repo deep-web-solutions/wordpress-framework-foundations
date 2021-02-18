@@ -42,7 +42,7 @@ trait AdminNotices {
 	 *
 	 * @return  AdminNoticesHandler
 	 */
-	public function get_admin_notices_handler(): AdminNoticesHandler {
+	protected function get_admin_notices_handler(): AdminNoticesHandler {
 		return $this->admin_notices_handler;
 	}
 

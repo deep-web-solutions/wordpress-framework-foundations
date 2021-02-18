@@ -118,8 +118,10 @@ trait Identity {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @param   Pluginable      $pluginable     The plugin instance to use from now on.
 	 */
-	abstract public function set_plugin(): void;
+	abstract public function set_plugin( Pluginable $pluginable ): void;
 
 	/**
 	 * Set the ID of the current class instance.

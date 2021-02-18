@@ -21,6 +21,55 @@ trait Hooks {
 		get_hook_name as get_hook_name_helpers;
 	}
 
+	// region FIELDS AND CONSTANTS
+
+	/**
+	 * Hooks handler for registering filters and actions.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     HooksHandler
+	 */
+	protected HooksHandler $hooks_handler;
+
+	// endregion
+
+	// region GETTERS
+
+	/**
+	 * Gets the hooks handler instance.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  HooksHandler
+	 */
+	protected function get_hooks_handler(): HooksHandler {
+		return $this->hooks_handler;
+	}
+
+	// endregion
+
+	// region SETTERS
+
+	/**
+	 * Sets the hooks handler.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   HooksHandler     $hooks_handler     Instance of the hooks handler.
+	 */
+	public function set_hooks_handler( HooksHandler $hooks_handler ): void {
+		$this->hooks_handler = $hooks_handler;
+	}
+
+	// endregion
+
+	// region METHODS
+
 	/**
 	 * Using classes should define their hooks in here.
 	 *
@@ -30,6 +79,10 @@ trait Hooks {
 	 * @param   HooksHandler    $hooks_handler      Instance of the hooks handler.
 	 */
 	abstract protected function register_hooks( HooksHandler $hooks_handler ): void;
+
+	// endregion
+
+	// region HELPERS
 
 	/**
 	 * Returns a meaningful, hopefully unique, name for an internal hook.
@@ -56,4 +109,6 @@ trait Hooks {
 
 		return $this->get_hook_name_helpers( $name, $extra, $root );
 	}
+
+	// endregion
 }

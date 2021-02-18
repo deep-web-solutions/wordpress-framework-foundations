@@ -317,7 +317,7 @@ class DependenciesService {
 	 * @return  string[]
 	 */
 	public function get_php_extensions( string $type ): array {
-		return $this->php_extensions[ $type ];
+		return $this->php_extensions[ $type ] ?? array();
 	}
 
 	/**
@@ -331,7 +331,7 @@ class DependenciesService {
 	 * @return  string[]
 	 */
 	public function get_php_functions( string $type ): array {
-		return $this->php_functions[ $type ];
+		return $this->php_functions[ $type ] ?? array();
 	}
 
 	/**
@@ -345,7 +345,7 @@ class DependenciesService {
 	 * @return  string[]
 	 */
 	public function get_php_settings( string $type ): array {
-		return $this->php_settings[ $type ];
+		return $this->php_settings[ $type ] ?? array();
 	}
 
 	/**
@@ -359,7 +359,7 @@ class DependenciesService {
 	 * @return  array
 	 */
 	public function get_active_plugins( string $type ): array {
-		return $this->active_plugins[ $type ];
+		return $this->active_plugins[ $type ] ?? array();
 	}
 
 	// endregion

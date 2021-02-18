@@ -4,6 +4,7 @@ namespace DeepWebSolutions\Framework\Utilities\Services;
 
 use DeepWebSolutions\Framework\Helpers\PHP\Misc;
 use DeepWebSolutions\Framework\Helpers\WordPress\Traits\Filesystem;
+use Symfony\Component\Uid\Ulid;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -67,6 +68,18 @@ class DependenciesService {
 	protected array $active_plugins = array();
 
 	/**
+	 * A universally unique lexicographically sortable identifier for the current instance. Useful to cache
+	 * the results of the checks.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     string
+	 */
+	protected string $ulid;
+
+	/**
 	 * Whether the set dependencies are fulfilled or not.
 	 *
 	 * @since   1.0.0
@@ -94,6 +107,8 @@ class DependenciesService {
 		$this->php_functions  = $configuration['php_functions'] ?? array();
 		$this->php_settings   = $configuration['php_settings'] ?? array();
 		$this->active_plugins = $configuration['active_plugins'] ?? array();
+
+		$this->ulid = ( new Ulid() )->toBase32();
 	}
 
 	// endregion
@@ -146,8 +161,8 @@ class DependenciesService {
 	public function get_missing_php_extensions( string $type ): array {
 		static $missing_php_extensions = array();
 
-		if ( ! isset( $missing_php_extensions[ $type ] ) ) {
-			$missing_php_extensions[ $type ] = array_filter(
+		if ( ! isset( $missing_php_extensions[ $this->ulid ][ $type ] ) ) {
+			$missing_php_extensions[ $this->ulid ][ $type ] = array_filter(
 				array_map(
 					function( $php_extension ) {
 						return extension_loaded( $php_extension ) ? false : $php_extension;
@@ -157,7 +172,7 @@ class DependenciesService {
 			);
 		}
 
-		return $missing_php_extensions[ $type ];
+		return $missing_php_extensions[ $this->ulid ][ $type ];
 	}
 
 	/**
@@ -173,8 +188,8 @@ class DependenciesService {
 	public function get_missing_php_functions( string $type ): array {
 		static $missing_php_functions = array();
 
-		if ( ! isset( $missing_php_functions[ $type ] ) ) {
-			$missing_php_functions[ $type ] = array_filter(
+		if ( ! isset( $missing_php_functions[ $this->ulid ][ $type ] ) ) {
+			$missing_php_functions[ $this->ulid ][ $type ] = array_filter(
 				array_map(
 					function( $php_function ) {
 						return function_exists( $php_function ) ? false : $php_function;
@@ -184,7 +199,7 @@ class DependenciesService {
 			);
 		}
 
-		return $missing_php_functions[ $type ];
+		return $missing_php_functions[ $this->ulid ][ $type ];
 	}
 
 	/**
@@ -200,8 +215,8 @@ class DependenciesService {
 	public function get_incompatible_php_settings( string $type ): array {
 		static $incompatible_settings = array();
 
-		if ( ! isset( $incompatible_settings[ $type ] ) ) {
-			$incompatible_settings[ $type ] = array();
+		if ( ! isset( $incompatible_settings[ $this->ulid ][ $type ] ) ) {
+			$incompatible_settings[ $this->ulid ][ $type ] = array();
 
 			if ( function_exists( 'ini_get' ) ) {
 				foreach ( $this->get_php_settings( $type ) as $php_setting => $expected_value ) {
@@ -215,14 +230,14 @@ class DependenciesService {
 						$environment_value_actual = $is_size ? Misc::let_to_num( $environment_value ) : $environment_value;
 
 						if ( $environment_value_actual < $expected_value ) {
-							$incompatible_settings[ $type ][ $php_setting ] = array(
+							$incompatible_settings[ $this->ulid ][ $type ][ $php_setting ] = array(
 								'expected'    => $is_size ? size_format( $expected_value ) : $expected_value,
 								'environment' => $is_size ? size_format( $environment_value_actual ) : $environment_value_actual,
 								'type'        => 'min',
 							);
 						}
 					} elseif ( $environment_value !== $expected_value ) {
-						$incompatible_settings[ $type ][ $php_setting ] = array(
+						$incompatible_settings[ $this->ulid ][ $type ][ $php_setting ] = array(
 							'expected'    => $expected_value,
 							'environment' => $environment_value,
 						);
@@ -231,7 +246,7 @@ class DependenciesService {
 			}
 		}
 
-		return $incompatible_settings[ $type ];
+		return $incompatible_settings[ $this->ulid ][ $type ];
 	}
 
 	/**
@@ -247,8 +262,8 @@ class DependenciesService {
 	public function get_missing_active_plugins( string $type ): array {
 		static $missing_plugins = array();
 
-		if ( ! isset( $missing_plugins[ $type ] ) ) {
-			$missing_plugins[ $type ] = array();
+		if ( ! isset( $missing_plugins[ $this->ulid ][ $type ] ) ) {
+			$missing_plugins[ $this->ulid ][ $type ] = array();
 
 			foreach ( $this->get_active_plugins( $type ) as $active_plugin => $active_plugin_config ) {
 				if ( isset( $active_plugin_config['active_checker'] ) && is_callable( $active_plugin_config['active_checker'] ) ) {
@@ -261,7 +276,7 @@ class DependenciesService {
 				}
 
 				if ( ! $is_active ) {
-					$missing_plugins[ $type ][ $active_plugin ] = $active_plugin_config;
+					$missing_plugins[ $this->ulid ][ $type ][ $active_plugin ] = $active_plugin_config;
 				} elseif ( isset( $active_plugin_config['min_version'] ) ) {
 					if ( isset( $active_plugin_config['version_checker'] ) && is_callable( $active_plugin_config['version_checker'] ) ) {
 						$version = call_user_func( $active_plugin_config['version_checker'] );
@@ -278,13 +293,13 @@ class DependenciesService {
 					}
 
 					if ( version_compare( $active_plugin_config['min_version'], $version, '>' ) ) {
-						$missing_plugins[ $type ][ $active_plugin ] = $active_plugin_config + array( 'version' => $version );
+						$missing_plugins[ $this->ulid ][ $type ][ $active_plugin ] = $active_plugin_config + array( 'version' => $version );
 					}
 				}
 			}
 		}
 
-		return $missing_plugins[ $type ];
+		return $missing_plugins[ $this->ulid ][ $type ];
 	}
 
 	// endregion

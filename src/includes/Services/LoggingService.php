@@ -102,7 +102,7 @@ class LoggingService {
 	 * @param   array   $context        The PSR3 context.
 	 */
 	public function log_event_and_doing_it_wrong( string $function, string $message, string $since_version, string $log_level = LogLevel::DEBUG, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): void {
-		$this->log_event( $logger, $log_level, $message, $is_sensitive, $context );
+		$this->log_event( $log_level, $message, $logger, $is_sensitive, $context );
 		_doing_it_wrong( $function, $message, $since_version ); // phpcs:ignore
 	}
 
@@ -120,7 +120,7 @@ class LoggingService {
 	 * @return  Exception
 	 */
 	public function log_event_and_return_exception( string $log_level, string $message, string $exception, Exception $original_exception = null, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): Exception {
-		$this->log_event( $logger, $log_level, $message, $is_sensitive, $context );
+		$this->log_event( $log_level, $message, $logger, $is_sensitive, $context );
 		return new $exception( $message, $original_exception ? $original_exception->getCode() : 0, $original_exception );
 	}
 

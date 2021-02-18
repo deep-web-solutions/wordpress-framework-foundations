@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper.git",
-                "reference": "d0f8e0d5100598e7facbda2d611ad4773ce8291a"
+                "reference": "77f086ff6156d4c7e3599e41313b5d0a556cea5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-bootstrapper/zipball/d0f8e0d5100598e7facbda2d611ad4773ce8291a",
-                "reference": "d0f8e0d5100598e7facbda2d611ad4773ce8291a",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-bootstrapper/zipball/77f086ff6156d4c7e3599e41313b5d0a556cea5d",
+                "reference": "77f086ff6156d4c7e3599e41313b5d0a556cea5d",
                 "shasum": ""
             },
             "require-dev": {
@@ -77,7 +77,7 @@
                 "source": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/tree/master",
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/issues"
             },
-            "time": "2021-02-16T14:22:19+00:00"
+            "time": "2021-02-16T14:28:43+00:00"
         },
         {
             "name": "deep-web-solutions/wp-framework-helpers",
@@ -85,12 +85,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-helpers.git",
-                "reference": "518ff23f6c2b460c3367c300f83f3174fe4bb18e"
+                "reference": "1831f10691e76959ca0945c3a2c161e1feebf733"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/518ff23f6c2b460c3367c300f83f3174fe4bb18e",
-                "reference": "518ff23f6c2b460c3367c300f83f3174fe4bb18e",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/1831f10691e76959ca0945c3a2c161e1feebf733",
+                "reference": "1831f10691e76959ca0945c3a2c161e1feebf733",
                 "shasum": ""
             },
             "require": {
@@ -156,7 +156,7 @@
                 "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/master",
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-helpers/issues"
             },
-            "time": "2021-02-15T16:17:14+00:00"
+            "time": "2021-02-18T21:49:27+00:00"
         },
         {
             "name": "psr/log",
@@ -2111,7 +2111,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.28.0",
+            "version": "v8.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -2165,7 +2165,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.28.0",
+            "version": "v8.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -2213,7 +2213,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.28.0",
+            "version": "v8.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -2259,7 +2259,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v8.28.0",
+            "version": "v8.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",

@@ -108,17 +108,25 @@ function dws_wp_framework_get_utilities_min_wp(): string {
 
 // Bootstrap the utilities (maybe)!
 if ( dws_wp_framework_check_php_wp_requirements_met( dws_wp_framework_get_utilities_min_php(), dws_wp_framework_get_utilities_min_wp() ) ) {
-	add_action(
-		'plugins_loaded',
-		function() {
-			define(
-				__NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_INIT',
-				defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT' ) && DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT &&
-				defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_HELPERS_INIT' ) && DWS_WP_FRAMEWORK_HELPERS_INIT
-			);
-		},
-		PHP_INT_MIN
-	);
+	if ( did_action( 'plugins_loaded' ) ) {
+		define(
+			__NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_INIT',
+			defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT' ) && DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT &&
+			defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_HELPERS_INIT' ) && DWS_WP_FRAMEWORK_HELPERS_INIT
+		);
+	} else {
+		add_action(
+			'plugins_loaded',
+			function() {
+				define(
+					__NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_INIT',
+					defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT' ) && DWS_WP_FRAMEWORK_BOOTSTRAPPER_INIT &&
+					defined( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_HELPERS_INIT' ) && DWS_WP_FRAMEWORK_HELPERS_INIT
+				);
+			},
+			PHP_INT_MIN
+		);
+	}
 } else {
 	define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_UTILITIES_INIT', false );
 	dws_wp_framework_output_requirements_error( dws_wp_framework_get_utilities_name(), dws_wp_framework_get_utilities_version(), dws_wp_framework_get_utilities_min_php(), dws_wp_framework_get_utilities_min_wp() );

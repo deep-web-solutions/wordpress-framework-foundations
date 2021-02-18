@@ -10,7 +10,7 @@ use Psr\Log\LogLevel;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Handles the logging of messages. GDPR-appropriate + full logger flexibility.
+ * Logs messages at all PSR-3 levels. GDPR-appropriate + full logger choice flexibility.
  *
  * @since   1.0.0
  * @version 1.0.0

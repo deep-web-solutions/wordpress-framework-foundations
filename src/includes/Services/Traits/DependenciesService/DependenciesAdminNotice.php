@@ -32,6 +32,8 @@ trait DependenciesAdminNotice {
 	 * @param   AdminNoticesHandler     $admin_notices_handler      Instance of the admin notices handler.
 	 */
 	public function register_admin_notices( AdminNoticesHandler $admin_notices_handler ): void {
+		$this->set_admin_notices_handler( $admin_notices_handler );
+
 		$this->maybe_register_required_missing_php_extensions_notice( $admin_notices_handler );
 		$this->maybe_register_optional_missing_php_extensions_notice( $admin_notices_handler );
 

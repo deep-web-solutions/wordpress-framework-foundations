@@ -94,7 +94,7 @@ trait AdminNotices {
 		$class       = is_null( $class ) ? $this : $class;
 		$plugin_name = $this->admin_notices_handler->get_plugin()->get_plugin_name();
 
-		return ( $class instanceof Identifiable )
+		return ( $class instanceof Identifiable ) && ! ( $class instanceof Pluginable )
 			? sprintf( '%s: %s', $plugin_name, $class->get_instance_public_name() )
 			: $plugin_name;
 	}

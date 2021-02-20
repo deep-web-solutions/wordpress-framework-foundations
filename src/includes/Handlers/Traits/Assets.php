@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Utilities\Handlers\Traits;
 
 use DeepWebSolutions\Framework\Utilities\Handlers\AssetsHandler;
-use DeepWebSolutions\Framework\Utilities\Handlers\Traits\Helpers\Assets as AssetsHelpers;
+use DeepWebSolutions\Framework\Utilities\Traits\Helpers\Assets as AssetsHelpers;
 
 defined( 'ABSPATH' ) || exit;
 

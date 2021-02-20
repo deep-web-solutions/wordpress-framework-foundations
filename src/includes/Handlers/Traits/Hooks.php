@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Utilities\Handlers\Traits;
 
 use DeepWebSolutions\Framework\Utilities\Handlers\HooksHandler;
-use DeepWebSolutions\Framework\Utilities\Handlers\Traits\Helpers\Hooks as HooksHelpers;
+use DeepWebSolutions\Framework\Utilities\Traits\Helpers\Hooks as HooksHelpers;
 
 defined( 'ABSPATH' ) || exit;
 

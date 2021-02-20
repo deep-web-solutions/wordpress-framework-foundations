@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities\Handlers\Traits\Helpers;
+namespace DeepWebSolutions\Framework\Utilities\Traits\Helpers;
 
 use DeepWebSolutions\Framework\Helpers\WordPress\Traits\Hooks as HooksHelpers;
 use DeepWebSolutions\Framework\Utilities\Interfaces\Resources\Identifiable;
@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Utilities\Handlers\Traits\Helpers
+ * @package DeepWebSolutions\WP-Framework\Utilities\Traits\Helpers
  */
 trait Hooks {
 	use HooksHelpers {

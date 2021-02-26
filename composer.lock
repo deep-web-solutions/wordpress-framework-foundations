@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1e3ff7f363b85c82a1bfa47dbf72be7",
+    "content-hash": "7140b4d838f391c9928e42270b177e38",
     "packages": [
         {
             "name": "deep-web-solutions/wp-framework-bootstrapper",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper.git",
-                "reference": "b2408252d0a8d818b600486b2a6c204de18dc6a4"
+                "reference": "0f355075ab1d190de476e3a9b1ea99f8702cd360"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-bootstrapper/zipball/b2408252d0a8d818b600486b2a6c204de18dc6a4",
-                "reference": "b2408252d0a8d818b600486b2a6c204de18dc6a4",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-bootstrapper/zipball/0f355075ab1d190de476e3a9b1ea99f8702cd360",
+                "reference": "0f355075ab1d190de476e3a9b1ea99f8702cd360",
                 "shasum": ""
             },
             "require-dev": {
@@ -26,7 +26,6 @@
                 "phpcompatibility/php-compatibility": "*",
                 "phpcompatibility/phpcompatibility-wp": "*",
                 "phpmd/phpmd": "*",
-                "sllh/composer-versions-check": "*",
                 "squizlabs/php_codesniffer": "^3.5",
                 "wp-coding-standards/wpcs": "*"
             },
@@ -64,7 +63,7 @@
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/issues",
                 "source": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/tree/v1.0.0"
             },
-            "time": "2021-02-26T17:48:20+00:00"
+            "time": "2021-02-26T18:01:40+00:00"
         },
         {
             "name": "deep-web-solutions/wp-framework-helpers",
@@ -72,12 +71,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-helpers.git",
-                "reference": "0b3da3599f330cfa693f9ecc61990ef288fc57b4"
+                "reference": "19e112b302c5e159b574210528129a16d1b45e64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/0b3da3599f330cfa693f9ecc61990ef288fc57b4",
-                "reference": "0b3da3599f330cfa693f9ecc61990ef288fc57b4",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/19e112b302c5e159b574210528129a16d1b45e64",
+                "reference": "19e112b302c5e159b574210528129a16d1b45e64",
                 "shasum": ""
             },
             "require": {
@@ -89,7 +88,6 @@
                 "phpcompatibility/php-compatibility": "*",
                 "phpcompatibility/phpcompatibility-wp": "*",
                 "phpmd/phpmd": "*",
-                "sllh/composer-versions-check": "*",
                 "squizlabs/php_codesniffer": "^3.5",
                 "wp-coding-standards/wpcs": "*"
             },
@@ -131,7 +129,7 @@
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-helpers/issues",
                 "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/master"
             },
-            "time": "2021-02-26T17:48:59+00:00"
+            "time": "2021-02-26T18:03:51+00:00"
         },
         {
             "name": "psr/log",
@@ -1080,63 +1078,6 @@
                 }
             ],
             "time": "2020-10-05T12:39:37+00:00"
-        },
-        {
-            "name": "sllh/composer-versions-check",
-            "version": "v2.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/soullivaneuh/composer-versions-check.git",
-                "reference": "05bca35588b6f234390fd4946d84c8f8e1890c43"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/soullivaneuh/composer-versions-check/zipball/05bca35588b6f234390fd4946d84c8f8e1890c43",
-                "reference": "05bca35588b6f234390fd4946d84c8f8e1890c43",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0",
-                "php": "^5.3 || ^7.0"
-            },
-            "require-dev": {
-                "composer/composer": "^1.0 || ^2.0",
-                "symfony/phpunit-bridge": "^2.7.4|^3.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "SLLH\\ComposerVersionsCheck\\VersionsCheckPlugin",
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SLLH\\ComposerVersionsCheck\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sullivan SENECHAL",
-                    "email": "soullivaneuh@gmail.com"
-                }
-            ],
-            "description": "Checks if packages are up to date to last major versions after update",
-            "keywords": [
-                "composer",
-                "plugin",
-                "update",
-                "versions"
-            ],
-            "support": {
-                "issues": "https://github.com/soullivaneuh/composer-versions-check/issues",
-                "source": "https://github.com/soullivaneuh/composer-versions-check/tree/master"
-            },
-            "time": "2020-05-05T13:03:07+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

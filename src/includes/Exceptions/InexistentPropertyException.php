@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Exceptions;
+namespace DeepWebSolutions\Framework\Foundations\Exceptions;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Exceptions
+ * @package DeepWebSolutions\WP-Framework\Foundations\Exceptions
  */
 class InexistentPropertyException extends \InvalidArgumentException {
 	/* empty on purpose */

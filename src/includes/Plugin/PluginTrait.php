@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Plugin;
+namespace DeepWebSolutions\Framework\Foundations\Plugin;
 
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Plugin
+ * @package DeepWebSolutions\WP-Framework\Foundations\Plugin
  */
 trait PluginTrait {
 	// region FIELDS AND CONSTANTS

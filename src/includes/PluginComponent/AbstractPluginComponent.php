@@ -1,14 +1,10 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Plugin;
+namespace DeepWebSolutions\Framework\Foundations\PluginComponent;
 
 use DeepWebSolutions\Framework\Exceptions\InexistentPropertyException;
 use DeepWebSolutions\Framework\Exceptions\ReadOnlyPropertyException;
 use DeepWebSolutions\Framework\Helpers\FileSystem\Objects\PathsTrait;
-use DeepWebSolutions\Framework\Utilities\Logging\LoggingService;
-use DeepWebSolutions\Framework\Utilities\Logging\Service\LoggingServiceAwareInterface;
-use DeepWebSolutions\Framework\Utilities\Logging\Service\LoggingServiceAwareTrait;
-use Psr\Log\LogLevel;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,12 +14,11 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Plugin
+ * @package DeepWebSolutions\WP-Framework\Foundations\PluginComponent
  */
-abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, PluginComponentInterface {
+abstract class AbstractPluginComponent implements PluginComponentInterface {
 	// region TRAITS
 
-	use LoggingServiceAwareTrait;
 	use PathsTrait;
 	use PluginComponentTrait;
 
@@ -34,12 +29,10 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 	/**
 	 * AbstractPluginComponent constructor.
 	 *
-	 * @param   LoggingService  $logging_service    Instance of the logging service.
 	 * @param   string|null     $component_id       Unique ID of the class instance. Must be persistent across requests.
 	 * @param   string|null     $component_name     The public name of the using class instance. Must be persistent across requests. Mustn't be unique.
 	 */
-	public function __construct( LoggingService $logging_service, ?string $component_id = null, ?string $component_name = null ) {
-		$this->set_logging_service( $logging_service );
+	public function __construct( ?string $component_id = null, ?string $component_name = null ) {
 		$this->set_instance_id( $component_id ?: hash( 'md5', static::class ) ); // phpcs:ignore
 		$this->set_instance_name( $component_name ?: static::class ); // phpcs:ignore
 	}
@@ -64,13 +57,7 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 			return $this->{$function}();
 		}
 
-		return $this->log_event_and_return_exception(
-			LogLevel::DEBUG,
-			sprintf( 'Inexistent property: %s', $name ),
-			InexistentPropertyException::class,
-			null,
-			'framework'
-		);
+		return new InexistentPropertyException( sprintf( 'Inexistent property: %s', $name ) );
 	}
 
 	/**
@@ -82,7 +69,6 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 	 * @param   string  $name   The name of the property that should be reassigned.
 	 * @param   mixed   $value  The value that should be assigned to the property.
 	 *
-	 * @noinspection PhpDocMissingThrowsInspection
 	 * @throws  InexistentPropertyException  Thrown if there are no getters and no setter for the property, and a global variable also doesn't exist already.
 	 * @throws  ReadOnlyPropertyException    Thrown if there is a getter for the property, but no setter.
 	 *
@@ -96,24 +82,10 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 		$has_get_getter = method_exists( $this, "get_{$name}" ) || method_exists( $this, 'get' . ucfirst( $name ) );
 		$has_is_getter  = method_exists( $this, "is_{$name}" ) || method_exists( $this, 'is' . ucfirst( $name ) );
 		if ( $has_get_getter || $has_is_getter ) {
-			/* @noinspection PhpUnhandledExceptionInspection */
-			throw $this->log_event_and_return_exception(
-				LogLevel::DEBUG,
-				sprintf( 'Property %s is ready-only', $name ),
-				ReadOnlyPropertyException::class,
-				null,
-				'framework'
-			);
+			throw new ReadOnlyPropertyException( sprintf( 'Property %s is ready-only', $name ) );
 		}
 
-		/* @noinspection PhpUnhandledExceptionInspection */
-		throw $this->log_event_and_return_exception(
-			LogLevel::DEBUG,
-			sprintf( 'Inexistent property: %s', $name ),
-			InexistentPropertyException::class,
-			null,
-			'framework'
-		);
+		throw new InexistentPropertyException( sprintf( 'Inexistent property: %s', $name ) );
 	}
 
 	/**

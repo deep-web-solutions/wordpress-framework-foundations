@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Plugin;
+namespace DeepWebSolutions\Framework\Foundations\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Plugin
+ * @package DeepWebSolutions\WP-Framework\Foundations\Plugin
  */
 interface PluginInterface {
 	/**

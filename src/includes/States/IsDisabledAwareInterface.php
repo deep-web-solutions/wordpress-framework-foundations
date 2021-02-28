@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Interfaces;
+namespace DeepWebSolutions\Framework\Foundations\States;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Interfaces
+ * @package DeepWebSolutions\WP-Framework\Foundations\States
  */
 interface IsDisabledAwareInterface {
 	/**

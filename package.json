@@ -1,16 +1,16 @@
 {
-  "name": "dws-wp-framework-utilities",
+  "name": "dws-wp-framework-foundations",
   "version": "1.0.0",
-  "title": "DWS WordPress Framework - Utilities",
+  "title": "DWS WordPress Framework - Foundations",
   "author": "Deep Web Solutions GmbH",
-  "homepage": "https://github.com/deep-web-solutions/wordpress-framework-utilities#readme",
+  "homepage": "https://github.com/deep-web-solutions/wordpress-framework-foundations#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/deep-web-solutions/wordpress-framework-utilities.git"
+    "url": "https://github.com/deep-web-solutions/wordpress-framework-foundations.git"
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/deep-web-solutions/wordpress-framework-utilities/issues"
+    "url": "https://github.com/deep-web-solutions/wordpress-framework-foundations/issues"
   },
   "devDependencies": {
     "grunt": "^1.3.0",

@@ -1,18 +1,18 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities\Plugin;
+namespace DeepWebSolutions\Framework\Plugin;
 
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Trait for working with the PluginInterface interface.
+ * Basic implementation of the plugin interface.
  *
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Utilities\Plugin
+ * @package DeepWebSolutions\WP-Framework\Plugin
  */
 trait PluginTrait {
 	// region FIELDS AND CONSTANTS

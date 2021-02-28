@@ -1,6 +1,8 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Utilities\Plugin;
+namespace DeepWebSolutions\Framework\Plugin;
+
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the plugin-aware interface.
@@ -8,7 +10,7 @@ namespace DeepWebSolutions\Framework\Utilities\Plugin;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Utilities\Plugin
+ * @package DeepWebSolutions\WP-Framework\Plugin
  */
 trait PluginAwareTrait {
 	// region FIELDS AND CONSTANTS

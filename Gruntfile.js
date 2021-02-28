@@ -22,10 +22,10 @@ module.exports = function( grunt ) {
 						cwd				: '<%= dirs.code %>',
 						domainPath		: 'languages',
 						exclude			: [],
-						potFilename		: 'dws-wp-framework-utilities.pot',
+						potFilename		: 'dws-wp-framework-foundations.pot',
 						mainFile		: 'bootstrap.php',
 						potHeaders		: {
-							'report-msgid-bugs-to'	: 'https://github.com/deep-web-solutions/wordpress-framework-utilities/issues',
+							'report-msgid-bugs-to'	: 'https://github.com/deep-web-solutions/wordpress-framework-foundations/issues',
 							'project-id-version'	: '<%= package.title %> <%= package.version %>',
 							'poedit'     		    : true,
 							'x-poedit-keywordslist' : true,
@@ -33,9 +33,9 @@ module.exports = function( grunt ) {
 						processPot		: function( pot ) {
 							delete pot.headers['x-generator'];
 
-							// include the default value of the constant DWS_WP_FRAMEWORK_UTILITIES_NAME
-							pot.translations['']['DWS_WP_FRAMEWORK_UTILITIES_NAME'] = {
-								msgid: 'Deep Web Solutions: Framework Utilities',
+							// include the default value of the constant DWS_WP_FRAMEWORK_FOUNDATIONS_NAME
+							pot.translations['']['DWS_WP_FRAMEWORK_FOUNDATIONS_NAME'] = {
+								msgid: 'Deep Web Solutions: Framework Foundations',
 								comments: { reference: 'bootstrap.php:35' },
 								msgstr: [ '' ]
 							};

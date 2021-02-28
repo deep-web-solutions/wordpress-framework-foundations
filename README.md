@@ -1,4 +1,4 @@
-# DWS WordPress Framework - Utilities
+# DWS WordPress Framework - Foundations
 
 **Contributors:** Antonius Hegyes, Deep Web Solutions GmbH  
 **Requires at least:** 5.5  
@@ -11,16 +11,16 @@
 
 ## Description 
 
-[![Build Status](https://travis-ci.com/deep-web-solutions/wordpress-framework-utilities.svg?branch=master)](https://travis-ci.com/deep-web-solutions/wordpress-framework-utilities)
-[![Maintainability](https://api.codeclimate.com/v1/badges/ccac5a84720a1b6230f6/maintainability)](https://codeclimate.com/github/deep-web-solutions/wordpress-framework-utilities/maintainability)
+[![Build Status](https://travis-ci.com/deep-web-solutions/wordpress-framework-foundations.svg?branch=master)](https://travis-ci.com/deep-web-solutions/wordpress-framework-utilities)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c46ed48bafc1914993c5/maintainability)](https://codeclimate.com/github/deep-web-solutions/wordpress-framework-foundations/maintainability)
 
-A set of related utility classes to kick-start WordPress development.
+A set of related foundational classes to kick-start WordPress plugin development.
 
 
 ## Installation
 
 The package is designed to be installed via Composer. It may work as a stand-alone but that is not officially supported.
-The package's name is `deep-web-solutions/wp-framework-utilities`.
+The package's name is `deep-web-solutions/wp-framework-foundations`.
 
 
 ## Contributing 

@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Resettable
  */
-trait ResetableTrait {
+trait ResettableTrait {
 	// region FIELDS AND CONSTANTS
 
 	/**

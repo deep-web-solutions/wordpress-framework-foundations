@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Core\Interfaces\Actions\Traits\Setupable;
+namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,8 +10,8 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Core\Interfaces\Actions\Traits\Setupable
+ * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Setupable
  */
-trait Setupable {
+trait SetupableExtensionTrait {
 	/* empty on purpose */
 }

@@ -1,33 +1,33 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\Actions\Runnable;
+namespace DeepWebSolutions\Framework\Foundations\Actions\Resetable;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Basic implementation of the runnable interface.
+ * Basic implementation of the resetable interface.
  *
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Runnable
+ * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Resetable
  */
-trait RunnableTrait {
+trait ResetableTrait {
 	// region FIELDS AND CONSTANTS
 
 	/**
-	 * The result of the run operation. Null if successful.
+	 * The result of the reset operation. Null if successful.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @access  protected
-	 * @var     RunFailureException|null
+	 * @var     ResetFailureException|null
 	 */
-	protected ?RunFailureException $run_result;
+	protected ?ResetFailureException $reset_result;
 
 	/**
-	 * Whether the using instance is ran or not. Null if not decided yet.
+	 * Whether the using instance is reset or not. Null if not decided yet.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -35,34 +35,34 @@ trait RunnableTrait {
 	 * @access  protected
 	 * @var     bool|null
 	 */
-	protected ?bool $is_ran = null;
+	protected ?bool $is_reset = null;
 
 	// endregion
 
 	// region GETTERS
 
 	/**
-	 * Returns the result of the run operation.
+	 * Returns the result of the reset operation.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @return  RunFailureException|null
+	 * @return  ResetFailureException|null
 	 */
-	public function get_run_result(): ?RunFailureException {
-		return $this->run_result;
+	public function get_reset_result(): ?ResetFailureException {
+		return $this->reset_result;
 	}
 
 	/**
-	 * Returns whether the using instance is ran or not. Null if not decided yet.
+	 * Returns whether the using instance is reset or not. Null if not decided yet.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return  bool|null
 	 */
-	public function is_ran(): ?bool {
-		return $this->is_ran;
+	public function is_reset(): ?bool {
+		return $this->is_reset;
 	}
 
 	// endregion
@@ -70,12 +70,12 @@ trait RunnableTrait {
 	// region METHODS
 
 	/**
-	 * Execute the run logic of the implementing class.
+	 * Execute the reset logic of the implementing class.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	abstract public function run(): ?RunFailureException;
+	abstract public function reset(): ?ResetFailureException;
 
 	// endregion
 }

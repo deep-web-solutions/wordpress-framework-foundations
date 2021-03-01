@@ -12,7 +12,7 @@
 ## Description 
 
 [![Build Status](https://travis-ci.com/deep-web-solutions/wordpress-framework-foundations.svg?branch=master)](https://travis-ci.com/deep-web-solutions/wordpress-framework-utilities)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c46ed48bafc1914993c5/maintainability)](https://codeclimate.com/github/deep-web-solutions/wordpress-framework-foundations/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/75fcacbb8919d442a664/maintainability)](https://codeclimate.com/github/deep-web-solutions/wordpress-framework-foundations/maintainability)
 
 A set of related foundational classes to kick-start WordPress plugin development.
 

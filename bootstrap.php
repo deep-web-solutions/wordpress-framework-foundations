@@ -87,7 +87,7 @@ function dws_wp_framework_get_foundations_min_php() {
  *
  * @return  string
  */
-function dws_wp_framework_get_foundations_min_wp(): string {
+function dws_wp_framework_get_foundations_min_wp() {
 	return constant( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_MIN_WP' );
 }
 

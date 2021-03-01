@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\States\IsActive;
+namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,8 +10,8 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\States\IsActive
+ * @package DeepWebSolutions\WP-Framework\Foundations\States\Activeable
  */
-trait IsActiveExtensionTrait {
+trait ActiveableExtensionTrait {
 	/* empty on purpose */
 }

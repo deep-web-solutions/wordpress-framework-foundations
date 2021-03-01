@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\States\IsActive;
+namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
 
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
@@ -8,14 +8,14 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Basic implementation of the is-active interface.
+ * Basic implementation of the activeable interface.
  *
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\States\IsActive
+ * @package DeepWebSolutions\WP-Framework\Foundations\States\Activeable
  */
-trait IsActiveAwareTrait {
+trait ActiveableTrait {
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -65,9 +65,9 @@ trait IsActiveAwareTrait {
 	 * @return  bool
 	 */
 	protected function maybe_check_is_active_traits(): bool {
-		if ( false !== array_search( IsActiveExtensionTrait::class, Objects::class_uses_deep_list( $this ), true ) ) {
+		if ( false !== array_search( ActiveableExtensionTrait::class, Objects::class_uses_deep_list( $this ), true ) ) {
 			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
-				if ( false === array_search( IsActiveExtensionTrait::class, $deep_used_traits, true ) ) {
+				if ( false === array_search( ActiveableExtensionTrait::class, $deep_used_traits, true ) ) {
 					continue;
 				}
 
@@ -93,12 +93,12 @@ trait IsActiveAwareTrait {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @see     IsActiveLocalTrait::is_active_local()
+	 * @see     ActiveableLocalTrait::is_active_local()
 	 *
 	 * @return  bool
 	 */
 	protected function maybe_check_is_active_local(): bool {
-		if ( in_array( IsActiveLocalTrait::class, Objects::class_uses_deep_list( $this ), true ) && method_exists( $this, 'is_active_local' ) ) {
+		if ( in_array( ActiveableLocalTrait::class, Objects::class_uses_deep_list( $this ), true ) && method_exists( $this, 'is_active_local' ) ) {
 			return $this->is_active_local();
 		}
 

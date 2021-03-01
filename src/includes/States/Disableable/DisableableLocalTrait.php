@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\States\IsDisabled;
+namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -10,9 +10,9 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\States\IsDisabled
+ * @package DeepWebSolutions\WP-Framework\Foundations\States\Disableable
  */
-trait IsDisabledLocalTrait {
+trait DisableableLocalTrait {
 	/**
 	 * Using classes should define their local is_disabled logic in here.
 	 *

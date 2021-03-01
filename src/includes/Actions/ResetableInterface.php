@@ -13,12 +13,13 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions
  */
-interface RunnableInterface {
+interface ResetableInterface {
 	/**
-	 * Should be called when the implementing class has been fully configured and must now perform its action.
+	 * Should be called when the implementing class must be set in a "clean-slate" state. After calling this function,
+	 * the whole class should be ready for reuse as if just constructed.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	public function run(): ?Runnable\RunFailureException;
+	public function reset(): ?Resetable\ResetFailureException;
 }

@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\States
  */
-interface IsDisabledAwareInterface {
+interface DisableableInterface {
 	/**
 	 * Should define logic for determining whether the implementing class is disabled or not.
 	 *

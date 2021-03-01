@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\States\IsDisabled;
+namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
 
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
@@ -8,14 +8,14 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Trait for working with the IsDisabledInterface interface.
+ * Basic implementation of the disableable interface.
  *
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\States\IsDisabled
+ * @package DeepWebSolutions\WP-Framework\Foundations\States\Disableable
  */
-trait IsDisabledAwareTrait {
+trait DisableableTrait {
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -65,9 +65,9 @@ trait IsDisabledAwareTrait {
 	 * @return  bool
 	 */
 	protected function maybe_check_is_disabled_traits(): bool {
-		if ( false !== array_search( IsDisabledExtensionTrait::class, Objects::class_uses_deep_list( $this ), true ) ) {
+		if ( false !== array_search( DisableableExtensionTrait::class, Objects::class_uses_deep_list( $this ), true ) ) {
 			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
-				if ( false === array_search( IsDisabledExtensionTrait::class, $deep_used_traits, true ) ) {
+				if ( false === array_search( DisableableExtensionTrait::class, $deep_used_traits, true ) ) {
 					continue;
 				}
 
@@ -93,12 +93,12 @@ trait IsDisabledAwareTrait {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @see     IsDisabledLocalTrait::is_disabled_local()
+	 * @see     DisableableLocalTrait::is_disabled_local()
 	 *
 	 * @return  bool
 	 */
 	protected function maybe_check_is_disabled_local(): bool {
-		if ( in_array( IsDisabledLocalTrait::class, Objects::class_uses_deep_list( $this ), true ) && method_exists( $this, 'is_disabled_local' ) ) {
+		if ( in_array( DisableableLocalTrait::class, Objects::class_uses_deep_list( $this ), true ) && method_exists( $this, 'is_disabled_local' ) ) {
 			return $this->is_disabled_local();
 		}
 

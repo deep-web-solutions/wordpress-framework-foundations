@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Foundations\PluginComponent;
 
-use DeepWebSolutions\Framework\Exceptions\InexistentPropertyException;
-use DeepWebSolutions\Framework\Exceptions\ReadOnlyPropertyException;
+use DeepWebSolutions\Framework\Foundations\Exceptions\InexistentPropertyException;
+use DeepWebSolutions\Framework\Foundations\Exceptions\ReadOnlyPropertyException;
 use DeepWebSolutions\Framework\Helpers\FileSystem\Objects\PathsTrait;
 
 defined( 'ABSPATH' ) || exit;

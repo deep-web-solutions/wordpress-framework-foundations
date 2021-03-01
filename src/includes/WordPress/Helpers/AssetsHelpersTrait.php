@@ -38,7 +38,7 @@ trait AssetsHelpersTrait {
 	public function get_asset_handle( string $name = '', array $extra = array(), string $root = 'dws-framework-foundations' ): string {
 		if ( $this instanceof PluginComponentInterface ) {
 			$root = ( 'dws-framework-foundations' === $root ) ? '' : $root;
-			$root = join( '-', array( $this->get_plugin()->get_plugin_slug(), $root ?: $this->get_instance_name() ) ); // phpcs:ignore
+			$root = join( '_', array( $this->get_plugin()->get_plugin_slug(), $root ?: $this->get_instance_name() ) ); // phpcs:ignore
 		} elseif ( $this instanceof PluginAwareInterface ) {
 			$root = $this->get_plugin()->get_plugin_slug();
 		}

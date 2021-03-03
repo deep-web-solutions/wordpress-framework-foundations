@@ -35,7 +35,7 @@ trait RunnableTrait {
 	 * @access  protected
 	 * @var     bool|null
 	 */
-	protected ?bool $is_ran = null;
+	protected ?bool $is_run = null;
 
 	// endregion
 
@@ -62,7 +62,7 @@ trait RunnableTrait {
 	 * @return  bool|null
 	 */
 	public function is_ran(): ?bool {
-		return $this->is_ran;
+		return $this->is_run;
 	}
 
 	// endregion

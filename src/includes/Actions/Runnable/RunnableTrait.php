@@ -61,7 +61,7 @@ trait RunnableTrait {
 	 *
 	 * @return  bool|null
 	 */
-	public function is_ran(): ?bool {
+	public function is_run(): ?bool {
 		return $this->is_run;
 	}
 

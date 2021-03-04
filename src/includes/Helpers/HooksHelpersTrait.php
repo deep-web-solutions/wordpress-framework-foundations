@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\WordPress\Helpers;
+namespace DeepWebSolutions\Framework\Foundations\Helpers;
 
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\PluginComponent\PluginComponentInterface;
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\WordPress\Helpers
+ * @package DeepWebSolutions\WP-Framework\Foundations\Helpers
  */
 trait HooksHelpersTrait {
 	use HelpersModuleTrait {

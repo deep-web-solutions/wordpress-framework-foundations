@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
 
+use LogicException;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -46,12 +48,14 @@ trait NodeTrait {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
+	 * @throws  LogicException  Thrown if the parent is not a node too.
+	 *
 	 * @return  NodeInterface|null
 	 */
 	public function get_parent(): ?NodeInterface {
 		$parent = $this->get_parent_trait();
 		if ( ! $parent instanceof NodeInterface ) {
-			throw new \LogicException( 'The parent of a node must be a node itself.' );
+			throw new LogicException( 'The parent of a node must be a node too.' );
 		}
 
 		return $parent;
@@ -79,9 +83,15 @@ trait NodeTrait {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
+	 * @throws  LogicException  Thrown if the parent is not a node too.
+	 *
 	 * @param   ParentInterface     $parent     The parent of the using instance.
 	 */
 	public function set_parent( ParentInterface $parent ): void {
+		if ( ! $parent instanceof NodeInterface ) {
+			throw new LogicException( 'The parent of a node must be a node too.' );
+		}
+
 		$this->set_parent_child_trait( $parent );
 		$this->set_depth( $parent->get_depth() + 1 );
 	}

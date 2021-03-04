@@ -66,7 +66,7 @@ trait ChildTrait {
 	 *
 	 * @param   ParentInterface     $parent     The parent of the using instance.
 	 */
-	public function set_parent( ParentInterface $parent ): void {
+	public function set_parent( ParentInterface $parent ) {
 		$this->parent = $parent;
 	}
 

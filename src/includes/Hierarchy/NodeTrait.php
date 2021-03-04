@@ -87,7 +87,7 @@ trait NodeTrait {
 	 *
 	 * @param   ParentInterface     $parent     The parent of the using instance.
 	 */
-	public function set_parent( ParentInterface $parent ): void {
+	public function set_parent( ParentInterface $parent ) {
 		if ( ! $parent instanceof NodeInterface ) {
 			throw new LogicException( 'The parent of a node must be a node too.' );
 		}
@@ -104,7 +104,7 @@ trait NodeTrait {
 	 *
 	 * @param   int     $depth      The depth of the using distance.
 	 */
-	public function set_depth( int $depth ): void {
+	public function set_depth( int $depth ) {
 		$this->depth = $depth;
 	}
 

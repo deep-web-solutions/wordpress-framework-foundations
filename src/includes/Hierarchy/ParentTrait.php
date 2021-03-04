@@ -71,7 +71,7 @@ trait ParentTrait {
 	 *
 	 * @param   object[]    $children   Children to set.
 	 */
-	public function set_children( array $children ): void {
+	public function set_children( array $children ) {
 		$this->children = array_filter( $children, 'is_object' );
 	}
 
@@ -84,9 +84,10 @@ trait ParentTrait {
 	 *
 	 * @param   string|object       $child      Object or class name to instantiate and add as a child.
 	 *
+	 * @noinspection PhpMissingReturnTypeInspection
 	 * @return  bool
 	 */
-	public function add_child( $child ): bool {
+	public function add_child( $child ) {
 		if ( ! is_a( $this, ParentInterface::class ) ) {
 			return false;
 		}

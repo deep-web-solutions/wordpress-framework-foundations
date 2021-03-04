@@ -86,7 +86,7 @@ trait PluginComponentTrait {
 	 *
 	 * @param   string  $instance_id    The value to be set.
 	 */
-	public function set_instance_id( string $instance_id ): void {
+	public function set_instance_id( string $instance_id ) {
 		$this->instance_id = $instance_id;
 	}
 
@@ -98,7 +98,7 @@ trait PluginComponentTrait {
 	 *
 	 * @param   string  $instance_name   The value to be set.
 	 */
-	public function set_instance_name( string $instance_name ): void {
+	public function set_instance_name( string $instance_name ) {
 		$this->instance_name = $instance_name;
 	}
 

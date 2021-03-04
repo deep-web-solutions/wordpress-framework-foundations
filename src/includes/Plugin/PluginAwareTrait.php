@@ -54,7 +54,7 @@ trait PluginAwareTrait {
 	 *
 	 * @param   PluginInterface     $plugin     The instance of the plugin to use from now on.
 	 */
-	public function set_plugin( PluginInterface $plugin ): void {
+	public function set_plugin( PluginInterface $plugin ) {
 		$this->plugin = $plugin;
 	}
 

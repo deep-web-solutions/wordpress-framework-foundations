@@ -30,6 +30,8 @@ interface PluginAwareInterface {
 	 * @version 1.0.0
 	 *
 	 * @param   PluginInterface     $plugin     Plugin instance to use from now on.
+	 *
+	 * @return  mixed
 	 */
-	public function set_plugin( PluginInterface $plugin ): void;
+	public function set_plugin( PluginInterface $plugin );
 }

@@ -16,7 +16,11 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Foundations\PluginComponent
  */
 trait PluginComponentTrait {
+	// region TRAITS
+
 	use PluginAwareTrait;
+
+	// endregion
 
 	// region FIELDS AND CONSTANTS
 

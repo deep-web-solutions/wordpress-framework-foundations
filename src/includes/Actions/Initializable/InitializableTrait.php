@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Initializable;
 
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
@@ -16,6 +17,12 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Initializable
  */
 trait InitializableTrait {
+	// region TRAITS
+
+	use ActionExtensionHelpersTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -80,7 +87,7 @@ trait InitializableTrait {
 	 */
 	public function initialize(): ?InitializationFailureException {
 		if ( is_null( $this->is_initialized ) ) {
-			if ( ! is_null( $result = $this->maybe_initialize_traits() ) ) { // phpcs:ignore
+			if ( ! is_null( $result = $this->maybe_action_extension_traits( InitializableExtensionTrait::class ) ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
 				$this->initialization_result = $result;
 			} elseif ( ! is_null( $result = $this->maybe_initialize_local() ) ) { // phpcs:ignore
@@ -98,37 +105,6 @@ trait InitializableTrait {
 	// endregion
 
 	// region HELPERS
-
-	/**
-	 * Execute any potential trait initialization logic.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  InitializationFailureException|null
-	 */
-	protected function maybe_initialize_traits(): ?InitializationFailureException {
-		if ( false !== array_search( InitializableExtensionTrait::class, Objects::class_uses_deep_list( $this ), true ) ) {
-			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
-				if ( false === array_search( InitializableExtensionTrait::class, $deep_used_traits, true ) ) {
-					continue;
-				}
-
-				$trait_boom  = explode( '\\', $trait_name );
-				$method_name = 'initialize' . strtolower( preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) );
-				$method_name = Strings::ends_with( $method_name, '_trait' ) ? str_replace( '_trait', '', $method_name ) : $method_name;
-
-				if ( method_exists( $this, $method_name ) ) {
-					$result = $this->{$method_name}();
-					if ( ! is_null( $result ) ) {
-						return $result;
-					}
-				}
-			}
-		}
-
-		return null;
-	}
 
 	/**
 	 * Execute any potential local initialization logic.

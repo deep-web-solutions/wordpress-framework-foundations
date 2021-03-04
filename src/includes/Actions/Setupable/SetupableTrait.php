@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
 
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
@@ -16,6 +17,12 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Setupable
  */
 trait SetupableTrait {
+	// region TRAITS
+
+	use ActionExtensionHelpersTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -80,7 +87,7 @@ trait SetupableTrait {
 	 */
 	public function setup(): ?SetupFailureException {
 		if ( is_null( $this->is_setup ) ) {
-			if ( ! is_null( $result = $this->maybe_setup_traits() ) ) { // phpcs:ignore
+			if ( ! is_null( $result = $this->maybe_action_extension_traits( SetupableExtensionTrait::class ) ) ) { // phpcs:ignore
 				$this->is_setup     = false;
 				$this->setup_result = $result;
 			} elseif ( ! is_null( $result = $this->maybe_setup_local() ) ) { // phpcs:ignore
@@ -98,38 +105,6 @@ trait SetupableTrait {
 	// endregion
 
 	// region HELPERS
-
-	/**
-	 * Execute any potential trait setup logic.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  SetupFailureException|null
-	 */
-	protected function maybe_setup_traits(): ?SetupFailureException {
-		if ( false !== array_search( SetupableExtensionTrait::class, Objects::class_uses_deep_list( $this ), true ) ) {
-			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
-				if ( false === array_search( SetupableExtensionTrait::class, $deep_used_traits, true ) ) {
-					continue;
-				}
-
-				$trait_boom  = explode( '\\', $trait_name );
-				$method_name = 'setup' . strtolower( preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) );
-				$method_name = Strings::ends_with( $method_name, '_trait' ) ? str_replace( '_trait', '', $method_name ) : $method_name;
-
-				if ( method_exists( $this, $method_name ) ) {
-					$result = $this->{$method_name}();
-
-					if ( ! is_null( $result ) ) {
-						return $result;
-					}
-				}
-			}
-		}
-
-		return null;
-	}
 
 	/**
 	 * Execute any potential local setup logic.

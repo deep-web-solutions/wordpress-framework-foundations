@@ -4,7 +4,6 @@ namespace DeepWebSolutions\Framework\Foundations\Helpers;
 
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
-use Exception;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,11 +23,12 @@ trait ActionExtensionHelpersTrait {
 	 * @version 1.0.0
 	 *
 	 * @param   string  $extension_trait    The name of the extension trait to look for.
+	 * @param   mixed   $success_return     Default return value on success.
 	 * @param   string  $prefix             Optional method name prefix.
 	 *
-	 * @return  Exception|null
+	 * @return  mixed
 	 */
-	protected function maybe_execute_extension_traits( string $extension_trait, string $prefix = '' ): ?Exception {
+	protected function maybe_execute_extension_traits( string $extension_trait, $success_return = null, string $prefix = '' ) {
 		if ( false !== array_search( $extension_trait, Objects::class_uses_deep_list( $this ), true ) ) {
 			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
 				if ( false === array_search( $extension_trait, $deep_used_traits, true ) ) {
@@ -36,7 +36,7 @@ trait ActionExtensionHelpersTrait {
 				}
 
 				$trait_boom  = explode( '\\', $trait_name );
-				$method_name = $prefix . strtolower( preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) );
+				$method_name = ltrim( $prefix . strtolower( preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) ), '_' );
 				$method_name = Strings::ends_with( $method_name, '_trait' ) ? str_replace( '_trait', '', $method_name ) : $method_name;
 
 				if ( method_exists( $this, $method_name ) ) {
@@ -49,6 +49,6 @@ trait ActionExtensionHelpersTrait {
 			}
 		}
 
-		return null;
+		return $success_return;
 	}
 }

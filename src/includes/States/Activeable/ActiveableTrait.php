@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
 
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
@@ -16,6 +17,12 @@ defined( 'ABSPATH' ) || exit;
  * @package DeepWebSolutions\WP-Framework\Foundations\States\Activeable
  */
 trait ActiveableTrait {
+	// region TRAITS
+
+	use ActionExtensionHelpersTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -45,8 +52,8 @@ trait ActiveableTrait {
 		if ( is_null( $this->is_active ) ) {
 			$this->is_active = true;
 
+			$this->is_active = $this->is_active && $this->maybe_execute_extension_traits( ActiveableExtensionTrait::class, true, 'is' );
 			$this->is_active = $this->is_active && $this->maybe_check_is_active_local();
-			$this->is_active = $this->is_active && $this->maybe_check_is_active_traits();
 		}
 
 		return $this->is_active;
@@ -55,37 +62,6 @@ trait ActiveableTrait {
 	// endregion
 
 	// region HELPERS
-
-	/**
-	 * Check any potential trait is_active logic.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  bool
-	 */
-	protected function maybe_check_is_active_traits(): bool {
-		if ( false !== array_search( ActiveableExtensionTrait::class, Objects::class_uses_deep_list( $this ), true ) ) {
-			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
-				if ( false === array_search( ActiveableExtensionTrait::class, $deep_used_traits, true ) ) {
-					continue;
-				}
-
-				$trait_boom  = explode( '\\', $trait_name );
-				$method_name = 'is_active' . strtolower( preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) );
-				$method_name = Strings::ends_with( $method_name, '_trait' ) ? str_replace( '_trait', '', $method_name ) : $method_name;
-
-				if ( method_exists( $this, $method_name ) ) {
-					$result = $this->{$method_name}();
-					if ( false === $result ) {
-						return false;
-					}
-				}
-			}
-		}
-
-		return true;
-	}
 
 	/**
 	 * Check any potential local is_active logic.

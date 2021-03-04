@@ -18,6 +18,8 @@ interface InitializableInterface {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  Initializable\InitializationFailureException|null
 	 */
 	public function initialize(): ?Initializable\InitializationFailureException;
 }

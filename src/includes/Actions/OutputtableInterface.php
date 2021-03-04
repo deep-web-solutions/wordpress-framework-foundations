@@ -18,6 +18,8 @@ interface OutputtableInterface {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  Outputtable\OutputFailureException|null
 	 */
 	public function output(): ?Outputtable\OutputFailureException;
 }

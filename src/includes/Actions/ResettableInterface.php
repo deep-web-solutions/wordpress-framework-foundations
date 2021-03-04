@@ -20,6 +20,8 @@ interface ResettableInterface {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  Resettable\ResetFailureException|null
 	 */
 	public function reset(): ?Resettable\ResetFailureException;
 }

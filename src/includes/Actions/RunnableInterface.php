@@ -19,6 +19,8 @@ interface RunnableInterface {
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
+	 *
+	 * @return  Runnable\RunFailureException|null
 	 */
 	public function run(): ?Runnable\RunFailureException;
 }

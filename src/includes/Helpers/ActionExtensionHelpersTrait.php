@@ -28,7 +28,7 @@ trait ActionExtensionHelpersTrait {
 	 *
 	 * @return  Exception|null
 	 */
-	protected function maybe_action_extension_traits( string $extension_trait, string $prefix = '' ): ?Exception {
+	protected function maybe_execute_extension_traits( string $extension_trait, string $prefix = '' ): ?Exception {
 		if ( false !== array_search( $extension_trait, Objects::class_uses_deep_list( $this ), true ) ) {
 			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
 				if ( false === array_search( $extension_trait, $deep_used_traits, true ) ) {

@@ -116,7 +116,7 @@ trait SetupableTrait {
 	 * @return  SetupFailureException|null
 	 */
 	protected function maybe_setup_local(): ?SetupFailureException {
-		if ( in_array( SetupableLocalTrait::class, Objects::class_uses_deep_list( $this ), true ) && method_exists( $this, 'setup_local' ) ) {
+		if ( Objects::has_trait_deep( SetupableLocalTrait::class, $this ) && method_exists( $this, 'setup_local' ) ) {
 			return $this->setup_local();
 		}
 

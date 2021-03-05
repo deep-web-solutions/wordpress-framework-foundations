@@ -29,7 +29,7 @@ trait ActionExtensionHelpersTrait {
 	 * @return  mixed
 	 */
 	protected function maybe_execute_extension_traits( string $extension_trait, $success_return = null, string $prefix = '' ) {
-		if ( false !== array_search( $extension_trait, Objects::class_uses_deep_list( $this ), true ) ) {
+		if ( Objects::has_trait_deep( $extension_trait, $this ) ) {
 			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
 				if ( false === array_search( $extension_trait, $deep_used_traits, true ) ) {
 					continue;

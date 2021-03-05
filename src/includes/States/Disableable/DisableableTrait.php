@@ -4,7 +4,6 @@ namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
 
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
-use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -74,7 +73,7 @@ trait DisableableTrait {
 	 * @return  bool
 	 */
 	protected function maybe_check_is_disabled_local(): bool {
-		if ( in_array( DisableableLocalTrait::class, Objects::class_uses_deep_list( $this ), true ) && method_exists( $this, 'is_disabled_local' ) ) {
+		if ( Objects::has_trait_deep( DisableableLocalTrait::class, $this ) && method_exists( $this, 'is_disabled_local' ) ) {
 			return $this->is_disabled_local();
 		}
 

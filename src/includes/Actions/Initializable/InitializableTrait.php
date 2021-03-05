@@ -116,7 +116,7 @@ trait InitializableTrait {
 	 * @return  InitializationFailureException|null
 	 */
 	protected function maybe_initialize_local(): ?InitializationFailureException {
-		if ( in_array( InitializableLocalTrait::class, Objects::class_uses_deep_list( $this ), true ) && method_exists( $this, 'initialize_local' ) ) {
+		if ( Objects::has_trait_deep( InitializableLocalTrait::class, $this ) && method_exists( $this, 'initialize_local' ) ) {
 			return $this->initialize_local();
 		}
 

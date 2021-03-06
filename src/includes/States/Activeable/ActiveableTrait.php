@@ -51,8 +51,8 @@ trait ActiveableTrait {
 		if ( is_null( $this->is_active ) ) {
 			$this->is_active = true;
 
-			$this->is_active = $this->is_active && $this->maybe_execute_extension_traits( ActiveableExtensionTrait::class, true, 'is' );
 			$this->is_active = $this->is_active && $this->maybe_check_is_active_local();
+			$this->is_active = $this->is_active && $this->maybe_execute_extension_traits( ActiveableExtensionTrait::class, true, 'is' );
 		}
 
 		return $this->is_active;

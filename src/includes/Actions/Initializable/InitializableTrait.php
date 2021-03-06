@@ -86,10 +86,10 @@ trait InitializableTrait {
 	 */
 	public function initialize(): ?InitializationFailureException {
 		if ( is_null( $this->is_initialized ) ) {
-			if ( ! is_null( $result = $this->maybe_execute_extension_traits( InitializableExtensionTrait::class ) ) ) { // phpcs:ignore
+			if ( ! is_null( $result = $this->maybe_initialize_local() ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
 				$this->initialization_result = $result;
-			} elseif ( ! is_null( $result = $this->maybe_initialize_local() ) ) { // phpcs:ignore
+			} elseif ( ! is_null( $result = $this->maybe_execute_extension_traits( InitializableExtensionTrait::class ) ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
 				$this->initialization_result = $result;
 			} else {

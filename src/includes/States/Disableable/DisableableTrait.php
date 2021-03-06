@@ -51,8 +51,8 @@ trait DisableableTrait {
 		if ( is_null( $this->is_disabled ) ) {
 			$this->is_disabled = false;
 
-			$this->is_disabled = $this->is_disabled || $this->maybe_execute_extension_traits( DisableableExtensionTrait::class, false, 'is' );
 			$this->is_disabled = $this->is_disabled || $this->maybe_check_is_disabled_local();
+			$this->is_disabled = $this->is_disabled || $this->maybe_execute_extension_traits( DisableableExtensionTrait::class, false, 'is' );
 		}
 
 		return $this->is_disabled;

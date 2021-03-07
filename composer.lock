@@ -71,12 +71,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-helpers.git",
-                "reference": "d5f93ba692085523e5516d301aefc9aefcdaa3db"
+                "reference": "bc4fa89b2477b0c90a1c1c60e8cf0494a17c3a91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/d5f93ba692085523e5516d301aefc9aefcdaa3db",
-                "reference": "d5f93ba692085523e5516d301aefc9aefcdaa3db",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/bc4fa89b2477b0c90a1c1c60e8cf0494a17c3a91",
+                "reference": "bc4fa89b2477b0c90a1c1c60e8cf0494a17c3a91",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +129,7 @@
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-helpers/issues",
                 "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/master"
             },
-            "time": "2021-03-06T00:28:52+00:00"
+            "time": "2021-03-06T20:15:31+00:00"
         }
     ],
     "packages-dev": [

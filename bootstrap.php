@@ -68,7 +68,7 @@ if ( dws_wp_framework_check_php_wp_requirements_met( dws_wp_framework_get_founda
 	$dws_foundations_init_function = function() {
 		\define(
 			__NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_INIT',
-			apply_filters(
+			\apply_filters(
 				'dws_wp_framework_foundations_init_status',
 				dws_wp_framework_get_helpers_init_status(),
 				__NAMESPACE__

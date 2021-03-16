@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Abstract trait for signaling that some local setup needs to take place too.

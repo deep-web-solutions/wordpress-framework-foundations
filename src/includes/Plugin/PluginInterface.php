@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Plugin;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Describes a plugin instance. Implementing classes need to define getters pertaining to the WordPress plugin that this

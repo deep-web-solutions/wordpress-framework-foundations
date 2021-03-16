@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
 
 use LogicException;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the node interface.

@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the setupable interface.
@@ -85,11 +85,11 @@ trait SetupableTrait {
 	 * @version 1.0.0
 	 */
 	public function setup(): ?SetupFailureException {
-		if ( is_null( $this->is_setup ) ) {
-			if ( ! is_null( $result = $this->maybe_setup_local() ) ) { // phpcs:ignore
+		if ( \is_null( $this->is_setup ) ) {
+			if ( ! \is_null( $result = $this->maybe_setup_local() ) ) { // phpcs:ignore
 				$this->is_setup     = false;
 				$this->setup_result = $result;
-			} elseif ( ! is_null( $result = $this->maybe_execute_extension_traits( SetupableExtensionTrait::class ) ) ) { // phpcs:ignore
+			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( SetupableExtensionTrait::class ) ) ) { // phpcs:ignore
 				$this->is_setup     = false;
 				$this->setup_result = $result;
 			} else {
@@ -116,7 +116,7 @@ trait SetupableTrait {
 	 * @return  SetupFailureException|null
 	 */
 	protected function maybe_setup_local(): ?SetupFailureException {
-		if ( Objects::has_trait_deep( SetupableLocalTrait::class, $this ) && method_exists( $this, 'setup_local' ) ) {
+		if ( Objects::has_trait_deep( SetupableLocalTrait::class, $this ) && \method_exists( $this, 'setup_local' ) ) {
 			return $this->setup_local();
 		}
 

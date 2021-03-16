@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Initializable;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Abstract trait for signaling that some local initialization needs to take place too.

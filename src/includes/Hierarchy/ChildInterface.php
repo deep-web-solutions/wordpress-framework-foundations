@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Describes an instance that can have a logical parent.

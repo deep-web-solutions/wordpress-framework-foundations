@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Exceptions;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * An exception thrown when trying to modify a read-only property.

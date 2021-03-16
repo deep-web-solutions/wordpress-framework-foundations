@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Describes an instance that doesn't do anything before it's explicitly told to. Implementing classes need to define a

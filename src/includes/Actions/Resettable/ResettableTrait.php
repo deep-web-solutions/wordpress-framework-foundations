@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Resettable;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the resettable interface.

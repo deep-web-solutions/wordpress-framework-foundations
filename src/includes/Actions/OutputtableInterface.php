@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Describes an instance that can be outputted in a certain format. Implementing classes need to define an output-generating logic.

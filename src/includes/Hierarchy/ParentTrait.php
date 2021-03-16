@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the parent interface.
@@ -51,10 +51,10 @@ trait ParentTrait {
 	 * @return  ChildInterface[]
 	 */
 	public function get_children(): array {
-		return array_filter(
+		return \array_filter(
 			$this->children,
 			function( $child ) {
-				return is_a( $child, ChildInterface::class );
+				return \is_a( $child, ChildInterface::class );
 			}
 		);
 	}
@@ -72,7 +72,7 @@ trait ParentTrait {
 	 * @param   object[]    $children   Children to set.
 	 */
 	public function set_children( array $children ) {
-		$this->children = array_filter( $children, 'is_object' );
+		$this->children = \array_filter( $children, 'is_object' );
 	}
 
 	// endregion
@@ -88,10 +88,10 @@ trait ParentTrait {
 	 * @return  bool
 	 */
 	public function add_child( $child ) {
-		if ( ! is_a( $this, ParentInterface::class ) ) {
+		if ( ! \is_a( $this, ParentInterface::class ) ) {
 			return false;
 		}
-		if ( ! is_a( $child, ChildInterface::class, true ) ) {
+		if ( ! \is_a( $child, ChildInterface::class, true ) ) {
 			return false;
 		}
 

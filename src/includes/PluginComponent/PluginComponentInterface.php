@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Foundations\PluginComponent;
 
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Describes a plugin component instance. Implementing classes need to define methods that let each instance be uniquely

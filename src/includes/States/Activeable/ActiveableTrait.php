@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the activeable interface.
@@ -48,7 +48,7 @@ trait ActiveableTrait {
 	 * @return  bool
 	 */
 	public function is_active(): bool {
-		if ( is_null( $this->is_active ) ) {
+		if ( \is_null( $this->is_active ) ) {
 			$this->is_active = true;
 
 			$this->is_active = $this->is_active && $this->maybe_check_is_active_local();
@@ -73,7 +73,7 @@ trait ActiveableTrait {
 	 * @return  bool
 	 */
 	protected function maybe_check_is_active_local(): bool {
-		if ( Objects::has_trait_deep( ActiveableLocalTrait::class, $this ) && method_exists( $this, 'is_active_local' ) ) {
+		if ( Objects::has_trait_deep( ActiveableLocalTrait::class, $this ) && \method_exists( $this, 'is_active_local' ) ) {
 			return $this->is_active_local();
 		}
 

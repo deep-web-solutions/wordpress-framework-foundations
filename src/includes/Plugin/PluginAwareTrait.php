@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Plugin;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the plugin-aware interface.

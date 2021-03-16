@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Foundations\Plugin;
 
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the plugin interface.

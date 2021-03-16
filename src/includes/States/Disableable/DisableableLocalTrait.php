@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Abstract trait that classes should use to denote that they want their own is_disabled logic called.

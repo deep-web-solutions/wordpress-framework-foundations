@@ -4,29 +4,36 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47014d33d866eadd01bf221c45552af4",
+    "content-hash": "daa1acff8a8a68e6bccdefaa169c52ec",
     "packages": [
         {
             "name": "deep-web-solutions/wp-framework-bootstrapper",
-            "version": "v1.0.0",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper.git",
-                "reference": "2eb5fa0c25b5544c7771e8d85be4a1c3b307b760"
+                "reference": "0f4fac93e7403916e6b8fd3c079a58ec34eefe35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-bootstrapper/zipball/2eb5fa0c25b5544c7771e8d85be4a1c3b307b760",
-                "reference": "2eb5fa0c25b5544c7771e8d85be4a1c3b307b760",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-bootstrapper/zipball/0f4fac93e7403916e6b8fd3c079a58ec34eefe35",
+                "reference": "0f4fac93e7403916e6b8fd3c079a58ec34eefe35",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=7.4"
+            },
             "require-dev": {
+                "codeception/module-asserts": "^1.3",
+                "codeception/module-db": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
                 "dealerdirect/phpcodesniffer-composer-installer": "*",
+                "lucatume/wp-browser": ">=3.0",
                 "object-calisthenics/phpcs-calisthenics-rules": "*",
                 "phpcompatibility/php-compatibility": "*",
                 "phpcompatibility/phpcompatibility-wp": "*",
                 "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "^3.5",
+                "squizlabs/php_codesniffer": "*",
                 "wp-coding-standards/wpcs": "*"
             },
             "type": "library",
@@ -51,7 +58,7 @@
                     "homepage": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/graphs/contributors"
                 }
             ],
-            "description": "A set of related functions that help bootstrap and version the other DWS WordPress Framework components.",
+            "description": "A set of related functions that help bootstrap and version the other DWS WordPress Framework packages.",
             "homepage": "https://www.deep-web-solutions.com",
             "keywords": [
                 "Deep Web Solutions",
@@ -61,37 +68,42 @@
             ],
             "support": {
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/issues",
-                "source": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/tree/v1.0.0"
+                "source": "https://github.com/deep-web-solutions/wordpress-framework-bootstrapper/tree/v1.1.3"
             },
-            "time": "2021-02-28T22:51:35+00:00"
+            "time": "2021-03-16T20:10:32+00:00"
         },
         {
             "name": "deep-web-solutions/wp-framework-helpers",
-            "version": "dev-master",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-helpers.git",
-                "reference": "f2386ace8bfe07c3807820c8e86b5985a16ada0c"
+                "reference": "a802de62aa6e22f8973e6ae9bf2df375b8a3e3ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/f2386ace8bfe07c3807820c8e86b5985a16ada0c",
-                "reference": "f2386ace8bfe07c3807820c8e86b5985a16ada0c",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/a802de62aa6e22f8973e6ae9bf2df375b8a3e3ad",
+                "reference": "a802de62aa6e22f8973e6ae9bf2df375b8a3e3ad",
                 "shasum": ""
             },
             "require": {
-                "deep-web-solutions/wp-framework-bootstrapper": "^1.0.0"
+                "deep-web-solutions/wp-framework-bootstrapper": "^1.1.0",
+                "php": ">=7.4"
             },
             "require-dev": {
+                "codeception/module-asserts": "^1.3",
+                "codeception/module-db": "^1.0",
+                "codeception/module-filesystem": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
                 "dealerdirect/phpcodesniffer-composer-installer": "*",
+                "lucatume/wp-browser": ">=3.0",
                 "object-calisthenics/phpcs-calisthenics-rules": "*",
                 "phpcompatibility/php-compatibility": "*",
                 "phpcompatibility/phpcompatibility-wp": "*",
                 "phpmd/phpmd": "*",
-                "squizlabs/php_codesniffer": "^3.5",
+                "squizlabs/php_codesniffer": "*",
                 "wp-coding-standards/wpcs": "*"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -127,9 +139,9 @@
             ],
             "support": {
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-helpers/issues",
-                "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/master"
+                "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/v1.0.1"
             },
-            "time": "2021-03-11T18:46:50+00:00"
+            "time": "2021-03-16T20:14:28+00:00"
         }
     ],
     "packages-dev": [
@@ -1570,9 +1582,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "deep-web-solutions/wp-framework-helpers": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

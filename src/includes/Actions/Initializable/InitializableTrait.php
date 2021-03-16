@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Initializable;
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the initializable interface.
@@ -85,11 +85,11 @@ trait InitializableTrait {
 	 * @version 1.0.0
 	 */
 	public function initialize(): ?InitializationFailureException {
-		if ( is_null( $this->is_initialized ) ) {
-			if ( ! is_null( $result = $this->maybe_initialize_local() ) ) { // phpcs:ignore
+		if ( \is_null( $this->is_initialized ) ) {
+			if ( ! \is_null( $result = $this->maybe_initialize_local() ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
 				$this->initialization_result = $result;
-			} elseif ( ! is_null( $result = $this->maybe_execute_extension_traits( InitializableExtensionTrait::class ) ) ) { // phpcs:ignore
+			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( InitializableExtensionTrait::class ) ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
 				$this->initialization_result = $result;
 			} else {
@@ -116,7 +116,7 @@ trait InitializableTrait {
 	 * @return  InitializationFailureException|null
 	 */
 	protected function maybe_initialize_local(): ?InitializationFailureException {
-		if ( Objects::has_trait_deep( InitializableLocalTrait::class, $this ) && method_exists( $this, 'initialize_local' ) ) {
+		if ( Objects::has_trait_deep( InitializableLocalTrait::class, $this ) && \method_exists( $this, 'initialize_local' ) ) {
 			return $this->initialize_local();
 		}
 

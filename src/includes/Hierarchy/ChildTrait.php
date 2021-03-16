@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the child interface.

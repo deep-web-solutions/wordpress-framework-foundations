@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Basic implementation of the disableable interface.
@@ -48,7 +48,7 @@ trait DisableableTrait {
 	 * @return  bool
 	 */
 	public function is_disabled(): bool {
-		if ( is_null( $this->is_disabled ) ) {
+		if ( \is_null( $this->is_disabled ) ) {
 			$this->is_disabled = false;
 
 			$this->is_disabled = $this->is_disabled || $this->maybe_check_is_disabled_local();
@@ -73,7 +73,7 @@ trait DisableableTrait {
 	 * @return  bool
 	 */
 	protected function maybe_check_is_disabled_local(): bool {
-		if ( Objects::has_trait_deep( DisableableLocalTrait::class, $this ) && method_exists( $this, 'is_disabled_local' ) ) {
+		if ( Objects::has_trait_deep( DisableableLocalTrait::class, $this ) && \method_exists( $this, 'is_disabled_local' ) ) {
 			return $this->is_disabled_local();
 		}
 

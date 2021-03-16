@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Exceptions;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * An exception thrown when trying to call an method that is not supported by the instance. Example scenarios include

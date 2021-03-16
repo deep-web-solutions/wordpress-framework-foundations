@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Defines an instance aware of both children and parents. Implementing classes need to define a logic for

@@ -6,7 +6,7 @@ use DeepWebSolutions\Framework\Foundations\Exceptions\InexistentPropertyExceptio
 use DeepWebSolutions\Framework\Foundations\Exceptions\ReadOnlyPropertyException;
 use DeepWebSolutions\Framework\Helpers\FileSystem\Objects\PathsTrait;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Template for encapsulating some of the most often required abilities of a plugin component.
@@ -33,7 +33,7 @@ abstract class AbstractPluginComponent implements PluginComponentInterface {
 	 * @param   string|null     $component_name     The public name of the using class instance. Must be persistent across requests. Mustn't be unique.
 	 */
 	public function __construct( ?string $component_id = null, ?string $component_name = null ) {
-		$this->set_instance_id( $component_id ?: hash( 'md5', static::class ) ); // phpcs:ignore
+		$this->set_instance_id( $component_id ?: \hash( 'md5', static::class ) ); // phpcs:ignore
 		$this->set_instance_name( $component_name ?: static::class ); // phpcs:ignore
 	}
 
@@ -49,19 +49,19 @@ abstract class AbstractPluginComponent implements PluginComponentInterface {
 	 * @return  InexistentPropertyException|mixed
 	 */
 	public function __get( string $name ) {
-		if ( method_exists( $this, ( $function = "get_{$name}" ) ) || method_exists( $this, ( $function = 'get' . ucfirst( $name ) ) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, ( $function = "get_{$name}" ) ) || \method_exists( $this, ( $function = 'get' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
 			return $this->{$function}();
 		}
 
-		if ( method_exists( $this, ( $function = "is_{$name}" ) ) || method_exists( $this, ( $function = 'is' . ucfirst( $name ) ) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, ( $function = "is_{$name}" ) ) || \method_exists( $this, ( $function = 'is' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
 			return $this->{$function}();
 		}
 
-		return new InexistentPropertyException( sprintf( 'Inexistent property: %s', $name ) );
+		return new InexistentPropertyException( \sprintf( 'Inexistent property: %s', $name ) );
 	}
 
 	/**
-	 * Used for writing data to existent properties that have a setter defined.
+	 * Used for writing data to existent properties that have a setter \defined.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -75,17 +75,17 @@ abstract class AbstractPluginComponent implements PluginComponentInterface {
 	 * @return  mixed
 	 */
 	public function __set( string $name, $value ) {
-		if ( method_exists( $this, ( $function = "set_{$name}" ) ) || method_exists( $this, ( $function = 'set' . ucfirst( $name ) ) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, ( $function = "set_{$name}" ) ) || \method_exists( $this, ( $function = 'set' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
 			return $this->{$function}( $value );
 		}
 
-		$has_get_getter = method_exists( $this, "get_{$name}" ) || method_exists( $this, 'get' . ucfirst( $name ) );
-		$has_is_getter  = method_exists( $this, "is_{$name}" ) || method_exists( $this, 'is' . ucfirst( $name ) );
+		$has_get_getter = \method_exists( $this, "get_{$name}" ) || \method_exists( $this, 'get' . \ucfirst( $name ) );
+		$has_is_getter  = \method_exists( $this, "is_{$name}" ) || \method_exists( $this, 'is' . \ucfirst( $name ) );
 		if ( $has_get_getter || $has_is_getter ) {
-			throw new ReadOnlyPropertyException( sprintf( 'Property %s is ready-only', $name ) );
+			throw new ReadOnlyPropertyException( \sprintf( 'Property %s is ready-only', $name ) );
 		}
 
-		throw new InexistentPropertyException( sprintf( 'Inexistent property: %s', $name ) );
+		throw new InexistentPropertyException( \sprintf( 'Inexistent property: %s', $name ) );
 	}
 
 	/**
@@ -99,11 +99,11 @@ abstract class AbstractPluginComponent implements PluginComponentInterface {
 	 * @return  bool
 	 */
 	public function __isset( string $name ): bool {
-		if ( method_exists( $this, "get_{$name}" ) || method_exists( $this, 'get' . ucfirst($name) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, "get_{$name}" ) || \method_exists( $this, 'get' . \ucfirst($name) ) ) { // phpcs:ignore
 			return true;
 		}
 
-		if ( method_exists( $this, "is_{$name}" ) || method_exists( $this, 'is' . ucfirst($name) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, "is_{$name}" ) || \method_exists( $this, 'is' . \ucfirst($name) ) ) { // phpcs:ignore
 			return true;
 		}
 

@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Abstract trait that classes should use to denote that they want their own is_active logic called.

@@ -6,7 +6,7 @@ use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\PluginComponent\PluginComponentInterface;
 use DeepWebSolutions\Framework\Helpers\WordPress\Hooks\HooksHelpersTrait as HelpersModuleTrait;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Enhances the helpers' module Hooks trait.
@@ -35,10 +35,10 @@ trait HooksHelpersTrait {
 	 *
 	 * @return  string
 	 */
-	public function get_hook_tag( string $name, array $extra = array(), string $root = 'dws-framework-foundations' ): string {
+	public function get_hook_tag( string $name, array $extra = array(), string $root = 'dws_framework_foundations' ): string {
 		if ( $this instanceof PluginComponentInterface ) {
-			$root = ( 'dws-framework-foundations' === $root ) ? '' : $root;
-			$root = join( '-', array( $this->get_plugin()->get_plugin_slug(), $root ?: $this->get_instance_name() ) ); // phpcs:ignore
+			$root = ( 'dws_framework_foundations' === $root ) ? '' : $root;
+			$root = \join( '-', array( $this->get_plugin()->get_plugin_slug(), $root ?: $this->get_instance_name() ) ); // phpcs:ignore
 		} elseif ( $this instanceof PluginAwareInterface ) {
 			$root = $this->get_plugin()->get_plugin_slug();
 		}

@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\States;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 /**
  * Describes an instance that can be logically disabled. Implementing classes need to define the logic of an 'is_disabled'

@@ -10,6 +10,10 @@
  * @noinspection PhpMissingReturnTypeInspection
  */
 
+namespace DeepWebSolutions\Framework;
+
+\defined( 'ABSPATH' ) || exit;
+
 /**
  * Returns the whitelabel name of the framework's foundations within the context of the current plugin.
  *

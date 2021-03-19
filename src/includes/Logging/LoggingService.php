@@ -36,7 +36,7 @@ class LoggingService extends AbstractMultiHandlerService {
 	 * @access  protected
 	 * @var     bool
 	 */
-	protected bool $include_sensitive;
+	protected bool $log_sensitive;
 
 	// endregion
 
@@ -56,7 +56,7 @@ class LoggingService extends AbstractMultiHandlerService {
 	 */
 	public function __construct( PluginInterface $plugin, array $handlers = array(), bool $include_sensitive = false ) {
 		parent::__construct( $plugin, $this, $handlers );
-		$this->include_sensitive = $include_sensitive;
+		$this->log_sensitive = $include_sensitive;
 	}
 
 	// endregion
@@ -85,15 +85,15 @@ class LoggingService extends AbstractMultiHandlerService {
 	// region GETTERS
 
 	/**
-	 * Gets whether the logs will include any sensitive information or not.
+	 * Returns whether the logs will include messages marked sensitive or not.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return  bool
 	 */
-	public function includes_sensitive_messages(): bool {
-		return $this->include_sensitive;
+	public function log_sensitive_messages(): bool {
+		return $this->log_sensitive;
 	}
 
 	// endregion
@@ -101,84 +101,39 @@ class LoggingService extends AbstractMultiHandlerService {
 	// region METHODS
 
 	/**
-	 * Logs an event with the given logger.
+	 * Returns a configurable log message object that needs to be finalized.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @param   string  $message    The log message.
+	 * @param   array   $context    The context to pass along to the logger.
+	 * @param   string  $handler    The logging handler to log the event with.
 	 *
-	 * @param   string  $log_level      The level of the log message.
-	 * @param   string  $message        The log message.
-	 * @param   string  $logger         The logger to log the event with.
-	 * @param   bool    $is_sensitive   Whether the log may contain any GDPR-sensitive information.
-	 * @param   array   $context        The context to pass along to the logger.
+	 * @return  LogMessageBuilder
 	 */
-	public function log_event( string $log_level, string $message, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): void {
-		$logger = $this->get_handler( $logger );
-		if ( ! $is_sensitive || $this->includes_sensitive_messages() ) {
-			$logger->log( $log_level, $message, $context );
-		}
+	public function log_event( string $message, array $context = array(), string $handler = 'plugin' ): LogMessageBuilder {
+		return new LogMessageBuilder(
+			$this->get_handler( $handler ),
+			$this->log_sensitive_messages(),
+			$message,
+			$context
+		);
 	}
 
 	/**
-	 * Logs an event with an appropriate level and also runs a '_doing_it_wrong' call with the same message.
+	 * Logs an event immediately using the given handler.
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 * @since   1.0.0
+	 * @version 1.0.0
 	 *
-	 * @param   string  $function       The function being used incorrectly.
-	 * @param   string  $message        The message to log/return as exception.
-	 * @param   string  $since_version  The plugin version that introduced this warning message.
-	 * @param   string  $log_level      The PSR3 log level.
-	 * @param   string  $logger         The logger to log the event with.
-	 * @param   bool    $is_sensitive   Whether the log may contain any GDPR-sensitive information.
-	 * @param   array   $context        The PSR3 context.
+	 * @param   string  $message    The log message.
+	 * @param   array   $context    The context to pass along to the logger.
+	 * @param   string  $log_level  The log level of the message.
+	 * @param   string  $handler    The logging handler to log the event with.
 	 */
-	public function log_event_and_doing_it_wrong( string $function, string $message, string $since_version, string $log_level = LogLevel::DEBUG, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): void {
-		$this->log_event( $log_level, $message, $logger, $is_sensitive, $context );
-		\_doing_it_wrong( wp_kses_post( $function ), wp_kses_post( $message ), wp_kses_post( $since_version ) );
-	}
-
-	/**
-	 * Logs an event with an appropriate level and returns an exception with the same message.
-	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-	 *
-	 * @param   string              $log_level              The PSR3 log level.
-	 * @param   string              $message                The message to log/return as exception.
-	 * @param   string              $exception              The exception to instantiate.
-	 * @param   \Exception|null     $original_exception     The original exception that was thrown. If not applicable, null.
-	 * @param   string              $logger                 The logger to log the event with.
-	 * @param   bool                $is_sensitive           Whether the log may contain any GDPR-sensitive information.
-	 * @param   array               $context                The PSR3 context.
-	 *
-	 * @return  \Exception
-	 */
-	public function log_event_and_return_exception( string $log_level, string $message, string $exception, \Exception $original_exception = null, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): \Exception {
-		$this->log_event( $log_level, $message, $logger, $is_sensitive, $context );
-		return new $exception( $message, $original_exception ? $original_exception->getCode() : 0, $original_exception );
-	}
-
-	/**
-	 * Logs an event with an appropriate level, runs a '_doing_it_wrong' call, and returns an exception with the same message.
-	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-	 *
-	 * @param   string              $function               The function being used incorrectly.
-	 * @param   string              $message                The message to log/return as exception.
-	 * @param   string              $since_version          The plugin version that introduced this warning message.
-	 * @param   string              $exception              The exception to instantiate.
-	 * @param   \Exception|null     $original_exception     The original exception that was thrown. If not applicable, null.
-	 * @param   string              $log_level              The PSR3 log level.
-	 * @param   string              $logger                 The logger to log the event with.
-	 * @param   bool                $is_sensitive           Whether the log may contain any GDPR-sensitive information.
-	 * @param   array               $context                The PSR3 context.
-	 *
-	 * @return  \Exception
-	 */
-	public function log_event_and_doing_it_wrong_and_return_exception( string $function, string $message, string $since_version, string $exception, \Exception $original_exception = null, string $log_level = LogLevel::DEBUG, string $logger = 'plugin', bool $is_sensitive = false, array $context = array() ): \Exception {
-		$this->log_event_and_doing_it_wrong( $function, $message, $since_version, $log_level, $logger, $is_sensitive, $context );
-		return new $exception( $message, $original_exception ? $original_exception->getCode() : 0, $original_exception );
+	public function log_event_and_finalize( string $message, array $context = array(), string $log_level = LogLevel::DEBUG, string $handler = 'plugin' ): void {
+		$this->log_event( $message, $context, $handler )->set_log_level( $log_level )->finalize();
 	}
 
 	// endregion

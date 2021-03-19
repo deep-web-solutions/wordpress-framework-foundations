@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Defines an instance aware of both children and parents. Implementing classes need to define a logic for
+ * Describes an instance aware of both children and parents. Implementing classes need to define a logic for
  * handling parent-child relations.
  *
  * @since   1.0.0

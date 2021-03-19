@@ -17,32 +17,32 @@ use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
  */
 interface PluginComponentInterface extends PluginAwareInterface {
 	/**
-	 * Implementing class should return a hopefully unique ID of the instance.
+	 * Implementing class should return a hopefully unique ID of the component instance.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return  string
 	 */
-	public function get_instance_id(): string;
+	public function get_component_id(): string;
 
 	/**
-	 * Implementing class should return a name of the instance for potential user-friendliness.
+	 * Implementing class should return a name of the component instance for potential user-friendliness.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return  string
 	 */
-	public function get_instance_name(): string;
+	public function get_component_name(): string;
 
 	/**
-	 * Implementing class must ensure this returns a PHP-friendly version of the instance's public name.
+	 * Implementing class must ensure this returns a PHP-friendly version of the component instance's name.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return  string
 	 */
-	public function get_instance_safe_name(): string;
+	public function get_component_safe_name(): string;
 }

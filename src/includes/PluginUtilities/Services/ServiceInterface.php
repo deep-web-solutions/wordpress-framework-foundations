@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\PluginUtilities\Services;
 
+use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreableInterface;
 
@@ -16,6 +17,6 @@ use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreableInte
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\PluginUtilities\Services
  */
-interface ServiceInterface extends PluginAwareInterface, StoreableInterface {
+interface ServiceInterface extends LoggingServiceAwareInterface, PluginAwareInterface, StoreableInterface {
 	/* empty on purpose */
 }

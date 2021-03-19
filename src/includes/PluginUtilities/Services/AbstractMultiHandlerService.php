@@ -2,6 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\PluginUtilities\Services;
 
+use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\PluginUtilities\Handlers\HandlerInterface;
@@ -34,11 +35,12 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Mu
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   PluginInterface     $plugin     Instance of the plugin.
-	 * @param   HandlerInterface[]  $handlers   Collection of handlers to use.
+	 * @param   PluginInterface     $plugin             Instance of the plugin.
+	 * @param   LoggingService      $logging_service    Instance of the logging service.
+	 * @param   HandlerInterface[]  $handlers           Collection of handlers to use.
 	 */
-	public function __construct( PluginInterface $plugin, array $handlers = array() ) {
-		parent::__construct( $plugin );
+	public function __construct( PluginInterface $plugin, LoggingService $logging_service, array $handlers = array() ) {
+		parent::__construct( $plugin, $logging_service );
 		$this->set_default_handlers( $handlers );
 	}
 

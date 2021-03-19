@@ -55,7 +55,7 @@ class LoggingService extends AbstractMultiHandlerService {
 	 * @param   bool                $include_sensitive  Whether the logs should include sensitive information or not.
 	 */
 	public function __construct( PluginInterface $plugin, array $handlers = array(), bool $include_sensitive = false ) {
-		parent::__construct( $plugin, $handlers );
+		parent::__construct( $plugin, $this, $handlers );
 		$this->include_sensitive = $include_sensitive;
 	}
 

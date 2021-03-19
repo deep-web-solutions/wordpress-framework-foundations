@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Foundations\PluginUtilities\Services;
 
+use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
+use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 
@@ -18,6 +20,7 @@ use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 abstract class AbstractService implements ServiceInterface {
 	// region TRAITS
 
+	use LoggingServiceAwareTrait;
 	use PluginAwareTrait;
 
 	// endregion
@@ -30,10 +33,12 @@ abstract class AbstractService implements ServiceInterface {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   PluginInterface     $plugin     Instance of the plugin.
+	 * @param   PluginInterface     $plugin             Instance of the plugin.
+	 * @param   LoggingService      $logging_service    Instance of the logging service.
 	 */
-	public function __construct( PluginInterface $plugin ) {
+	public function __construct( PluginInterface $plugin, LoggingService $logging_service ) {
 		$this->set_plugin( $plugin );
+		$this->set_logging_service( $logging_service );
 	}
 
 	// endregion

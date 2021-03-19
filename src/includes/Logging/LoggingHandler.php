@@ -2,17 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\DependencyInjection\ContainerAwareInterface;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Handlers\AbstractHandler;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Handlers\HandlerInterface;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Services\AbstractMultiHandlerService;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Services\AbstractService;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreableTrait;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
-use Psr\Log\NullLogger;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -24,13 +14,7 @@ use Psr\Log\NullLogger;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
-class LoggingHandler extends AbstractHandler implements LoggerInterface {
-	// region TRAITS
-
-	use StoreableTrait;
-
-	// endregion
-
+class LoggingHandler extends AbstractLoggingHandler {
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -65,18 +49,6 @@ class LoggingHandler extends AbstractHandler implements LoggerInterface {
 	// endregion
 
 	// region INHERITED METHODS
-
-	/**
-	 * Returns the type of the handler.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  string
-	 */
-	public function get_type(): string {
-		return 'logging';
-	}
 
 	/**
 	 * Logs an emergency with the provided logger.

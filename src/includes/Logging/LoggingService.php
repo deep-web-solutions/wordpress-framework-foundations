@@ -2,15 +2,11 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\PluginUtilities\DependencyInjection\ContainerAwareInterface;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Handlers\HandlerInterface;
 use DeepWebSolutions\Framework\Foundations\PluginUtilities\Services\AbstractMultiHandlerService;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Services\AbstractService;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
 
@@ -71,9 +67,9 @@ class LoggingService extends AbstractMultiHandlerService {
 	 *
 	 * @param   string      $handler_id         Unique name of the logging handler to retrieve.
 	 *
-	 * @return  LoggingHandler
+	 * @return  LoggingHandlerInterface
 	 */
-	public function get_handler( string $handler_id ): LoggingHandler {
+	public function get_handler( string $handler_id ): LoggingHandlerInterface {
 		$handler = parent::get_handler( $handler_id );
 
 		/* @noinspection PhpIncompatibleReturnTypeInspection */
@@ -172,7 +168,7 @@ class LoggingService extends AbstractMultiHandlerService {
 	 * @return  string
 	 */
 	protected function get_handler_class(): string {
-		return LoggingHandler::class;
+		return LoggingHandlerInterface::class;
 	}
 
 	// endregion

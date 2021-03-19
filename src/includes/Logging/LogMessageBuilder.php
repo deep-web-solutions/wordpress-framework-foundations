@@ -25,9 +25,9 @@ class LogMessageBuilder {
 	 * @version 1.0.0
 	 *
 	 * @access  protected
-	 * @var     LoggingHandler
+	 * @var     LoggingHandlerInterface
 	 */
-	protected LoggingHandler $handler;
+	protected LoggingHandlerInterface $handler;
 
 	/**
 	 * Whether to finalize messages marked sensitive or not.
@@ -130,12 +130,12 @@ class LogMessageBuilder {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   LoggingHandler  $handler            Handler to log the messages with.
-	 * @param   bool            $log_sensitive      Whether to finalize messages marked sensitive or not.
-	 * @param   string          $message            The message to log.
-	 * @param   array           $context            Additional context to pass along.
+	 * @param   LoggingHandlerInterface     $handler            Handler to log the messages with.
+	 * @param   bool                        $log_sensitive      Whether to finalize messages marked sensitive or not.
+	 * @param   string                      $message            The message to log.
+	 * @param   array                       $context            Additional context to pass along.
 	 */
-	public function __construct( LoggingHandler $handler, bool $log_sensitive, string $message, array $context = array() ) {
+	public function __construct( LoggingHandlerInterface $handler, bool $log_sensitive, string $message, array $context = array() ) {
 		$this->handler       = $handler;
 		$this->log_sensitive = $log_sensitive;
 		$this->message       = \wp_kses_post( $message );

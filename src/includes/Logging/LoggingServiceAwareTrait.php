@@ -2,7 +2,6 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
-use Exception;
 use Psr\Log\LogLevel;
 
 \defined( 'ABSPATH' ) || exit;

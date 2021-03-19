@@ -1,0 +1,10 @@
+{
+    "classes": [
+        "Exception"
+    ],
+    "functions": [
+        "apply_filters",
+        "did_action",
+        "add_action"
+    ]
+}

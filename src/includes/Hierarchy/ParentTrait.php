@@ -88,21 +88,14 @@ trait ParentTrait {
 	 * @return  bool
 	 */
 	public function add_child( $child ) {
-		if ( ! \is_a( $this, ParentInterface::class ) ) {
-			return false;
-		}
-		if ( ! \is_a( $child, ChildInterface::class, true ) ) {
+		if ( ! \is_a( $this, ParentInterface::class ) || ! \is_a( $child, ChildInterface::class, true ) ) {
 			return false;
 		}
 
-		if ( ! is_object( $child ) ) {
+		if ( ! \is_object( $child ) ) {
 			$child = new $child();
-		} else {
-			if ( $child->has_parent() ) {
-				return false;
-			} elseif ( $child === $this ) {
-				return false;
-			}
+		} elseif ( $child->has_parent() || $child === $this ) {
+			return false;
 		}
 
 		$child->set_parent( $this );

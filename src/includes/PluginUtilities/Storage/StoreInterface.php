@@ -21,16 +21,6 @@ interface StoreInterface extends ContainerInterface, StoreableInterface {
 	// region METHODS
 
 	/**
-	 * Returns the identifier of the store.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  string
-	 */
-	public function get_store_id(): string;
-
-	/**
 	 * Returns the storage medium of the store.
 	 *
 	 * @since   1.0.0

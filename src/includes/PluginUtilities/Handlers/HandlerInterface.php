@@ -15,5 +15,13 @@ use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreableInte
  * @package DeepWebSolutions\WP-Framework\Foundations\PluginUtilities\Handlers
  */
 interface HandlerInterface extends StoreableInterface {
-	/* empty on purpose */
+	/**
+	 * Returns the type of the handler.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string
+	 */
+	public function get_type(): string;
 }

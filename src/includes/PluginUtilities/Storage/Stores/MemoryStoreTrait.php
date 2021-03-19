@@ -1,8 +1,10 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage;
+namespace DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\Stores;
 
 use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
+use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreableInterface;
+use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreException;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -12,7 +14,7 @@ use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\PluginUtilities\Storage
+ * @package DeepWebSolutions\WP-Framework\Foundations\PluginUtilities\Storage\Stores
  */
 trait MemoryStoreTrait {
 	// region FIELDS AND CONSTANTS
@@ -39,7 +41,7 @@ trait MemoryStoreTrait {
 	 *
 	 * @return  string
 	 */
-	abstract public function get_store_id(): string;
+	abstract public function get_id(): string;
 
 	/**
 	 * Returns the storage medium of the store.
@@ -112,7 +114,7 @@ trait MemoryStoreTrait {
 			return $this->stored_objects[ $entry_id ];
 		}
 
-		throw new NotFoundException( \sprintf( 'Could not retrieve entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_store_id(), $this->get_storage_type() ) );
+		throw new NotFoundException( \sprintf( 'Could not retrieve entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );
 	}
 
 	/**
@@ -129,7 +131,7 @@ trait MemoryStoreTrait {
 		$entry_id = $storeable->get_id();
 
 		if ( $this->has( $entry_id ) ) {
-			throw new StoreException( \sprintf( 'Entry %1$s already exists in store %2$s of type %3$s', $entry_id, $this->get_store_id(), $this->get_storage_type() ) );
+			throw new StoreException( \sprintf( 'Entry %1$s already exists in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );
 		}
 
 		$this->stored_objects[ $entry_id ] = $storeable;
@@ -162,7 +164,7 @@ trait MemoryStoreTrait {
 			unset( $this->stored_objects[ $entry_id ] );
 		}
 
-		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_store_id(), $this->get_storage_type() ) );
+		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );
 	}
 
 	// endregion

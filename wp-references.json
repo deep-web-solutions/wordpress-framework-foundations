@@ -5,6 +5,7 @@
     "functions": [
         "apply_filters",
         "did_action",
-        "add_action"
+        "add_action",
+        "_doing_it_wrong"
     ]
 }

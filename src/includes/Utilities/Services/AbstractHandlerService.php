@@ -3,6 +3,8 @@
 namespace DeepWebSolutions\Framework\Foundations\Utilities\Services;
 
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
+use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
@@ -55,6 +57,13 @@ abstract class AbstractHandlerService extends AbstractService implements Handler
 	 */
 	public function set_handler( HandlerInterface $handler ) {
 		if ( \is_a( $handler, $this->get_handler_class() ) ) {
+			if ( $handler instanceof PluginAwareInterface ) {
+				$handler->set_plugin( $this->get_plugin() );
+			}
+			if ( $handler instanceof LoggingServiceAwareInterface ) {
+				$handler->set_logging_service( $this->get_logging_service() );
+			}
+
 			$this->handler = $handler;
 		}
 	}

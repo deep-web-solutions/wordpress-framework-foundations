@@ -40,8 +40,8 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 	 */
 	public function __construct( LoggingService $logging_service, ?string $component_id = null, ?string $component_name = null ) {
 		$this->set_logging_service( $logging_service );
-		$this->set_instance_id( $component_id ?: \hash( 'md5', static::class ) ); // phpcs:ignore
-		$this->set_instance_name( $component_name ?: static::class ); // phpcs:ignore
+		$this->set_component_id( $component_id ?: \hash( 'md5', static::class ) ); // phpcs:ignore
+		$this->set_component_name( $component_name ?: static::class ); // phpcs:ignore
 	}
 
 	/**

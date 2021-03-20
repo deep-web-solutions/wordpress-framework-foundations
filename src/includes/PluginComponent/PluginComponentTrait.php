@@ -33,7 +33,7 @@ trait PluginComponentTrait {
 	 * @access  protected
 	 * @var     string
 	 */
-	protected string $instance_id;
+	protected string $component_id;
 
 	/**
 	 * The public name of the using class instance.
@@ -44,7 +44,7 @@ trait PluginComponentTrait {
 	 * @access  protected
 	 * @var     string
 	 */
-	protected string $instance_name;
+	protected string $component_name;
 
 	// endregion
 
@@ -58,8 +58,8 @@ trait PluginComponentTrait {
 	 *
 	 * @return  string
 	 */
-	public function get_instance_id(): string {
-		return $this->instance_id;
+	public function get_component_id(): string {
+		return $this->component_id;
 	}
 
 	/**
@@ -70,8 +70,8 @@ trait PluginComponentTrait {
 	 *
 	 * @return  string
 	 */
-	public function get_instance_name(): string {
-		return $this->instance_name;
+	public function get_component_name(): string {
+		return $this->component_name;
 	}
 
 	// endregion
@@ -84,10 +84,10 @@ trait PluginComponentTrait {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   string  $instance_id    The value to be set.
+	 * @param   string  $component_id   The value to be set.
 	 */
-	public function set_instance_id( string $instance_id ) {
-		$this->instance_id = $instance_id;
+	public function set_component_id( string $component_id ) {
+		$this->component_id = $component_id;
 	}
 
 	/**
@@ -96,10 +96,10 @@ trait PluginComponentTrait {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   string  $instance_name   The value to be set.
+	 * @param   string  $component_name     The value to be set.
 	 */
-	public function set_instance_name( string $instance_name ) {
-		$this->instance_name = $instance_name;
+	public function set_component_name( string $component_name ) {
+		$this->component_name = $component_name;
 	}
 
 	// endregion
@@ -114,9 +114,9 @@ trait PluginComponentTrait {
 	 *
 	 * @return  string
 	 */
-	public function get_instance_safe_name(): string {
+	public function get_component_safe_name(): string {
 		return Strings::to_safe_string(
-			Strings::to_alphanumeric_string( $this->get_instance_name() ),
+			Strings::to_alphanumeric_string( $this->get_component_name() ),
 			array(
 				' ' => '-',
 				'_' => '_',

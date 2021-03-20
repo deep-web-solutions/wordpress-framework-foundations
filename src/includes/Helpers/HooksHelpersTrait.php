@@ -38,7 +38,7 @@ trait HooksHelpersTrait {
 	public function get_hook_tag( string $name, array $extra = array(), string $root = 'dws_framework_foundations' ): string {
 		if ( $this instanceof PluginComponentInterface ) {
 			$root = ( 'dws_framework_foundations' === $root ) ? '' : $root;
-			$root = \join( '-', array( $this->get_plugin()->get_plugin_safe_slug(), $root ?: $this->get_instance_safe_name() ) ); // phpcs:ignore
+			$root = \join( '-', array( $this->get_plugin()->get_plugin_safe_slug(), $root ?: $this->get_component_safe_name() ) ); // phpcs:ignore
 		} elseif ( $this instanceof PluginAwareInterface ) {
 			$root = $this->get_plugin()->get_plugin_safe_slug();
 		}

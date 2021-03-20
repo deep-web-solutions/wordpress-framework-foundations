@@ -117,10 +117,7 @@ trait PluginComponentTrait {
 	public function get_component_safe_name(): string {
 		return Strings::to_safe_string(
 			Strings::to_alphanumeric_string( $this->get_component_name() ),
-			array(
-				' ' => '-',
-				'_' => '_',
-			)
+			array( ' ' => '-' )
 		);
 	}
 

@@ -54,7 +54,7 @@ trait HandlerAwareTrait {
 	 *
 	 * @param   HandlerInterface    $handler    Handler instance to use from now on.
 	 */
-	public function set_hooks_handler( HandlerInterface $handler ) {
+	public function set_handler( HandlerInterface $handler ) {
 		$this->handler = $handler;
 	}
 

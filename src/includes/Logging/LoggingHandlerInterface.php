@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Handlers\HandlerInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
 use Psr\Log\LoggerInterface;
 
 \defined( 'ABSPATH' ) || exit;

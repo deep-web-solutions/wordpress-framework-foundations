@@ -30,6 +30,16 @@ trait UserMetaStoreTrait {
 	abstract public function get_id(): string;
 
 	/**
+	 * Returns the key used to store the objects in the database.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string
+	 */
+	abstract public function get_key(): string;
+
+	/**
 	 * Returns the storage medium of the store.
 	 *
 	 * @since   1.0.0
@@ -88,7 +98,7 @@ trait UserMetaStoreTrait {
 	 */
 	public function get_all( ?int $user_id = null ): array {
 		$user_id = $this->parse_user_id( $user_id );
-		return \get_user_meta( $user_id, $this->get_id(), true ) ?: array(); // phpcs:ignore
+		return \get_user_meta( $user_id, $this->get_key(), true ) ?: array(); // phpcs:ignore
 	}
 
 	/**
@@ -151,7 +161,7 @@ trait UserMetaStoreTrait {
 
 		return \update_user_meta(
 			$user_id,
-			$this->get_id(),
+			$this->get_key(),
 			\array_merge(
 				$this->get_all(),
 				array( $storeable->get_id() => $storeable )
@@ -181,8 +191,8 @@ trait UserMetaStoreTrait {
 			unset( $stored_objects[ $entry_id ] );
 
 			return empty( $stored_objects )
-				? \delete_user_meta( $user_id, $this->get_id() )
-				: \update_user_meta( $user_id, $this->get_id(), $stored_objects );
+				? \delete_user_meta( $user_id, $this->get_key() )
+				: \update_user_meta( $user_id, $this->get_key(), $stored_objects );
 		}
 
 		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s from user %2$s. Not found in store %3$s of type %4$s', $entry_id, $user_id, $this->get_id(), $this->get_storage_type() ) );

@@ -30,6 +30,16 @@ trait OptionsStoreTrait {
 	abstract public function get_id(): string;
 
 	/**
+	 * Returns the key used to store the objects in the database.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string
+	 */
+	abstract public function get_key(): string;
+
+	/**
 	 * Returns the storage medium of the store.
 	 *
 	 * @since   1.0.0
@@ -80,7 +90,7 @@ trait OptionsStoreTrait {
 	 * @return  StoreableInterface[]
 	 */
 	public function get_all(): array {
-		return \get_option( $this->get_id(), array() );
+		return \get_option( $this->get_key(), array() );
 	}
 
 	/**
@@ -133,7 +143,7 @@ trait OptionsStoreTrait {
 	 */
 	public function update( StoreableInterface $storeable ): bool {
 		return \update_option(
-			$this->get_id(),
+			$this->get_key(),
 			\array_merge(
 				$this->get_all(),
 				array( $storeable->get_id() => $storeable )
@@ -160,8 +170,8 @@ trait OptionsStoreTrait {
 			unset( $stored_objects[ $entry_id ] );
 
 			return empty( $stored_objects )
-				? \delete_option( $this->get_id() )
-				: \update_option( $this->get_id(), $stored_objects );
+				? \delete_option( $this->get_key() )
+				: \update_option( $this->get_key(), $stored_objects );
 		}
 
 		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );

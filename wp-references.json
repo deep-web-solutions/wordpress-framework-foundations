@@ -7,6 +7,13 @@
         "did_action",
         "add_action",
         "wp_kses_post",
-        "_doing_it_wrong"
+        "_doing_it_wrong",
+        "get_option",
+        "update_option",
+        "delete_option",
+        "get_user_meta",
+        "update_user_meta",
+        "delete_user_meta",
+        "get_current_user_id"
     ]
 }

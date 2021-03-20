@@ -58,7 +58,7 @@ trait PluginComponentTrait {
 	 *
 	 * @return  string
 	 */
-	public function get_component_id(): string {
+	public function get_id(): string {
 		return $this->component_id;
 	}
 
@@ -70,7 +70,7 @@ trait PluginComponentTrait {
 	 *
 	 * @return  string
 	 */
-	public function get_component_name(): string {
+	public function get_name(): string {
 		return $this->component_name;
 	}
 
@@ -86,7 +86,7 @@ trait PluginComponentTrait {
 	 *
 	 * @param   string  $component_id   The value to be set.
 	 */
-	public function set_component_id( string $component_id ) {
+	public function set_id( string $component_id ) {
 		$this->component_id = $component_id;
 	}
 
@@ -98,7 +98,7 @@ trait PluginComponentTrait {
 	 *
 	 * @param   string  $component_name     The value to be set.
 	 */
-	public function set_component_name( string $component_name ) {
+	public function set_name( string $component_name ) {
 		$this->component_name = $component_name;
 	}
 
@@ -114,9 +114,9 @@ trait PluginComponentTrait {
 	 *
 	 * @return  string
 	 */
-	public function get_component_safe_name(): string {
+	public function get_safe_name(): string {
 		return Strings::to_safe_string(
-			Strings::to_alphanumeric_string( $this->get_component_name() ),
+			Strings::to_alphanumeric_string( $this->get_name() ),
 			array( ' ' => '-' )
 		);
 	}

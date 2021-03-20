@@ -44,7 +44,7 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 		}
 
 		/* @noinspection PhpUnhandledExceptionInspection */
-		throw $this->log_event( \sprintf( 'Could not find plugin root from within node. Node name: %s', $this->get_component_name() ), array(), 'framework' )
+		throw $this->log_event( \sprintf( 'Could not find plugin root from within node. Node name: %s', $this->get_name() ), array(), 'framework' )
 			->set_log_level( LogLevel::ERROR )->return_exception( \LogicException::class )
 			->finalize();
 	}

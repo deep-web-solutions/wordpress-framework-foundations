@@ -24,7 +24,7 @@ interface PluginComponentInterface extends PluginAwareInterface {
 	 *
 	 * @return  string
 	 */
-	public function get_component_id(): string;
+	public function get_id(): string;
 
 	/**
 	 * Implementing class should return a name of the component instance for potential user-friendliness.
@@ -34,7 +34,7 @@ interface PluginComponentInterface extends PluginAwareInterface {
 	 *
 	 * @return  string
 	 */
-	public function get_component_name(): string;
+	public function get_name(): string;
 
 	/**
 	 * Implementing class must ensure this returns a PHP-friendly version of the component instance's name.
@@ -44,5 +44,5 @@ interface PluginComponentInterface extends PluginAwareInterface {
 	 *
 	 * @return  string
 	 */
-	public function get_component_safe_name(): string;
+	public function get_safe_name(): string;
 }

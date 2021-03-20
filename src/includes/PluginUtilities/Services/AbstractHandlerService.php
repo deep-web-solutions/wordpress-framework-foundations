@@ -38,11 +38,54 @@ abstract class AbstractHandlerService extends AbstractService implements Handler
 	 */
 	public function __construct( PluginInterface $plugin, LoggingService $logging_service, ?HandlerInterface $handler = null ) {
 		parent::__construct( $plugin, $logging_service );
+		$this->set_default_handler( $handler );
+	}
 
+	// endregion
+
+	// region INHERITED METHODS
+
+	/**
+	 * Sets a handler instance on the object.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   HandlerInterface    $handler    Handler instance to use from now on.
+	 */
+	public function set_handler( HandlerInterface $handler ) {
+		if ( \is_a( $handler, $this->get_handler_class() ) ) {
+			$this->handler = $handler;
+		}
+	}
+
+	// endregion
+
+	// region HELPERS
+
+	/**
+	 * Registers a default handler if one has not been set through the container.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   HandlerInterface|null       $handler    Handler passed on in the constructor.
+	 */
+	protected function set_default_handler( ?HandlerInterface $handler ): void {
 		if ( ! \is_null( $handler ) ) {
 			$this->set_handler( $handler );
 		}
 	}
+
+	/**
+	 * Returns the class name of the used handler for better type-checking.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string
+	 */
+	abstract protected function get_handler_class(): string;
 
 	// endregion
 }

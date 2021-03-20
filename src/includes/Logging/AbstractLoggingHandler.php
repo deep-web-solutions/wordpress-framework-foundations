@@ -3,7 +3,6 @@
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
 use DeepWebSolutions\Framework\Foundations\PluginUtilities\Handlers\AbstractHandler;
-use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreableTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -16,12 +15,6 @@ use DeepWebSolutions\Framework\Foundations\PluginUtilities\Storage\StoreableTrai
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
 abstract class AbstractLoggingHandler extends AbstractHandler implements LoggingHandlerInterface {
-	// region TRAITS
-
-	use StoreableTrait;
-
-	// endregion
-
 	// region INHERITED METHODS
 
 	/**

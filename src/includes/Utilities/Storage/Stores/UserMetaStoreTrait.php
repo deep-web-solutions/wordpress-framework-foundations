@@ -116,7 +116,7 @@ trait UserMetaStoreTrait {
 	 * @return  StoreableInterface
 	 */
 	public function get( string $entry_id, ?int $user_id = null ): StoreableInterface {
-		$user_id  = $this->parse_user_id( $user_id );
+		$user_id = $this->parse_user_id( $user_id );
 
 		if ( $this->has( $entry_id, $user_id ) ) {
 			$entry_id = $this->sanitize_entry_id( $entry_id );
@@ -138,7 +138,7 @@ trait UserMetaStoreTrait {
 	 * @throws  StoreException      Error while adding the entry.
 	 */
 	public function add( StoreableInterface $storeable, ?int $user_id = null ) {
-		$user_id  = $this->parse_user_id( $user_id );
+		$user_id = $this->parse_user_id( $user_id );
 
 		if ( $this->has( $storeable->get_id(), $user_id ) ) {
 			throw new StoreException( \sprintf( 'Entry %1$s already exists in store %2$s of type %3$s for user %4$s', $entry_id, $this->get_id(), $this->get_storage_type(), $user_id ) );
@@ -186,7 +186,7 @@ trait UserMetaStoreTrait {
 	 * @return  bool
 	 */
 	public function remove( string $entry_id, ?int $user_id = null ): bool {
-		$user_id  = $this->parse_user_id( $user_id );
+		$user_id = $this->parse_user_id( $user_id );
 
 		if ( $this->has( $entry_id, $user_id ) ) {
 			$stored_objects = $this->get_all( $user_id );

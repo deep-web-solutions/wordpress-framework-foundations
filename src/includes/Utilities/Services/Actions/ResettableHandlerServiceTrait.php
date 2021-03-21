@@ -45,7 +45,7 @@ trait ResettableHandlerServiceTrait {
 		if ( \is_null( $this->is_reset ) ) {
 			$this->reset_result = null;
 
-			$handlers = ( $this instanceof HandlerServiceInterface ) ? (array) $this->get_handler() : $this->get_handlers();
+			$handlers = ( $this instanceof HandlerServiceInterface ) ? array( $this->get_handler() ) : $this->get_handlers();
 			$handlers = array_filter(
 				$handlers,
 				function ( HandlerInterface $handler ) {

@@ -45,7 +45,7 @@ trait RunnableHandlerServiceTrait {
 		if ( \is_null( $this->is_run ) ) {
 			$this->run_result = null;
 
-			$handlers = ( $this instanceof HandlerServiceInterface ) ? (array) $this->get_handler() : $this->get_handlers();
+			$handlers = ( $this instanceof HandlerServiceInterface ) ? array( $this->get_handler() ) : $this->get_handlers();
 			$handlers = array_filter(
 				$handlers,
 				function ( HandlerInterface $handler ) {

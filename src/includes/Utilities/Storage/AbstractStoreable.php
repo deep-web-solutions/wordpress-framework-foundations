@@ -30,7 +30,7 @@ abstract class AbstractStoreable implements StoreableInterface {
 	 * @param   string  $storeable_id   The ID of the instance.
 	 */
 	public function __construct( string $storeable_id ) {
-		$this->storeable_id = \sanitize_key( $storeable_id );
+		$this->storeable_id = $storeable_id;
 	}
 
 	// endregion

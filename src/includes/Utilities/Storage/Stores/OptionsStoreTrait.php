@@ -74,6 +74,7 @@ trait OptionsStoreTrait {
 	 * @return  bool
 	 */
 	public function has( string $entry_id ): bool {
+		$entry_id = $this->sanitize_entry_id( $entry_id );
 		return isset( $this->get_all()[ $entry_id ] );
 	}
 
@@ -107,6 +108,7 @@ trait OptionsStoreTrait {
 	 */
 	public function get( string $entry_id ): StoreableInterface {
 		if ( $this->has( $entry_id ) ) {
+			$entry_id = $this->sanitize_entry_id( $entry_id );
 			return $this->get_all()[ $entry_id ];
 		}
 
@@ -142,11 +144,13 @@ trait OptionsStoreTrait {
 	 * @return  bool
 	 */
 	public function update( StoreableInterface $storeable ): bool {
+		$entry_id = $this->sanitize_entry_id( $storeable->get_id() );
+
 		return \update_option(
 			$this->get_key(),
 			\array_merge(
 				$this->get_all(),
-				array( $storeable->get_id() => $storeable )
+				array( $entry_id => $storeable )
 			)
 		);
 	}
@@ -167,6 +171,7 @@ trait OptionsStoreTrait {
 		if ( $this->has( $entry_id ) ) {
 			$stored_objects = $this->get_all();
 
+			$entry_id = $this->sanitize_entry_id( $entry_id );
 			unset( $stored_objects[ $entry_id ] );
 
 			return empty( $stored_objects )
@@ -175,6 +180,24 @@ trait OptionsStoreTrait {
 		}
 
 		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );
+	}
+
+	// endregion
+
+	// region HELPERS
+
+	/**
+	 * Ensures that the entry ID is safe to save into the database.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $entry_id   The string to sanitize.
+	 *
+	 * @return  string
+	 */
+	protected function sanitize_entry_id( string $entry_id ): string {
+		return \sanitize_key( $entry_id );
 	}
 
 	// endregion

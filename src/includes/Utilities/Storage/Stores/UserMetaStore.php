@@ -49,7 +49,7 @@ class UserMetaStore extends AbstractStore {
 	 */
 	public function __construct( string $storeable_id, string $key ) {
 		parent::__construct( $storeable_id );
-		$this->key = $key;
+		$this->key = \sanitize_key( $key );
 	}
 
 	// endregion

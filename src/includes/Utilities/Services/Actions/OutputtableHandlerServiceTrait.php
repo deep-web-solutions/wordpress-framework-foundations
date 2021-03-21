@@ -69,7 +69,7 @@ trait OutputtableHandlerServiceTrait {
 						->return_exception( OutputFailureException::class )->finalize();
 		}
 
-		return $this->run_result;
+		return $this->output_result;
 	}
 
 	// endregion

@@ -160,11 +160,11 @@ trait MemoryStoreTrait {
 	 * @throws  NotFoundException   Thrown when the entry does not exist.
 	 */
 	public function remove( string $entry_id ) {
-		if ( $this->has( $entry_id ) ) {
-			unset( $this->stored_objects[ $entry_id ] );
+		if ( ! $this->has( $entry_id ) ) {
+			throw new NotFoundException( \sprintf( 'Could not delete entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );
 		}
 
-		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );
+		unset( $this->stored_objects[ $entry_id ] );
 	}
 
 	// endregion

@@ -3,12 +3,8 @@
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Services\AbstractMultiHandlerService;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\LogLevel;
-use Psr\Log\NullLogger;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -137,26 +133,15 @@ class LoggingService extends AbstractMultiHandlerService {
 	// region HELPERS
 
 	/**
-	 * Register the logging handlers passed on in the constructor together with the default handlers.
+	 * Returns a list of what the default handlers actually are for the inheriting service.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param array $handlers Logging handlers passed on in the constructor.
-	 *
-	 * @throws  NotFoundExceptionInterface      Thrown if the NullLogger is not found in the plugin DI-container.
-	 * @throws  ContainerExceptionInterface     Thrown if some other error occurs while retrieving the NullLogger instance.
+	 * @return  array
 	 */
-	protected function set_default_handlers( array $handlers ): void {
-		$plugin = $this->get_plugin();
-
-		$null_logger = ( $plugin instanceof ContainerAwareInterface )
-			? $plugin->get_container()->get( NullLogger::class )
-			: new NullLogger();
-
-		$handlers = array_merge( array( new LoggingHandler( 'null', $null_logger ) ), $handlers );
-
-		parent::set_default_handlers( $handlers );
+	protected function get_default_handlers_classes(): array {
+		return array( LoggingHandler::class );
 	}
 
 	/**

@@ -2,7 +2,11 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareTrait;
+use DeepWebSolutions\Framework\Helpers\WordPress\Hooks;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +18,13 @@ use Psr\Log\LoggerInterface;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
-class LoggingHandler extends AbstractLoggingHandler {
+class LoggingHandler extends AbstractLoggingHandler implements PluginAwareInterface {
+	// region TRAITS
+
+	use PluginAwareTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -38,12 +48,20 @@ class LoggingHandler extends AbstractLoggingHandler {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   string              $handler_id     Unique name for the logging handler / logger itself.
-	 * @param   LoggerInterface     $logger         Instance of a PSR-3 conform logger.
+	 * @param   string                  $handler_id     Unique name for the logging handler / logger itself.
+	 * @param   LoggerInterface|null    $logger         Instance of a PSR-3 conform logger.
 	 */
-	public function __construct( string $handler_id, LoggerInterface $logger ) {
+	public function __construct( string $handler_id = 'null', ?LoggerInterface $logger = null ) {
 		parent::__construct( $handler_id );
-		$this->logger = $logger;
+
+		$this->logger = $logger ?? new NullLogger();
+		Hooks::enqueue_temp_on_next_tick(
+			function() {
+				if ( $this->logger instanceof PluginAwareInterface ) {
+					$this->logger->set_plugin( $this->get_plugin() );
+				}
+			}
+		);
 	}
 
 	// endregion

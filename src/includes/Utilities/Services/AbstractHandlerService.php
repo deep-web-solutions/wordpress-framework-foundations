@@ -96,7 +96,7 @@ abstract class AbstractHandlerService extends AbstractService implements Handler
 				: new $handler_class();
 		}
 
-		if ( \is_null( $handler ) ) {
+		if ( ! \is_null( $handler ) ) {
 			$this->set_handler( $handler );
 		}
 	}

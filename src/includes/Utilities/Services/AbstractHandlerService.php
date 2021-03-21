@@ -6,8 +6,11 @@ use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -79,11 +82,35 @@ abstract class AbstractHandlerService extends AbstractService implements Handler
 	 * @version 1.0.0
 	 *
 	 * @param   HandlerInterface|null       $handler    Handler passed on in the constructor.
+	 *
+	 * @throws  NotFoundExceptionInterface      Thrown if the NullLogger is not found in the plugin DI-container.
+	 * @throws  ContainerExceptionInterface     Thrown if some other error occurs while retrieving the NullLogger instance.
 	 */
 	protected function set_default_handler( ?HandlerInterface $handler ): void {
-		if ( ! \is_null( $handler ) ) {
+		if ( ! \is_a( $handler, $this->get_handler_class() ) ) {
+			$handler_class = $this->get_default_handler_class();
+
+			$plugin  = $this->get_plugin();
+			$handler = ( $plugin instanceof ContainerAwareInterface )
+				? $plugin->get_container()->get( $handler_class )
+				: new $handler_class();
+		}
+
+		if ( \is_null( $handler ) ) {
 			$this->set_handler( $handler );
 		}
+	}
+
+	/**
+	 * Returns the class name of the default handler.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  string|null
+	 */
+	protected function get_default_handler_class(): ?string {
+		return null;
 	}
 
 	/**

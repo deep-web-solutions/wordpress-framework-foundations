@@ -6,10 +6,12 @@ use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores\MemoryStore;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -140,9 +142,45 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Mu
 	 * @version 1.0.0
 	 *
 	 * @param   array   $handlers   Handlers passed on in the constructor.
+	 *
+	 * @throws  NotFoundExceptionInterface      Thrown if the NullLogger is not found in the plugin DI-container.
+	 * @throws  ContainerExceptionInterface     Thrown if some other error occurs while retrieving the NullLogger instance.
 	 */
 	protected function set_default_handlers( array $handlers ): void {
-		$this->set_handlers( $handlers );
+		$plugin = $this->get_plugin();
+
+		if ( $plugin instanceof ContainerAwareInterface ) {
+			$container        = $plugin->get_container();
+			$default_handlers = array_map(
+				function( string $class ) use ( $container ) {
+					return $container->get( $class );
+				},
+				$this->get_default_handlers_classes()
+			);
+		} else {
+			$default_handlers = array_filter(
+				array_map(
+					function( string $class ) {
+						return \is_a( $class, $this->get_handler_class(), true ) ? new $class() : null;
+					},
+					$this->get_default_handlers_classes()
+				)
+			);
+		}
+
+		$this->set_handlers( array_merge( $default_handlers, $handlers ) );
+	}
+
+	/**
+	 * Returns a list of what the default handlers actually are for the inheriting service.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  array
+	 */
+	protected function get_default_handlers_classes(): array {
+		return array();
 	}
 
 	/**

@@ -459,12 +459,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-configs.git",
-                "reference": "474165140c2d9a4540187d9199ba7cad7563c815"
+                "reference": "503c7a9b9fb17f895c17a880f3abc98413c6140a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-configs/zipball/474165140c2d9a4540187d9199ba7cad7563c815",
-                "reference": "474165140c2d9a4540187d9199ba7cad7563c815",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-configs/zipball/503c7a9b9fb17f895c17a880f3abc98413c6140a",
+                "reference": "503c7a9b9fb17f895c17a880f3abc98413c6140a",
                 "shasum": ""
             },
             "require": {
@@ -510,7 +510,7 @@
                 "issues": "https://github.com/deep-web-solutions/wordpress-configs/issues",
                 "source": "https://github.com/deep-web-solutions/wordpress-configs/tree/master"
             },
-            "time": "2021-03-21T17:09:07+00:00"
+            "time": "2021-03-23T11:56:37+00:00"
         },
         {
             "name": "humbug/php-scoper",
@@ -602,12 +602,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "777dfa15071f06aecdc895c722055b1edec50dac"
+                "reference": "646ba736ef95b4d27c645d1c2796a4b53e43e20d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/777dfa15071f06aecdc895c722055b1edec50dac",
-                "reference": "777dfa15071f06aecdc895c722055b1edec50dac",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/646ba736ef95b4d27c645d1c2796a4b53e43e20d",
+                "reference": "646ba736ef95b4d27c645d1c2796a4b53e43e20d",
                 "shasum": ""
             },
             "require-dev": {
@@ -643,7 +643,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2021-03-19T17:08:17+00:00"
+            "time": "2021-03-23T11:57:53+00:00"
         },
         {
             "name": "nette/utils",

@@ -24,6 +24,21 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 
 	// endregion
 
+	// region FIELDS AND CONSTANTS
+
+	/**
+	 * Whether the plugin has been set on the instance or not.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @access  protected
+	 * @var     bool
+	 */
+	protected bool $set_plugin = false;
+
+	// endregion
+
 	// region INHERITED METHODS
 
 	/**
@@ -38,15 +53,21 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 	 * @return  PluginInterface
 	 */
 	public function get_plugin(): PluginInterface {
-		$plugin = $this->get_closest( PluginInterface::class );
-		if ( $plugin instanceof PluginInterface ) {
-			return $plugin;
-		}
+		if ( $this->set_plugin ) {
+			return parent::get_plugin();
+		} else {
+			$plugin = $this->get_closest( PluginInterface::class );
+			if ( $plugin instanceof PluginInterface ) {
+				$this->set_plugin( $plugin );
+				return $plugin;
+			}
 
-		/* @noinspection PhpUnhandledExceptionInspection */
-		throw $this->log_event( \sprintf( 'Could not find plugin root from within node. Node name: %s', $this->get_name() ), array(), 'framework' )
-			->set_log_level( LogLevel::ERROR )->return_exception( \LogicException::class )
-			->finalize();
+			/* @noinspection PhpUnhandledExceptionInspection */
+			throw $this->log_event( \sprintf( 'Could not find plugin root from within node. Node name: %s', $this->get_name() ), array(), 'framework' )
+						->set_log_level( LogLevel::ERROR )
+						->return_exception( \LogicException::class )
+						->finalize();
+		}
 	}
 
 	/**
@@ -60,7 +81,8 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 	 * @param   PluginInterface|null    $plugin     NOT USED BY THIS IMPLEMENTATION.
 	 */
 	public function set_plugin( ?PluginInterface $plugin = null ) {
-		$this->plugin = $this->get_plugin();
+		$this->plugin     = $this->get_plugin();
+		$this->set_plugin = true;
 	}
 
 	// endregion

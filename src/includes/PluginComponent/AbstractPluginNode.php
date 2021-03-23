@@ -81,7 +81,7 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 	 * @param   PluginInterface|null    $plugin     NOT USED BY THIS IMPLEMENTATION.
 	 */
 	public function set_plugin( ?PluginInterface $plugin = null ) {
-		$this->plugin     = $this->get_plugin();
+		$this->plugin     = \is_null( $plugin ) ? $this->get_plugin() : $plugin;
 		$this->set_plugin = true;
 	}
 

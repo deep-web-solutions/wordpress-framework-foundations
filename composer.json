@@ -36,7 +36,16 @@
     "object-calisthenics/phpcs-calisthenics-rules": "*",
     "phpcompatibility/php-compatibility": "*",
     "phpcompatibility/phpcompatibility-wp": "*",
-    "wp-coding-standards/wpcs": "*"
+    "wp-coding-standards/wpcs": "*",
+
+    "lucatume/wp-browser": ">=3.0",
+    "codeception/module-asserts": "^1.3",
+    "codeception/module-phpbrowser": "^1.0",
+    "codeception/module-webdriver": "^1.2",
+    "codeception/module-db": "^1.1",
+    "codeception/module-filesystem": "^1.0",
+    "codeception/module-cli": "^1.1",
+    "codeception/util-universalframework": "^1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -48,6 +57,15 @@
     "files": [
       "bootstrap.php"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Support\\": "tests/_support",
+      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Acceptance\\": "tests/acceptance",
+      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Functional\\": "tests/functional",
+      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Integration\\": "tests/wpunit",
+      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Unit\\": "tests/unit"
+    }
   },
 
   "scripts": {
@@ -70,6 +88,30 @@
     ],
     "coding-standards:fix": [
       "@php ./vendor/bin/phpcbf --standard=phpcs.xml.dist"
+    ],
+
+    "test:clean": [
+      "@php ./vendor/bin/codecept clean"
+    ],
+    "test:acceptance": [
+      "Composer\\Config::disableProcessTimeout",
+      "@php ./vendor/bin/codecept run acceptance"
+    ],
+    "test:functional": [
+      "Composer\\Config::disableProcessTimeout",
+      "@php ./vendor/bin/codecept run functional"
+    ],
+    "test:integration": [
+      "Composer\\Config::disableProcessTimeout",
+      "@php ./vendor/bin/codecept run wpunit"
+    ],
+    "test:unit": [
+      "Composer\\Config::disableProcessTimeout",
+      "@php ./vendor/bin/codecept run unit"
+    ],
+    "test:coverage": [
+      "Composer\\Config::disableProcessTimeout",
+      "@php ./vendor/bin/codecept run wpunit --coverage --coverage-xml --coverage-html"
     ]
   }
 }

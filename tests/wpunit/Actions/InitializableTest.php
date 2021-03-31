@@ -1,6 +1,6 @@
 <?php declare( strict_types = 1 );
 
-namespace DeepWebSolutions\Framework\Tests\Foundations\Integration;
+namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Actions;
 
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationFailureException;
@@ -15,7 +15,7 @@ use WpunitTester;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration
+ * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration\Actions
  */
 class InitializableTest extends WPTestCase {
 	// region FIELDS AND CONSTANTS

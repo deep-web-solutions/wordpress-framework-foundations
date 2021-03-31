@@ -3,6 +3,7 @@
 namespace DeepWebSolutions\Framework\Foundations\Helpers;
 
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\PluginComponent\PluginComponentInterface;
 use DeepWebSolutions\Framework\Helpers\WordPress\Hooks\HooksHelpersTrait as HelpersModuleTrait;
 
@@ -39,8 +40,12 @@ trait HooksHelpersTrait {
 		if ( $this instanceof PluginComponentInterface ) {
 			$root = ( 'dws_framework_foundations' === $root ) ? '' : $root;
 			$root = \join( '-', array( $this->get_plugin()->get_plugin_safe_slug(), $root ?: $this->get_safe_name() ) ); // phpcs:ignore
-		} elseif ( $this instanceof PluginAwareInterface ) {
-			$root = $this->get_plugin()->get_plugin_safe_slug();
+		} elseif ( 'dws_framework_foundations' === $root ) {
+			if ( $this instanceof PluginAwareInterface ) {
+				$root = $this->get_plugin()->get_plugin_safe_slug();
+			} elseif ( $this instanceof PluginInterface ) {
+				$root = $this->get_plugin_safe_slug();
+			}
 		}
 
 		return $this->get_hook_tag_helpers( $name, $extra, $root );

@@ -3,6 +3,7 @@
 namespace DeepWebSolutions\Framework\Foundations\Helpers;
 
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\PluginComponent\PluginComponentInterface;
 use DeepWebSolutions\Framework\Helpers\WordPress\Assets\AssetsHelpersTrait as HelpersModuleTrait;
 
@@ -39,8 +40,12 @@ trait AssetsHelpersTrait {
 		if ( $this instanceof PluginComponentInterface ) {
 			$root = ( 'dws-framework-foundations' === $root ) ? '' : $root;
 			$root = \join( '_', array( $this->get_plugin()->get_plugin_slug(), $root ?: $this->get_name() ) ); // phpcs:ignore
-		} elseif ( $this instanceof PluginAwareInterface ) {
-			$root = $this->get_plugin()->get_plugin_slug();
+		} elseif ( 'dws-framework-foundations' === $root ) {
+			if ( $this instanceof PluginAwareInterface ) {
+				$root = $this->get_plugin()->get_plugin_slug();
+			} elseif ( $this instanceof PluginInterface ) {
+				$root = $this->get_plugin_slug();
+			}
 		}
 
 		return $this->get_asset_handle_helpers( $name, $extra, $root );

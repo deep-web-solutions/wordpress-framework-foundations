@@ -6,6 +6,7 @@ use DeepWebSolutions\Framework\Foundations\Helpers\AssetsHelpersTrait;
 use DeepWebSolutions\Framework\Foundations\Helpers\HooksHelpersTrait;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -23,6 +24,22 @@ class PluginAwareObject implements PluginAwareInterface {
 	use PluginAwareTrait;
 	use AssetsHelpersTrait;
 	use HooksHelpersTrait;
+
+	// endregion
+
+	// region MAGIC METHODS
+
+	/**
+	 * PluginAwareObject constructor.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   PluginInterface     $plugin     Instance of the plugin.
+	 */
+	public function __construct( PluginInterface $plugin ) {
+		$this->set_plugin( $plugin );
+	}
 
 	// endregion
 }

@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations;
 
+use DeepWebSolutions\Framework\Foundations\Helpers\AssetsHelpersTrait;
+use DeepWebSolutions\Framework\Foundations\Helpers\HooksHelpersTrait;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginTrait;
 use function DeepWebSolutions\Plugins\dws_foundations_test_base_path;
@@ -20,6 +22,8 @@ class Plugin implements PluginInterface {
 	// region TRAITS
 
 	use PluginTrait;
+	use AssetsHelpersTrait;
+	use HooksHelpersTrait;
 
 	// endregion
 

@@ -97,6 +97,8 @@ trait InitializableTrait {
 				$this->is_initialized        = true;
 				$this->initialization_result = null;
 			}
+		} else {
+			return new InitializationFailureException( \sprintf( 'Instance of %s has been initialized already', __CLASS__ ) );
 		}
 
 		return $this->initialization_result;

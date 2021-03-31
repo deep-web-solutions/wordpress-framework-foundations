@@ -36,7 +36,7 @@ trait ActionExtensionHelpersTrait {
 				}
 
 				$trait_boom  = \explode( '\\', $trait_name );
-				$method_name = \ltrim( $prefix . \strtolower( \preg_replace( '/([A-Z]+)/', '_${1}', end( $trait_boom ) ) ), '_' );
+				$method_name = \ltrim( $prefix . \strtolower( \preg_replace( '/([A-Z]+)/', '_${1}', \end( $trait_boom ) ) ), '_' );
 				$method_name = Strings::ends_with( $method_name, '_trait' ) ? \str_replace( '_trait', '', $method_name ) : $method_name;
 
 				if ( \method_exists( $this, $method_name ) ) {

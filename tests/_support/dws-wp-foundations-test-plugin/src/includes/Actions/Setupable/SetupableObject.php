@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Tests\Foundations\Actions;
+namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\Setupable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupableTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\SetupableInterface;
@@ -13,9 +13,8 @@ use DeepWebSolutions\Framework\Foundations\Actions\SetupableInterface;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Actions
+ * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Actions\Setupable
  */
 class SetupableObject implements SetupableInterface {
 	use SetupableTrait;
-
 }

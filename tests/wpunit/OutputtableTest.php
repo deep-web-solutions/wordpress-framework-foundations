@@ -56,9 +56,9 @@ class OutputtableTest extends WPTestCase {
 		$this->assertEquals( true, $outputtable_object->is_outputted() );
 		$this->assertEquals( null, $outputtable_object->get_output_result() );
 
-		$run_result = $outputtable_object->output();
-		$this->assertInstanceOf( OutputFailureException::class, $run_result );
-		$this->assertStringEndsWith( 'has been outputted already', $run_result->getMessage() );
+		$output_result = $outputtable_object->output();
+		$this->assertInstanceOf( OutputFailureException::class, $output_result );
+		$this->assertStringEndsWith( 'has been outputted already', $output_result->getMessage() );
 	}
 
 	/**

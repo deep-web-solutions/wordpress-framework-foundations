@@ -97,6 +97,8 @@ trait SetupableTrait {
 				$this->is_setup     = true;
 				$this->setup_result = null;
 			}
+		} else {
+			return new SetupFailureException( \sprintf( 'Instance of %s has been setup already', __CLASS__ ) );
 		}
 
 		return $this->setup_result;

@@ -18,6 +18,7 @@
  * Author URI:          https://www.deep-web-solutions.com
  * License:             GPL-3.0+
  * License URI:         http://www.gnu.org/licenses/gpl-3.0.txt
+ * Text Domain:         dws-wp-foundations-test-plugin
  */
 
 namespace DeepWebSolutions\Plugins;
@@ -40,4 +41,4 @@ require_once __DIR__ . '/bootstrap-functions.php';
 
 // Start the plugin.
 require_once __DIR__ . '/functions.php';
-dws_foundations_test_plugin();
+add_action( 'plugins_loaded', 'dws_foundations_test_plugin_instance_initialize' );

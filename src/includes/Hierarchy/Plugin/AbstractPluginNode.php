@@ -1,21 +1,22 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\PluginComponent;
+namespace DeepWebSolutions\Framework\Foundations\Hierarchy\Plugin;
 
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeTrait;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\PluginComponent\AbstractPluginComponent;
 use Psr\Log\LogLevel;
 
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Template for encapsulating some of the most often required abilities of a tree-like plugin component.
+ * Template for encapsulating some of the most often required abilities of a tree-like plugin's component.
  *
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\PluginComponents
+ * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\Plugin
  */
 abstract class AbstractPluginNode extends AbstractPluginComponent implements NodeInterface {
 	// region TRAITS

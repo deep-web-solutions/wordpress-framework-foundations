@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Helpers;
 
-use DeepWebSolutions\Framework\Foundations\PluginComponent\AbstractPluginNode;
+use DeepWebSolutions\Framework\Foundations\Hierarchy\Plugin\AbstractPluginNode;
 
 \defined( 'ABSPATH' ) || exit;
 

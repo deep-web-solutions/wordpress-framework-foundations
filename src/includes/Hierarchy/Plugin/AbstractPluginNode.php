@@ -96,12 +96,15 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   string  $class  The name of the class of the searched-for parent node.
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @param   string  $class          The name of the class of the searched-for parent node.
+	 * @param   bool    $ignore_self    Whether to ignore oneself if oneself also fulfills the requirements.
 	 *
 	 * @return  NodeInterface|null
 	 */
-	public function get_closest( string $class ): ?NodeInterface {
-		if ( \is_a( $this, $class ) || ! $this->has_parent() ) {
+	public function get_closest( string $class, bool $ignore_self = false ): ?NodeInterface {
+		if ( ! $this->has_parent() || ( \is_a( $this, $class ) && ! $ignore_self ) ) {
 			return null;
 		}
 

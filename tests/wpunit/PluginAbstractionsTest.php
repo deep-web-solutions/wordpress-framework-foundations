@@ -6,7 +6,10 @@ use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Exceptions\InexistentPropertyException;
 use DeepWebSolutions\Framework\Foundations\Exceptions\ReadOnlyPropertyException;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginComponent;
+use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginNode;
+use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginRoot;
 use WpunitTester;
 
 /**
@@ -109,6 +112,56 @@ class PluginAbstractionsTest extends WPTestCase {
 		} catch ( InexistentPropertyException $exception ) {
 			$this->assertEquals( 'Inexistent property: inexistent_test', $exception->getMessage() );
 		}
+	}
+
+	/**
+	 * Tests for the hierarchical plugins.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function test_plugin_tree() {
+		$plugin_root       = new GenericPluginRoot();
+		$plugin_component1 = new GenericPluginNode( new LoggingService( $plugin_root ), 'component-1', 'Component 1' );
+		$plugin_component2 = new GenericPluginNode( new LoggingService( $plugin_root ), 'component-2', 'Component 2' );
+
+		try {
+			$this->assertEquals( $plugin_root, $plugin_component1->get_plugin() );
+			$this->fail( 'Retrieved plugin before initializing the plugin tree' );
+		} catch ( \LogicException $exception ) {
+			$this->assertEquals( 'Could not find plugin root from within node. Node name: Component 1', $exception->getMessage() );
+		}
+		try {
+			$this->assertEquals( $plugin_root, $plugin_component2->get_plugin() );
+			$this->fail( 'Retrieved plugin before initializing the plugin tree' );
+		} catch ( \LogicException $exception ) {
+			$this->assertEquals( 'Could not find plugin root from within node. Node name: Component 2', $exception->getMessage() );
+		}
+
+		// Initialize plugin tree.
+		$plugin_root->add_child( $plugin_component1 );
+		$plugin_component1->add_child( $plugin_component2 );
+
+		// Make sure everyone can identify the plugin root.
+		$this->assertEquals( $plugin_root, $plugin_root->get_plugin() );
+		$this->assertEquals( $plugin_root, $plugin_component1->get_plugin() );
+		$this->assertEquals( $plugin_root, $plugin_component2->get_plugin() );
+
+		// Make sure the root simply cannot have a parent.
+		$plugin_root->set_parent( $plugin_component1 );
+		$this->assertEquals( $plugin_root, $plugin_root->get_plugin() );
+		$this->assertNull( $plugin_root->get_parent() );
+
+		// Test the 'get_closest' method.
+		$this->assertNull( $plugin_component2->get_closest( GenericPluginNode::class ) );
+		$this->assertEquals( $plugin_component1, $plugin_component2->get_closest( GenericPluginNode::class, true ) );
+		$this->assertEquals( $plugin_root, $plugin_component2->get_closest( GenericPluginRoot::class ) );
+		$this->assertEquals( $plugin_root, $plugin_component2->get_closest( PluginInterface::class ) );
+
+		// Test the 'set_plugin' method.
+		$plugin_root2 = new GenericPluginRoot();
+		$plugin_component2->set_plugin( $plugin_root2 );
+		$this->assertEquals( $plugin_root2, $plugin_component2->get_plugin() );
 	}
 
 	// endregion

@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Tests\Foundations\Helpers;
+namespace DeepWebSolutions\Framework\Tests\Foundations\PluginComponents;
 
 use DeepWebSolutions\Framework\Foundations\Hierarchy\Plugin\AbstractPluginRoot;
 
@@ -12,7 +12,7 @@ use DeepWebSolutions\Framework\Foundations\Hierarchy\Plugin\AbstractPluginRoot;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Helpers
+ * @package DeepWebSolutions\WP-Framework\Tests\Foundations\PluginComponents
  */
 class GenericPluginRoot extends AbstractPluginRoot {
 	/**

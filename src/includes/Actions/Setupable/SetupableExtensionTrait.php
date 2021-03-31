@@ -13,5 +13,9 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Setupable
  */
 trait SetupableExtensionTrait {
-	/* empty on purpose */
+	// region TRAITS
+
+	use SetupableTrait;
+
+	// endregion
 }

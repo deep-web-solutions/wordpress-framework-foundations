@@ -13,5 +13,9 @@ namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
  * @package DeepWebSolutions\WP-Framework\Foundations\States\Activeable
  */
 trait ActiveableExtensionTrait {
-	/* empty on purpose */
+	// region TRAITS
+
+	use ActiveableTrait;
+
+	// endregion
 }

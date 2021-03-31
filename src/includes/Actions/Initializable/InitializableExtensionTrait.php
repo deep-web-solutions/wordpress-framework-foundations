@@ -13,5 +13,9 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Initializable;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Initializable
  */
 trait InitializableExtensionTrait {
-	/* empty on purpose */
+	// region TRAITS
+
+	use InitializableTrait;
+
+	// endregion
 }

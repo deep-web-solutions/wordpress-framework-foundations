@@ -13,5 +13,9 @@ namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
  * @package DeepWebSolutions\WP-Framework\Foundations\States\Disableable
  */
 trait DisableableExtensionTrait {
-	/* empty on purpose */
+	// region TRAITS
+
+	use DisableableTrait;
+
+	// endregion
 }

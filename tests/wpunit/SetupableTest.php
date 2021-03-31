@@ -5,6 +5,7 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Integration;
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputFailureException;
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupFailureException;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\Setupable\SetupableExtensionObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\Setupable\SetupableLocalObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\Setupable\SetupableObject;
 use WpunitTester;
@@ -89,6 +90,33 @@ class SetupableTest extends WPTestCase {
 		$this->assertEquals( $example['setup_result'], $setupable_object->get_setup_result() );
 	}
 
+	/**
+	 * Test for the extension setupable trait.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   array   $example    Example to run the test on.
+	 *
+	 * @dataProvider    _setupable_extension_trait_provider
+	 */
+	public function test_setupable_extension_trait( array $example ) {
+		$setupable_object = new SetupableExtensionObject( $example['setup_result_local'], $example['setup_result_extension'] );
+
+		$this->assertEquals( null, $setupable_object->is_setup() );
+		try {
+			/* @noinspection PhpExpressionResultUnusedInspection */
+			$setupable_object->get_setup_result();
+			$this->fail( 'Accessed initialization result before initializing the object' );
+		} catch ( \Error $e ) {
+			$this->assertStringStartsWith( 'Typed property', $e->getMessage() );
+		}
+
+		$setupable_object->setup();
+		$this->assertEquals( $example['is_setup'], $setupable_object->is_setup() );
+		$this->assertEquals( $example['setup_result'], $setupable_object->get_setup_result() );
+	}
+
 	// endregion
 
 	// region HELPERS
@@ -115,6 +143,51 @@ class SetupableTest extends WPTestCase {
 					'setup_result_local' => ( $local_result = new SetupFailureException() ), // phpcs:ignore
 					'setup_result'       => $local_result,
 					'is_setup'           => false,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'setupable_extension_trait' tester.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _setupable_extension_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'setup_result_local'     => null,
+					'setup_result_extension' => null,
+					'setup_result'           => null,
+					'is_setup'               => true,
+				),
+			),
+			array(
+				array(
+					'setup_result_local'     => ( $local_result = new SetupFailureException( 'Local failure' ) ), // phpcs:ignore
+					'setup_result_extension' => null,
+					'setup_result'           => $local_result,
+					'is_setup'               => false,
+				),
+			),
+			array(
+				array(
+					'setup_result_local'     => null,
+					'setup_result_extension' => ( $extension_result = new SetupFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'setup_result'           => $extension_result,
+					'is_setup'               => false,
+				),
+			),
+			array(
+				array(
+					'setup_result_local'     => ( $local_result = new SetupFailureException( 'Local failure' ) ), // phpcs:ignore
+					'setup_result_extension' => ( $extension_result = new SetupFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'setup_result'           => $local_result,
+					'is_setup'               => false,
 				),
 			),
 		);

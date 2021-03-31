@@ -13,6 +13,14 @@ namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
  * @package DeepWebSolutions\WP-Framework\Foundations\States\Disableable
  */
 trait DisableableLocalTrait {
+	// region TRAITS
+
+	use DisableableTrait;
+
+	// endregion
+
+	// region METHODS
+
 	/**
 	 * Using classes should define their local is_disabled logic in here.
 	 *
@@ -20,4 +28,6 @@ trait DisableableLocalTrait {
 	 * @version 1.0.0
 	 */
 	abstract public function is_disabled_local(): bool;
+
+	// endregion
 }

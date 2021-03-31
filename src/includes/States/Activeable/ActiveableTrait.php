@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
 
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
-use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -19,6 +19,7 @@ trait ActiveableTrait {
 	// region TRAITS
 
 	use ActionExtensionHelpersTrait;
+	use ActionLocalExtensionHelpersTrait;
 
 	// endregion
 
@@ -49,35 +50,11 @@ trait ActiveableTrait {
 	 */
 	public function is_active(): bool {
 		if ( \is_null( $this->is_active ) ) {
-			$this->is_active = true;
-
-			$this->is_active = $this->is_active && $this->maybe_check_is_active_local();
+			$this->is_active = $this->maybe_execute_local_trait( ActiveableLocalTrait::class, 'is_active', true );
 			$this->is_active = $this->is_active && $this->maybe_execute_extension_traits( ActiveableExtensionTrait::class, true, 'is' );
 		}
 
 		return $this->is_active;
-	}
-
-	// endregion
-
-	// region HELPERS
-
-	/**
-	 * Check any potential local is_active logic.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @see     ActiveableLocalTrait::is_active_local()
-	 *
-	 * @return  bool
-	 */
-	protected function maybe_check_is_active_local(): bool {
-		if ( Objects::has_trait_deep( ActiveableLocalTrait::class, $this ) && \method_exists( $this, 'is_active_local' ) ) {
-			return $this->is_active_local();
-		}
-
-		return true;
 	}
 
 	// endregion

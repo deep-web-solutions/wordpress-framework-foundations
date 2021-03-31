@@ -13,6 +13,14 @@ namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
  * @package DeepWebSolutions\WP-Framework\Foundations\States\Activeable
  */
 trait ActiveableLocalTrait {
+	// region TRAITS
+
+	use ActiveableTrait;
+
+	// endregion
+
+	// region METHODS
+
 	/**
 	 * Using classes should define their local is_active logic in here.
 	 *
@@ -20,4 +28,6 @@ trait ActiveableLocalTrait {
 	 * @version 1.0.0
 	 */
 	abstract public function is_active_local(): bool;
+
+	// endregion
 }

@@ -72,7 +72,12 @@ trait ParentTrait {
 	 * @param   object[]    $children   Children to set.
 	 */
 	public function set_children( array $children ) {
-		$this->children = \array_filter( $children, 'is_object' );
+		$this->children = \array_filter(
+			$children,
+			function( $child ) {
+				return \is_object( $child ) && \is_a( $child, ChildInterface::class );
+			}
+		);
 	}
 
 	// endregion

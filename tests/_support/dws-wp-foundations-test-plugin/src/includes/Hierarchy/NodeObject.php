@@ -13,7 +13,7 @@ use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeTrait;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Tests\Foundations
+ * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Hierarchy
  */
 class NodeObject implements NodeInterface {
 	use NodeTrait;

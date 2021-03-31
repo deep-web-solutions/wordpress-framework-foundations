@@ -46,8 +46,6 @@ interface ChildInterface {
 	 * @version 1.0.0
 	 *
 	 * @param   ParentInterface     $parent     The value to set the parent to.
-	 *
-	 * @return  mixed
 	 */
 	public function set_parent( ParentInterface $parent );
 

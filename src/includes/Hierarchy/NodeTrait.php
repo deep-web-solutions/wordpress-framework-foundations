@@ -54,8 +54,8 @@ trait NodeTrait {
 	 */
 	public function get_parent(): ?NodeInterface {
 		$parent = $this->get_parent_trait();
-		if ( ! $parent instanceof NodeInterface ) {
-			throw new LogicException( 'The parent of a node must be a node too.' );
+		if ( ! \is_null( $parent ) && ! $parent instanceof NodeInterface ) {
+			throw new LogicException( 'The parent of a node must be a node too' );
 		}
 
 		return $parent;
@@ -89,7 +89,7 @@ trait NodeTrait {
 	 */
 	public function set_parent( ParentInterface $parent ) {
 		if ( ! $parent instanceof NodeInterface ) {
-			throw new LogicException( 'The parent of a node must be a node too.' );
+			throw new LogicException( 'The parent of a node must be a node too' );
 		}
 
 		$this->set_parent_child_trait( $parent );

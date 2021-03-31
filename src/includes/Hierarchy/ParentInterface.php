@@ -46,8 +46,6 @@ interface ParentInterface {
 	 * @version 1.0.0
 	 *
 	 * @param   ChildInterface[]        $children       Children to set.
-	 *
-	 * @return  mixed
 	 */
 	public function set_children( array $children );
 
@@ -59,8 +57,6 @@ interface ParentInterface {
 	 * Method for adding a new child to the instance.
 	 *
 	 * @param   string|ChildInterface       $child      Object or class name to instantiate and add as a child.
-	 *
-	 * @return  mixed
 	 */
 	public function add_child( $child );
 

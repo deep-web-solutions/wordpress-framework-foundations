@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34e0be1f7f0084c252f11885bf591f08",
+    "content-hash": "fadac47fee27c8802b6ee22e514748ca",
     "packages": [
         {
             "name": "deep-web-solutions/wp-framework-bootstrapper",
@@ -2144,7 +2144,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v8.35.0",
+            "version": "v8.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -2198,7 +2198,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v8.35.0",
+            "version": "v8.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -2246,7 +2246,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v8.35.0",
+            "version": "v8.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -2292,7 +2292,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v8.35.0",
+            "version": "v8.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -2423,12 +2423,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "c75f3adb837cea4e3a175ae1470ec82354878ab5"
+                "reference": "016afa5d6494a18a95822437ab529e57088a07eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/c75f3adb837cea4e3a175ae1470ec82354878ab5",
-                "reference": "c75f3adb837cea4e3a175ae1470ec82354878ab5",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/016afa5d6494a18a95822437ab529e57088a07eb",
+                "reference": "016afa5d6494a18a95822437ab529e57088a07eb",
                 "shasum": ""
             },
             "require-dev": {
@@ -2464,7 +2464,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2021-03-30T12:41:48+00:00"
+            "time": "2021-03-31T17:53:24+00:00"
         },
         {
             "name": "lucatume/wp-browser",
@@ -6314,12 +6314,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "f209823d320547cb848cd2692b6cab37481f0e28"
+                "reference": "28be64a901c2c9f25f29da411b880d4ff8fd6c07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/f209823d320547cb848cd2692b6cab37481f0e28",
-                "reference": "f209823d320547cb848cd2692b6cab37481f0e28",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/28be64a901c2c9f25f29da411b880d4ff8fd6c07",
+                "reference": "28be64a901c2c9f25f29da411b880d4ff8fd6c07",
                 "shasum": ""
             },
             "require": {
@@ -6368,7 +6368,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-30T08:12:49+00:00"
+            "time": "2021-03-31T16:52:38+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -6376,12 +6376,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "3decd5ef0eb3a9c688f0dc29bd832b8bc3af4406"
+                "reference": "103004077b81a29ed9766bb7c738bbe5632becf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/3decd5ef0eb3a9c688f0dc29bd832b8bc3af4406",
-                "reference": "3decd5ef0eb3a9c688f0dc29bd832b8bc3af4406",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/103004077b81a29ed9766bb7c738bbe5632becf6",
+                "reference": "103004077b81a29ed9766bb7c738bbe5632becf6",
                 "shasum": ""
             },
             "require": {
@@ -6425,7 +6425,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-03-30T00:02:48+00:00"
+            "time": "2021-03-30T23:21:26+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -9870,7 +9870,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "ext-iconv": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

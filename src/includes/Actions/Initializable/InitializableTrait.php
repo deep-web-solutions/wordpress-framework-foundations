@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Foundations\Actions\Initializable;
 
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
-use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -19,6 +19,7 @@ trait InitializableTrait {
 	// region TRAITS
 
 	use ActionExtensionHelpersTrait;
+	use ActionLocalExtensionHelpersTrait;
 
 	// endregion
 
@@ -86,7 +87,7 @@ trait InitializableTrait {
 	 */
 	public function initialize(): ?InitializationFailureException {
 		if ( \is_null( $this->is_initialized ) ) {
-			if ( ! \is_null( $result = $this->maybe_initialize_local() ) ) { // phpcs:ignore
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( InitializableLocalTrait::class, 'initialize' ) ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
 				$this->initialization_result = $result;
 			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( InitializableExtensionTrait::class ) ) ) { // phpcs:ignore
@@ -99,28 +100,6 @@ trait InitializableTrait {
 		}
 
 		return $this->initialization_result;
-	}
-
-	// endregion
-
-	// region HELPERS
-
-	/**
-	 * Execute any potential local initialization logic.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @see     InitializableLocalTrait::initialize_local()
-	 *
-	 * @return  InitializationFailureException|null
-	 */
-	protected function maybe_initialize_local(): ?InitializationFailureException {
-		if ( Objects::has_trait_deep( InitializableLocalTrait::class, $this ) && \method_exists( $this, 'initialize_local' ) ) {
-			return $this->initialize_local();
-		}
-
-		return null;
 	}
 
 	// endregion

@@ -2,6 +2,11 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Resettable;
 
+use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunnableTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
+use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
+
 \defined( 'ABSPATH' ) || exit;
 
 /**
@@ -13,6 +18,12 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Resettable;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Resettable
  */
 trait ResettableTrait {
+	// region TRAITS
+
+	use ActionLocalExtensionHelpersTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -70,12 +81,31 @@ trait ResettableTrait {
 	// region METHODS
 
 	/**
-	 * Execute the reset logic of the implementing class.
+	 * Simple reset logic.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	abstract public function reset(): ?ResetFailureException;
+	public function reset(): ?ResetFailureException {
+		if ( \is_null( $this->is_reset ) ) {
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( ResettableLocalTrait::class, 'reset' ) ) ) { // phpcs:ignore
+				$this->is_reset     = false;
+				$this->reset_result = $result;
+			} else {
+				$this->is_reset     = true;
+				$this->reset_result = null;
+			}
+
+			if ( $this instanceof RunnableInterface && Objects::has_trait_deep( RunnableTrait::class, $this ) ) {
+				$this->is_run = null;
+				unset( $this->run_result );
+			}
+		} else {
+			return new ResetFailureException( \sprintf( 'Instance of %s has been reset already', __CLASS__ ) );
+		}
+
+		return $this->reset_result;
+	}
 
 	// endregion
 }

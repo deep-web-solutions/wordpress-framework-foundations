@@ -22,12 +22,22 @@
 
 namespace DeepWebSolutions\Plugins;
 
-defined( 'ABSPATH' ) || exit;
+\defined( 'ABSPATH' ) || exit;
 
 // Register autoloader for testing dependencies.
-is_file( __DIR__ . '/vendor/autoload.php' ) && require_once __DIR__ . '/vendor/autoload.php';
-if ( ! defined( 'DeepWebSolutions\Framework\DWS_WP_FRAMEWORK_BOOTSTRAPPER_NAME' ) ) {
+\is_file( __DIR__ . '/vendor/autoload.php' ) && require_once __DIR__ . '/vendor/autoload.php';
+if ( ! \defined( 'DeepWebSolutions\Framework\DWS_WP_FRAMEWORK_BOOTSTRAPPER_NAME' ) ) {
 	require __DIR__ . '/vendor/deep-web-solutions/wp-framework-bootstrapper/bootstrap.php';
 	require __DIR__ . '/vendor/deep-web-solutions/wp-framework-helpers/bootstrap.php';
 	require __DIR__ . '/vendor/deep-web-solutions/wp-framework-foundations/bootstrap.php';
 }
+
+// Load plugin-specific bootstrapping functions.
+require_once __DIR__ . '/bootstrap-functions.php';
+
+// Define plugins' constants.
+\define( __NAMESPACE__ . '\DWS_FOUNDATIONS_TEST_PLUGIN_BASE_PATH', plugin_dir_path( __FILE__ ) );
+
+// Start the plugin.
+require_once __DIR__ . '/functions.php';
+dws_foundations_test_plugin();

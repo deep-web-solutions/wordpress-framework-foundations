@@ -2,6 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Outputtable;
 
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
+
 \defined( 'ABSPATH' ) || exit;
 
 /**
@@ -13,6 +15,12 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Outputtable;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Outputtable
  */
 trait OutputtableTrait {
+	// region TRAITS
+
+	use ActionLocalExtensionHelpersTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -49,7 +57,7 @@ trait OutputtableTrait {
 	 *
 	 * @return  OutputFailureException|null
 	 */
-	public function get_reset_result(): ?OutputFailureException {
+	public function get_output_result(): ?OutputFailureException {
 		return $this->output_result;
 	}
 
@@ -70,12 +78,26 @@ trait OutputtableTrait {
 	// region METHODS
 
 	/**
-	 * Execute the output logic of the implementing class.
+	 * Simple output logic.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	abstract public function output(): ?OutputFailureException;
+	public function output(): ?OutputFailureException {
+		if ( \is_null( $this->is_outputted ) ) {
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( OutputtableLocalTrait::class, 'output' ) ) ) { // phpcs:ignore
+				$this->is_outputted  = false;
+				$this->output_result = $result;
+			} else {
+				$this->is_outputted  = true;
+				$this->output_result = null;
+			}
+		} else {
+			return new OutputFailureException( \sprintf( 'Instance of %s has been outputted already', __CLASS__ ) );
+		}
+
+		return $this->output_result;
+	}
 
 	// endregion
 }

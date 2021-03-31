@@ -2,6 +2,11 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Actions\Runnable;
 
+use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResettableTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\ResettableInterface;
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
+use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
+
 \defined( 'ABSPATH' ) || exit;
 
 /**
@@ -13,6 +18,12 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Runnable;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Runnable
  */
 trait RunnableTrait {
+	// region TRAITS
+
+	use ActionLocalExtensionHelpersTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -70,12 +81,31 @@ trait RunnableTrait {
 	// region METHODS
 
 	/**
-	 * Execute the run logic of the implementing class.
+	 * Simple run logic.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
-	abstract public function run(): ?RunFailureException;
+	public function run(): ?RunFailureException {
+		if ( \is_null( $this->is_run ) ) {
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( RunnableLocalTrait::class, 'run' ) ) ) { // phpcs:ignore
+				$this->is_run     = false;
+				$this->run_result = $result;
+			} else {
+				$this->is_run     = true;
+				$this->run_result = null;
+			}
+
+			if ( $this instanceof ResettableInterface && Objects::has_trait_deep( ResettableTrait::class, $this ) ) {
+				$this->is_reset = null;
+				unset( $this->reset_result );
+			}
+		} else {
+			return new RunFailureException( \sprintf( 'Instance of %s has been run already', __CLASS__ ) );
+		}
+
+		return $this->run_result;
+	}
 
 	// endregion
 }

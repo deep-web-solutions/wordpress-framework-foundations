@@ -13,6 +13,14 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Initializable;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Initializable
  */
 trait InitializableLocalTrait {
+	// region TRAITS
+
+	use InitializableTrait;
+
+	// endregion
+
+	// region METHODS
+
 	/**
 	 * Using classes should define their local initialization logic in here.
 	 *
@@ -22,4 +30,6 @@ trait InitializableLocalTrait {
 	 * @return  InitializationFailureException|null
 	 */
 	abstract protected function initialize_local(): ?InitializationFailureException;
+
+	// endregion
 }

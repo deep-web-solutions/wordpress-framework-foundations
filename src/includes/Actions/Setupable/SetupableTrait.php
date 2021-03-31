@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
 
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
-use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -19,6 +19,7 @@ trait SetupableTrait {
 	// region TRAITS
 
 	use ActionExtensionHelpersTrait;
+	use ActionLocalExtensionHelpersTrait;
 
 	// endregion
 
@@ -86,7 +87,7 @@ trait SetupableTrait {
 	 */
 	public function setup(): ?SetupFailureException {
 		if ( \is_null( $this->is_setup ) ) {
-			if ( ! \is_null( $result = $this->maybe_setup_local() ) ) { // phpcs:ignore
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( SetupableLocalTrait::class, 'setup' ) ) ) { // phpcs:ignore
 				$this->is_setup     = false;
 				$this->setup_result = $result;
 			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( SetupableExtensionTrait::class ) ) ) { // phpcs:ignore
@@ -99,28 +100,6 @@ trait SetupableTrait {
 		}
 
 		return $this->setup_result;
-	}
-
-	// endregion
-
-	// region HELPERS
-
-	/**
-	 * Execute any potential local setup logic.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @see     SetupLocal::setup_local()
-	 *
-	 * @return  SetupFailureException|null
-	 */
-	protected function maybe_setup_local(): ?SetupFailureException {
-		if ( Objects::has_trait_deep( SetupableLocalTrait::class, $this ) && \method_exists( $this, 'setup_local' ) ) {
-			return $this->setup_local();
-		}
-
-		return null;
 	}
 
 	// endregion

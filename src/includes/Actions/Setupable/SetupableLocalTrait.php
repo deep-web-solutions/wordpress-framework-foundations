@@ -13,6 +13,14 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Setupable
  */
 trait SetupableLocalTrait {
+	// region TRAITS
+
+	use SetupableTrait;
+
+	// endregion
+
+	// region METHODS
+
 	/**
 	 * Using classes should define their local setup logic in here.
 	 *
@@ -22,4 +30,6 @@ trait SetupableLocalTrait {
 	 * @return  SetupFailureException|null
 	 */
 	abstract protected function setup_local(): ?SetupFailureException;
+
+	// endregion
 }

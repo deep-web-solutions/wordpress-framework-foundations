@@ -12,7 +12,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Setupable;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Setupable
  */
-trait SetupableLocalTrait {
+trait SetupLocalTrait {
 	// region TRAITS
 
 	use SetupableTrait;

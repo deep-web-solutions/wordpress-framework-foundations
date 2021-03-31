@@ -88,7 +88,7 @@ trait RunnableTrait {
 	 */
 	public function run(): ?RunFailureException {
 		if ( \is_null( $this->is_run ) ) {
-			if ( ! \is_null( $result = $this->maybe_execute_local_trait( RunnableLocalTrait::class, 'run' ) ) ) { // phpcs:ignore
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( RunLocalTrait::class, 'run' ) ) ) { // phpcs:ignore
 				$this->is_run     = false;
 				$this->run_result = $result;
 			} else {

@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\States;
 
 use DeepWebSolutions\Framework\Foundations\States\Disableable\DisableableExtensionTrait;
-use DeepWebSolutions\Framework\Foundations\States\Disableable\DisableableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\States\Disableable\DisabledLocalTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -19,7 +19,7 @@ trait DisabledExtensionTrait {
 	// region TRAITS
 
 	use DisableableExtensionTrait;
-	use DisableableLocalTrait;
+	use DisabledLocalTrait;
 
 	// endregion
 

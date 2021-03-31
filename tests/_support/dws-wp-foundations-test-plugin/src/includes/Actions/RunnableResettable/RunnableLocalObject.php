@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunnableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunLocalTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunnableLocalTrait;
 class RunnableLocalObject extends RunnableObject {
 	// region TRAITS
 
-	use RunnableLocalTrait;
+	use RunLocalTrait;
 
 	// endregion
 

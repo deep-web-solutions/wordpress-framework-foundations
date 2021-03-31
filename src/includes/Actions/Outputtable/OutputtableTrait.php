@@ -85,7 +85,7 @@ trait OutputtableTrait {
 	 */
 	public function output(): ?OutputFailureException {
 		if ( \is_null( $this->is_outputted ) ) {
-			if ( ! \is_null( $result = $this->maybe_execute_local_trait( OutputtableLocalTrait::class, 'output' ) ) ) { // phpcs:ignore
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( OutputLocalTrait::class, 'output' ) ) ) { // phpcs:ignore
 				$this->is_outputted  = false;
 				$this->output_result = $result;
 			} else {

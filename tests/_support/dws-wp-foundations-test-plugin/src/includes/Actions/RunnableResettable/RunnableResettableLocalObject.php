@@ -3,10 +3,10 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResettableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\ResettableInterface;
 use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunnableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
 
 \defined( 'ABSPATH' ) || exit;
@@ -22,8 +22,8 @@ use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
 class RunnableResettableLocalObject implements RunnableInterface, ResettableInterface {
 	// region TRAITS
 
-	use ResettableLocalTrait;
-	use RunnableLocalTrait;
+	use ResetLocalTrait;
+	use RunLocalTrait;
 
 	// endregion
 

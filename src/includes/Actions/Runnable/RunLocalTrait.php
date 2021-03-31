@@ -12,7 +12,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Runnable;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Runnable
  */
-trait RunnableLocalTrait {
+trait RunLocalTrait {
 	// region TRAITS
 
 	use RunnableTrait;

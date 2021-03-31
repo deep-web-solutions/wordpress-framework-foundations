@@ -12,7 +12,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Initializable;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Initializable
  */
-trait InitializableLocalTrait {
+trait InitializeLocalTrait {
 	// region TRAITS
 
 	use InitializableTrait;

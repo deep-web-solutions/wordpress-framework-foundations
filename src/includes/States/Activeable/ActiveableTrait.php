@@ -50,7 +50,7 @@ trait ActiveableTrait {
 	 */
 	public function is_active(): bool {
 		if ( \is_null( $this->is_active ) ) {
-			$this->is_active = $this->maybe_execute_local_trait( ActiveableLocalTrait::class, 'is_active', true );
+			$this->is_active = $this->maybe_execute_local_trait( ActiveLocalTrait::class, 'is_active', true );
 			$this->is_active = $this->is_active && $this->maybe_execute_extension_traits( ActiveableExtensionTrait::class, true, 'is' );
 		}
 

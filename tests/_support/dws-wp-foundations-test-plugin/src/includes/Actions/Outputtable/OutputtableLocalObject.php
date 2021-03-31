@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\Outputtable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputtableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputLocalTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputtableLocalT
 class OutputtableLocalObject extends OutputtableObject {
 	// region TRAITS
 
-	use OutputtableLocalTrait;
+	use OutputLocalTrait;
 
 	// endregion
 

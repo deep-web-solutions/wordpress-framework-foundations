@@ -12,7 +12,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Outputtable;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Outputtable
  */
-trait OutputtableLocalTrait {
+trait OutputLocalTrait {
 	// region TRAITS
 
 	use OutputtableTrait;

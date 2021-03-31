@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable;
 
-use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializeLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationFailureException;
 
 \defined( 'ABSPATH' ) || exit;
@@ -18,7 +18,7 @@ use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationF
 class InitializableLocalObject extends InitializableObject {
 	// region TRAITS
 
-	use InitializableLocalTrait;
+	use InitializeLocalTrait;
 
 	// endregion
 

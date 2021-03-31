@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\States;
 
-use DeepWebSolutions\Framework\Foundations\States\Disableable\DisableableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\States\Disableable\DisabledLocalTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -17,7 +17,7 @@ use DeepWebSolutions\Framework\Foundations\States\Disableable\DisableableLocalTr
 class DisableableLocalObject extends DisableableObject {
 	// region TRAITS
 
-	use DisableableLocalTrait;
+	use DisabledLocalTrait;
 
 	// endregion
 

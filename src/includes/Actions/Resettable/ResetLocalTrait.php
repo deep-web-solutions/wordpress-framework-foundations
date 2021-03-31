@@ -12,7 +12,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Resettable;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Resettable
  */
-trait ResettableLocalTrait {
+trait ResetLocalTrait {
 	// region TRAITS
 
 	use ResettableTrait;

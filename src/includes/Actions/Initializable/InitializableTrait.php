@@ -87,7 +87,7 @@ trait InitializableTrait {
 	 */
 	public function initialize(): ?InitializationFailureException {
 		if ( \is_null( $this->is_initialized ) ) {
-			if ( ! \is_null( $result = $this->maybe_execute_local_trait( InitializableLocalTrait::class, 'initialize' ) ) ) { // phpcs:ignore
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( InitializeLocalTrait::class, 'initialize' ) ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
 				$this->initialization_result = $result;
 			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( InitializableExtensionTrait::class ) ) ) { // phpcs:ignore

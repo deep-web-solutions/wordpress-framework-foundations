@@ -87,7 +87,7 @@ trait SetupableTrait {
 	 */
 	public function setup(): ?SetupFailureException {
 		if ( \is_null( $this->is_setup ) ) {
-			if ( ! \is_null( $result = $this->maybe_execute_local_trait( SetupableLocalTrait::class, 'setup' ) ) ) { // phpcs:ignore
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( SetupLocalTrait::class, 'setup' ) ) ) { // phpcs:ignore
 				$this->is_setup     = false;
 				$this->setup_result = $result;
 			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( SetupableExtensionTrait::class ) ) ) { // phpcs:ignore

@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\Setupable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupableExtensionTrait;
-use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupFailureException;
 
 \defined( 'ABSPATH' ) || exit;
@@ -20,7 +20,7 @@ trait SetupExtensionTrait {
 	// region TRAITS
 
 	use SetupableExtensionTrait;
-	use SetupableLocalTrait;
+	use SetupLocalTrait;
 
 	// endregion
 

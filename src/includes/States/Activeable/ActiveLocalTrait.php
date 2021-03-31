@@ -12,7 +12,7 @@ namespace DeepWebSolutions\Framework\Foundations\States\Activeable;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\States\Activeable
  */
-trait ActiveableLocalTrait {
+trait ActiveLocalTrait {
 	// region TRAITS
 
 	use ActiveableTrait;

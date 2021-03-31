@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResettableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetLocalTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResettableLocalTra
 class ResettableLocalObject extends ResettableObject {
 	// region TRAITS
 
-	use ResettableLocalTrait;
+	use ResetLocalTrait;
 
 	// endregion
 

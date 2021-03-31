@@ -12,7 +12,7 @@ namespace DeepWebSolutions\Framework\Foundations\States\Disableable;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\States\Disableable
  */
-trait DisableableLocalTrait {
+trait DisabledLocalTrait {
 	// region TRAITS
 
 	use DisableableTrait;

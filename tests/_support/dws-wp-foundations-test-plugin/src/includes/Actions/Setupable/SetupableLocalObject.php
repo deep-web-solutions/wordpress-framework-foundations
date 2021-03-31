@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\Setupable;
 
-use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupFailureException;
 
 \defined( 'ABSPATH' ) || exit;
@@ -18,7 +18,7 @@ use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupFailureExcepti
 class SetupableLocalObject extends SetupableObject {
 	// region TRAITS
 
-	use SetupableLocalTrait;
+	use SetupLocalTrait;
 
 	// endregion
 

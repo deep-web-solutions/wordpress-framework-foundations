@@ -88,7 +88,7 @@ trait ResettableTrait {
 	 */
 	public function reset(): ?ResetFailureException {
 		if ( \is_null( $this->is_reset ) ) {
-			if ( ! \is_null( $result = $this->maybe_execute_local_trait( ResettableLocalTrait::class, 'reset' ) ) ) { // phpcs:ignore
+			if ( ! \is_null( $result = $this->maybe_execute_local_trait( ResetLocalTrait::class, 'reset' ) ) ) { // phpcs:ignore
 				$this->is_reset     = false;
 				$this->reset_result = $result;
 			} else {

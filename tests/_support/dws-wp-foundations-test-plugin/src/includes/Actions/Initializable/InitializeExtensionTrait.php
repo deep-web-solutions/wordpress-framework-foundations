@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializableExtensionTrait;
-use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializeLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationFailureException;
 
 \defined( 'ABSPATH' ) || exit;
@@ -20,7 +20,7 @@ trait InitializeExtensionTrait {
 	// region TRAITS
 
 	use InitializableExtensionTrait;
-	use InitializableLocalTrait;
+	use InitializeLocalTrait;
 
 	// endregion
 

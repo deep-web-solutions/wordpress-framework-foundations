@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\States;
 
-use DeepWebSolutions\Framework\Foundations\States\Activeable\ActiveableLocalTrait;
+use DeepWebSolutions\Framework\Foundations\States\Activeable\ActiveLocalTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -17,7 +17,7 @@ use DeepWebSolutions\Framework\Foundations\States\Activeable\ActiveableLocalTrai
 class ActiveableLocalObject extends ActiveableObject {
 	// region TRAITS
 
-	use ActiveableLocalTrait;
+	use ActiveLocalTrait;
 
 	// endregion
 

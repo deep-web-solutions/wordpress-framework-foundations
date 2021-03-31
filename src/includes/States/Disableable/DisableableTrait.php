@@ -50,7 +50,7 @@ trait DisableableTrait {
 	 */
 	public function is_disabled(): bool {
 		if ( \is_null( $this->is_disabled ) ) {
-			$this->is_disabled = $this->maybe_execute_local_trait( DisableableLocalTrait::class, 'is_disabled', false );
+			$this->is_disabled = $this->maybe_execute_local_trait( DisabledLocalTrait::class, 'is_disabled', false );
 			$this->is_disabled = $this->is_disabled || $this->maybe_execute_extension_traits( DisableableExtensionTrait::class, false, 'is' );
 		}
 

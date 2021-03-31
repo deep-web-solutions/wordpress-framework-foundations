@@ -50,7 +50,7 @@ class RunnableResettableTest extends WPTestCase {
 	 * @param   RunnableInterface|null      $runnable_object    Object to run tests against.
 	 */
 	public function test_runnable_trait( ?RunnableInterface $runnable_object = null ) {
-		$runnable_object = is_null( $runnable_object ) ? new RunnableObject() : $runnable_object;
+		$runnable_object = $runnable_object ?? new RunnableObject();
 
 		$this->assertEquals( null, $runnable_object->is_run() );
 		try {
@@ -82,7 +82,7 @@ class RunnableResettableTest extends WPTestCase {
 	 * @dataProvider    _runnable_local_trait_provider
 	 */
 	public function test_runnable_local_trait( array $example, ?RunnableInterface $runnable_object = null ) {
-		$runnable_object = is_null( $runnable_object ) ? new RunnableLocalObject( $example['run_result_local'] ) : $runnable_object;
+		$runnable_object = $runnable_object ?? new RunnableLocalObject( $example['run_result_local'] );
 
 		$this->assertEquals( null, $runnable_object->is_run() );
 		try {
@@ -107,7 +107,7 @@ class RunnableResettableTest extends WPTestCase {
 	 * @param   ResettableInterface|null    $resettable_object      Object to run tests against.
 	 */
 	public function test_resettable_trait( ?ResettableInterface $resettable_object = null ) {
-		$resettable_object = is_null( $resettable_object ) ? new ResettableObject() : $resettable_object;
+		$resettable_object = $resettable_object ?? new ResettableObject();
 
 		$this->assertEquals( null, $resettable_object->is_reset() );
 		try {
@@ -139,7 +139,7 @@ class RunnableResettableTest extends WPTestCase {
 	 * @dataProvider    _resettable_local_trait_provider
 	 */
 	public function test_resettable_local_trait( array $example, ?ResettableInterface $resettable_object = null ) {
-		$resettable_object = is_null( $resettable_object ) ? new ResettableLocalObject( $example['reset_result_local'] ) : $resettable_object;
+		$resettable_object = $resettable_object ?? new ResettableLocalObject( $example['reset_result_local'] );
 
 		$this->assertEquals( null, $resettable_object->is_reset() );
 		try {

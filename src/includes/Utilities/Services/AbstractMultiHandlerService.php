@@ -9,7 +9,7 @@ use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores\MemoryStore;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -27,7 +27,10 @@ use Psr\Container\NotFoundExceptionInterface;
 abstract class AbstractMultiHandlerService extends AbstractService implements ServiceInterface, MultiHandlerAwareInterface {
 	// region TRAITS
 
-	use StoreAwareTrait;
+	use MultiHandlerAwareTrait {
+		get_handler as protected get_handler_trait;
+		register_handler as protected register_handler_trait;
+	}
 
 	// endregion
 
@@ -45,28 +48,16 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	 */
 	public function __construct( PluginInterface $plugin, LoggingService $logging_service, array $handlers = array() ) {
 		parent::__construct( $plugin, $logging_service );
+
+		$this->set_stores_store( new MemoryStore( $this->get_id() ) );
+		$this->set_handlers_store( new MemoryStore( 'handlers' ) );
+
 		$this->set_default_handlers( $handlers );
 	}
 
 	// endregion
 
 	// region INHERITED METHODS
-
-	/**
-	 * Returns all registered handlers.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  HandlerInterface[]
-	 */
-	public function get_handlers(): array {
-		try {
-			return $this->get_store()->get_all();
-		} catch ( ContainerExceptionInterface $exception ) {
-			return array();
-		}
-	}
 
 	/**
 	 * Returns a given registered handler.
@@ -79,32 +70,8 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	 * @return  HandlerInterface|null
 	 */
 	public function get_handler( string $handler_id ): ?HandlerInterface {
-		$entry = $this->get_store_entry( $handler_id );
-
-		/* @noinspection PhpIncompatibleReturnTypeInspection */
+		$entry = $this->get_handler_trait( $handler_id );
 		return \is_a( $entry, $this->get_handler_class() ) ? $entry : null;
-	}
-
-	/**
-	 * Overwrites all the current handlers available to the service.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   HandlerInterface[]      $handlers       Handlers to be used by the service from now on.
-	 *
-	 * @return  $this
-	 */
-	public function set_handlers( array $handlers ): self {
-		$this->set_store( new MemoryStore( $this->get_id() ) );
-
-		foreach ( $handlers as $handler ) {
-			if ( $handler instanceof HandlerInterface ) {
-				$this->register_handler( $handler );
-			}
-		}
-
-		return $this;
 	}
 
 	/**
@@ -115,21 +82,24 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	 *
 	 * @param   HandlerInterface    $handler    The new handler to register with the service.
 	 *
+	 * @throws  \LogicException     Thrown if the handler passed on is of the wrong type.
+	 *
 	 * @return  $this
 	 */
 	public function register_handler( HandlerInterface $handler ): self {
-		if ( \is_a( $handler, $this->get_handler_class() ) ) {
-			if ( $handler instanceof PluginAwareInterface ) {
-				$handler->set_plugin( $this->get_plugin() );
-			}
-			if ( $handler instanceof LoggingServiceAwareInterface ) {
-				$handler->set_logging_service( $this->get_logging_service() );
-			}
-
-			$this->update_store_entry( $handler );
+		if ( ! \is_a( $handler, $this->get_handler_class() ) ) {
+			throw new \LogicException( \sprintf( 'The handler registered must be of class %s', $this->get_handler_class() ) );
 		}
 
-		return $this;
+		if ( $handler instanceof PluginAwareInterface ) {
+			$handler->set_plugin( $this->get_plugin() );
+		}
+		if ( $handler instanceof LoggingServiceAwareInterface ) {
+			$handler->set_logging_service( $this->get_logging_service() );
+		}
+
+		/* @noinspection PhpIncompatibleReturnTypeInspection */
+		return $this->register_handler_trait( $handler );
 	}
 
 	// endregion
@@ -148,26 +118,22 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	 * @throws  ContainerExceptionInterface     Thrown if some other error occurs while retrieving the NullLogger instance.
 	 */
 	protected function set_default_handlers( array $handlers ): void {
-		$plugin = $this->get_plugin();
+		$plugin    = $this->get_plugin();
+		$container = ( $plugin instanceof ContainerAwareInterface )
+			? $plugin->get_container() : null;
 
-		if ( $plugin instanceof ContainerAwareInterface ) {
-			$container        = $plugin->get_container();
-			$default_handlers = \array_map(
+		$default_handlers = \array_filter(
+			\array_map(
 				function( string $class ) use ( $container ) {
-					return $container->get( $class );
+					if ( ! \is_a( $class, $this->get_handler_class(), true ) ) {
+						return null;
+					}
+
+					return \is_null( $container ) ? new $class() : $container->get( $class );
 				},
 				$this->get_default_handlers_classes()
-			);
-		} else {
-			$default_handlers = \array_filter(
-				\array_map(
-					function( string $class ) {
-						return \is_a( $class, $this->get_handler_class(), true ) ? new $class() : null;
-					},
-					$this->get_default_handlers_classes()
-				)
-			);
-		}
+			)
+		);
 
 		$this->set_handlers( \array_merge( $default_handlers, $handlers ) );
 	}

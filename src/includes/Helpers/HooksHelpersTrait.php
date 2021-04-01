@@ -19,7 +19,7 @@ use DeepWebSolutions\Framework\Helpers\WordPress\Hooks\HooksHelpersTrait as Help
  */
 trait HooksHelpersTrait {
 	use HelpersModuleTrait {
-		get_hook_tag as get_hook_tag_helpers;
+		get_hook_tag as protected get_hook_tag_helpers;
 	}
 
 	/**

@@ -19,7 +19,7 @@ use DeepWebSolutions\Framework\Helpers\WordPress\Assets\AssetsHelpersTrait as He
  */
 trait AssetsHelpersTrait {
 	use HelpersModuleTrait {
-		get_asset_handle as get_asset_handle_helpers;
+		get_asset_handle as protected get_asset_handle_helpers;
 	}
 
 	/**

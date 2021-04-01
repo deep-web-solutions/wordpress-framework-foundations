@@ -7,6 +7,7 @@ use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
 use Psr\Container\ContainerExceptionInterface;
@@ -22,10 +23,12 @@ use Psr\Container\NotFoundExceptionInterface;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Services
  */
-abstract class AbstractHandlerService extends AbstractService implements ServiceInterface, HandlerInterface {
+abstract class AbstractHandlerService extends AbstractService implements ServiceInterface, HandlerAwareInterface {
 	// region TRAITS
 
-	use HandlerAwareTrait;
+	use HandlerAwareTrait {
+		set_handler as protected set_handler_trait;
+	}
 
 	// endregion
 
@@ -57,18 +60,23 @@ abstract class AbstractHandlerService extends AbstractService implements Service
 	 * @version 1.0.0
 	 *
 	 * @param   HandlerInterface    $handler    Handler instance to use from now on.
+	 *
+	 * @return  bool
 	 */
-	public function set_handler( HandlerInterface $handler ) {
-		if ( \is_a( $handler, $this->get_handler_class() ) ) {
-			if ( $handler instanceof PluginAwareInterface ) {
-				$handler->set_plugin( $this->get_plugin() );
-			}
-			if ( $handler instanceof LoggingServiceAwareInterface ) {
-				$handler->set_logging_service( $this->get_logging_service() );
-			}
-
-			$this->handler = $handler;
+	public function set_handler( HandlerInterface $handler ): bool {
+		if ( ! \is_a( $handler, $this->get_handler_class() ) ) {
+			return false;
 		}
+
+		if ( $handler instanceof PluginAwareInterface ) {
+			$handler->set_plugin( $this->get_plugin() );
+		}
+		if ( $handler instanceof LoggingServiceAwareInterface ) {
+			$handler->set_logging_service( $this->get_logging_service() );
+		}
+
+		$this->set_handler_trait( $handler );
+		return true;
 	}
 
 	// endregion
@@ -90,10 +98,14 @@ abstract class AbstractHandlerService extends AbstractService implements Service
 		if ( ! \is_a( $handler, $this->get_handler_class() ) ) {
 			$handler_class = $this->get_default_handler_class();
 
-			$plugin  = $this->get_plugin();
-			$handler = ( $plugin instanceof ContainerAwareInterface )
-				? $plugin->get_container()->get( $handler_class )
-				: new $handler_class();
+			if ( \is_null( $handler_class ) ) {
+				$handler = null;
+			} else {
+				$plugin  = $this->get_plugin();
+				$handler = ( $plugin instanceof ContainerAwareInterface )
+					? $plugin->get_container()->get( $handler_class )
+					: new $handler_class();
+			}
 		}
 
 		if ( ! \is_null( $handler ) ) {

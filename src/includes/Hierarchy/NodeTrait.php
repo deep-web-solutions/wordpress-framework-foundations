@@ -18,8 +18,8 @@ trait NodeTrait {
 	// region TRAITS
 
 	use ChildTrait {
-		get_parent as get_parent_trait;
-		set_parent as set_parent_child_trait;
+		get_parent as protected get_parent_trait;
+		set_parent as protected set_parent_child_trait;
 	}
 	use ParentTrait;
 

@@ -167,5 +167,15 @@ trait MemoryStoreTrait {
 		unset( $this->stored_objects[ $entry_id ] );
 	}
 
+	/**
+	 * Removes all objects from the store.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function empty() {
+		$this->stored_objects = array();
+	}
+
 	// endregion
 }

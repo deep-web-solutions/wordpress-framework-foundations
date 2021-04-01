@@ -8,6 +8,7 @@ use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores\MemoryStore;
 use Psr\Container\ContainerExceptionInterface;
@@ -23,7 +24,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Services
  */
-abstract class AbstractMultiHandlerService extends AbstractService implements MultiHandlerServiceInterface {
+abstract class AbstractMultiHandlerService extends AbstractService implements ServiceInterface, MultiHandlerAwareInterface {
 	// region TRAITS
 
 	use StoreAwareTrait;
@@ -151,15 +152,15 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Mu
 
 		if ( $plugin instanceof ContainerAwareInterface ) {
 			$container        = $plugin->get_container();
-			$default_handlers = array_map(
+			$default_handlers = \array_map(
 				function( string $class ) use ( $container ) {
 					return $container->get( $class );
 				},
 				$this->get_default_handlers_classes()
 			);
 		} else {
-			$default_handlers = array_filter(
-				array_map(
+			$default_handlers = \array_filter(
+				\array_map(
 					function( string $class ) {
 						return \is_a( $class, $this->get_handler_class(), true ) ? new $class() : null;
 					},
@@ -168,7 +169,7 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Mu
 			);
 		}
 
-		$this->set_handlers( array_merge( $default_handlers, $handlers ) );
+		$this->set_handlers( \array_merge( $default_handlers, $handlers ) );
 	}
 
 	/**

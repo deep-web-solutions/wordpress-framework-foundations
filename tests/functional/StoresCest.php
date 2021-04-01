@@ -210,6 +210,14 @@ class StoresCest {
 
 		$store->remove( $storeable->get_id() );
 		$I->assertFalse( $store->has( 'dummy-entry' ) );
+
+		$I->assertEquals( 0, $store->count() );
+		$store->add( new StoreableObject( 'dummy-empty-1' ) );
+		$store->add( new StoreableObject( 'dummy-empty-2' ) );
+		$I->assertEquals( 2, $store->count() );
+
+		$store->empty();
+		$I->assertEquals( 0, $store->count() );
 	}
 
 	// endregion

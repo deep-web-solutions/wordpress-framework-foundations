@@ -195,12 +195,24 @@ trait UserMetaStoreTrait {
 			$entry_id = $this->sanitize_entry_id( $entry_id );
 			unset( $stored_objects[ $entry_id ] );
 
-			return empty( $stored_objects )
-				? \delete_user_meta( $user_id, $this->get_key() )
+			return empty( $stored_objects ) ? $this->empty( $user_id )
 				: \update_user_meta( $user_id, $this->get_key(), $stored_objects );
 		}
 
 		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s from user %2$s. Not found in store %3$s of type %4$s', $entry_id, $user_id, $this->get_id(), $this->get_storage_type() ) );
+	}
+
+	/**
+	 * Removes all objects from the store.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   int|null    $user_id        The ID of the user to remove the stored object from.
+	 */
+	public function empty( ?int $user_id = null ): bool {
+		$user_id = $this->parse_user_id( $user_id );
+		return \delete_user_meta( $user_id, $this->get_key() );
 	}
 
 	// endregion

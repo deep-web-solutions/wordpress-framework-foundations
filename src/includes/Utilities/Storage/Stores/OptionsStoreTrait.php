@@ -174,12 +174,21 @@ trait OptionsStoreTrait {
 			$entry_id = $this->sanitize_entry_id( $entry_id );
 			unset( $stored_objects[ $entry_id ] );
 
-			return empty( $stored_objects )
-				? \delete_option( $this->get_key() )
+			return empty( $stored_objects ) ? $this->empty()
 				: \update_option( $this->get_key(), $stored_objects );
 		}
 
 		throw new NotFoundException( \sprintf( 'Could not delete entry %1$s. Not found in store %2$s of type %3$s', $entry_id, $this->get_id(), $this->get_storage_type() ) );
+	}
+
+	/**
+	 * Removes all objects from the store.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 */
+	public function empty(): bool {
+		return \delete_option( $this->get_key() );
 	}
 
 	// endregion

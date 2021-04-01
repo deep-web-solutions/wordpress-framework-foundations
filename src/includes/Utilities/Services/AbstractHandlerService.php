@@ -22,7 +22,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Services
  */
-abstract class AbstractHandlerService extends AbstractService implements HandlerServiceInterface {
+abstract class AbstractHandlerService extends AbstractService implements ServiceInterface, HandlerInterface {
 	// region TRAITS
 
 	use HandlerAwareTrait;

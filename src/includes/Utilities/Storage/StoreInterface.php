@@ -93,5 +93,15 @@ interface StoreInterface extends ContainerInterface, StoreableInterface {
 	 */
 	public function remove( string $entry_id );
 
+	/**
+	 * Removes all objects from the store.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @throws  ContainerExceptionInterface     Error while deleting the entries.
+	 */
+	public function empty();
+
 	// endregion
 }

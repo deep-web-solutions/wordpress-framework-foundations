@@ -2,8 +2,10 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\MultiStoreAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreInterface;
 use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -18,11 +20,23 @@ use Psr\Container\ContainerExceptionInterface;
 trait MultiHandlerAwareTrait {
 	// region TRAITS
 
-	use StoreAwareTrait;
+	use MultiStoreAwareTrait;
 
 	// endregion
 
 	// region GETTERS
+
+	/**
+	 * Gets the handlers store instance.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  StoreInterface|null
+	 */
+	public function get_handlers_store(): ?StoreInterface {
+		return $this->get_store( 'handlers' );
+	}
 
 	/**
 	 * Gets all handler instances set on the object.
@@ -34,7 +48,7 @@ trait MultiHandlerAwareTrait {
 	 */
 	public function get_handlers(): array {
 		try {
-			return $this->get_store()->get_all();
+			return $this->get_handlers_store()->get_all();
 		} catch ( ContainerExceptionInterface $exception ) {
 			return array();
 		}
@@ -43,6 +57,24 @@ trait MultiHandlerAwareTrait {
 	// endregion
 
 	// region SETTERS
+
+	/**
+	 * Sets the handlers store on the instance.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   StoreInterface      $store      Handlers store to set.
+	 *
+	 * @throws  \LogicException     Thrown if the handlers store has the wrong ID.
+	 */
+	public function set_handlers_store( StoreInterface $store ) {
+		if ( 'handlers' !== $store->get_id() ) {
+			throw new \LogicException( 'The handlers store must have the ID "handlers"' );
+		}
+
+		$this->update_stores_store_entry( $store );
+	}
 
 	/**
 	 * Replaces all handlers set on the object with new ones.
@@ -55,7 +87,7 @@ trait MultiHandlerAwareTrait {
 	 * @return  $this
 	 */
 	public function set_handlers( array $handlers ): self {
-		$this->get_store()->empty();
+		$this->get_handlers_store()->empty();
 
 		foreach ( $handlers as $handler ) {
 			if ( $handler instanceof HandlerInterface ) {
@@ -81,8 +113,11 @@ trait MultiHandlerAwareTrait {
 	 * @return  HandlerInterface|null
 	 */
 	public function get_handler( string $handler_id ): ?HandlerInterface {
-		/* @noinspection PhpIncompatibleReturnTypeInspection */
-		return $this->get_store_entry( $handler_id );
+		try {
+			return $this->get_handlers_store()->get( $handler_id );
+		} catch ( ContainerExceptionInterface | NotFoundExceptionInterface $exception ) {
+			return null;
+		}
 	}
 
 	/**
@@ -102,7 +137,7 @@ trait MultiHandlerAwareTrait {
 			throw new \LogicException( 'Using classes must be multi-handler aware objects.' );
 		}
 
-		$this->update_store_entry( $handler );
+		$this->get_handlers_store()->update( $handler );
 		return $this;
 	}
 

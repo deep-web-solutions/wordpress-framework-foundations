@@ -49,8 +49,13 @@ class MultiHandlerAwareTest extends WPTestCase {
 		$this->assertInstanceOf( MultiHandlerAwareInterface::class, $handler_aware_object );
 
 		$memory_store = new MemoryStore( MultiHandlerAwareObject::class );
-		$handler_aware_object->set_store( $memory_store );
-		$this->assertEquals( $memory_store, $handler_aware_object->get_store() );
+		$handler_aware_object->set_stores_store( $memory_store );
+		$this->assertEquals( $memory_store, $handler_aware_object->get_stores_store() );
+
+		$this->assertNull( $handler_aware_object->get_handlers_store() );
+		$handlers_store = new MemoryStore( 'handlers' );
+		$handler_aware_object->set_handlers_store( $handlers_store );
+		$this->assertEquals( $handlers_store, $handler_aware_object->get_handlers_store() );
 
 		$this->assertEmpty( $handler_aware_object->get_handlers() );
 		$handler_aware_object->register_handler( $handler1 );

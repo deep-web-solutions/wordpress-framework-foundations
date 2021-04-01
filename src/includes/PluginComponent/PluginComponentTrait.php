@@ -117,7 +117,7 @@ trait PluginComponentTrait {
 	public function get_safe_name(): string {
 		$ascii_name = \filter_var( $this->get_name(), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH );
 
-		if ( $this->get_name() !== $ascii_name && \extension_loaded( 'iconv' ) ) {
+		if ( $this->get_name() !== $ascii_name && \extension_loaded( 'iconv' ) && \seems_utf8( $ascii_name ) ) {
 			try {
 				$ascii_name = \iconv( 'UTF-8', 'ASCII//TRANSLIT//IGNORE', $this->get_name() );
 			} catch ( \Exception $error ) { // phpcs:ignore

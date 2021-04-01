@@ -2379,12 +2379,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "8191c171b68ec9b067bdd2d4b9fc9b6416c58523"
+                "reference": "c2607811710b645ab782a72d63cf5ce700e79dcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/8191c171b68ec9b067bdd2d4b9fc9b6416c58523",
-                "reference": "8191c171b68ec9b067bdd2d4b9fc9b6416c58523",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/c2607811710b645ab782a72d63cf5ce700e79dcf",
+                "reference": "c2607811710b645ab782a72d63cf5ce700e79dcf",
                 "shasum": ""
             },
             "require-dev": {
@@ -2420,7 +2420,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2021-04-01T09:03:47+00:00"
+            "time": "2021-04-01T18:53:50+00:00"
         },
         {
             "name": "lucatume/wp-browser",

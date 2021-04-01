@@ -44,7 +44,7 @@ class StoreAwareTest extends WPTestCase {
 	 * @version 1.0.0
 	 */
 	public function test_store_aware_object() {
-		$store_double         = Mockery::mock( StoreInterface::class );
+		$store_double         = Mockery::mock( StoreInterface::class . '[get,update,remove]' )->makePartial();
 		$existing_storeable   = new StoreableObject( 'existing_entry' );
 		$inexisting_storeable = new StoreableObject( 'inexisting_entry' );
 

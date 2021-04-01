@@ -14,7 +14,7 @@
 [![Build Status](https://travis-ci.com/deep-web-solutions/wordpress-framework-foundations.svg?branch=master)](https://travis-ci.com/deep-web-solutions/wordpress-framework-utilities)
 [![Maintainability](https://api.codeclimate.com/v1/badges/75fcacbb8919d442a664/maintainability)](https://codeclimate.com/github/deep-web-solutions/wordpress-framework-foundations/maintainability)
 
-A set of related foundational classes to kick-start WordPress plugin development.
+A set of related foundational classes to kick-start WordPress plugin development. Documentation can be found at https://docs.deep-web-solutions.com/
 
 
 ## Installation
@@ -25,6 +25,7 @@ The package's name is `deep-web-solutions/wp-framework-foundations`.
 If the package will be used outside a composer-based installation, e.g. inside a regular WP plugin, you should install
 using the `--ignore-platform-reqs` option. If you don't do that, the bundled `DWS WordPress Framework - Bootstrapper` package
 will only be able to perform checks for the WordPress version because composer will throw an error in case of an incompatible PHP version.
+
 
 ## Contributing 
 
@@ -48,5 +49,5 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 ## Changelog 
 
-### 1.0.0 (TBD) 
+### 1.0.0 (April 1st, 2021) 
 * First official release.

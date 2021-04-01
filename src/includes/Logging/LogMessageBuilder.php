@@ -73,17 +73,6 @@ class LogMessageBuilder {
 	protected string $log_level = LogLevel::DEBUG;
 
 	/**
-	 * Whether the message is sensitive in nature or not.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @access  protected
-	 * @var     bool
-	 */
-	protected bool $is_sensitive = false;
-
-	/**
 	 * The function the was called incorrectly.
 	 *
 	 * @SuppressWarnings(PHPMD.LongVariable)
@@ -138,7 +127,7 @@ class LogMessageBuilder {
 	public function __construct( LoggingHandlerInterface $handler, bool $log_sensitive, string $message, array $context = array() ) {
 		$this->handler       = $handler;
 		$this->log_sensitive = $log_sensitive;
-		$this->message       = \wp_kses_post( $message );
+		$this->message       = $this->maybe_redact_sensitive_content( $this->sanitize_outputtable( $message ) );
 		$this->context       = $context;
 	}
 
@@ -162,23 +151,6 @@ class LogMessageBuilder {
 	}
 
 	/**
-	 * Marks the message as sensitive or not.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-	 *
-	 * @param   bool    $is_sensitive   Whether to mark the message as sensitive or not.
-	 *
-	 * @return  $this
-	 */
-	public function is_sensitive( bool $is_sensitive = true ): LogMessageBuilder {
-		$this->is_sensitive = $is_sensitive;
-		return $this;
-	}
-
-	/**
 	 * Marks the message as requiring a call to '_doing_it_wrong' as well.
 	 *
 	 * @since   1.0.0
@@ -190,8 +162,8 @@ class LogMessageBuilder {
 	 * @return  $this
 	 */
 	public function doing_it_wrong( string $function, string $version ): LogMessageBuilder {
-		$this->doing_it_wrong_function = \wp_kses_post( $function );
-		$this->doing_it_wrong_version  = \wp_kses_post( $version );
+		$this->doing_it_wrong_function = $this->sanitize_outputtable( $function );
+		$this->doing_it_wrong_version  = $this->sanitize_outputtable( $version );
 
 		return $this;
 	}
@@ -243,25 +215,64 @@ class LogMessageBuilder {
 	 * @return  null|\Throwable
 	 */
 	public function finalize(): ?\Throwable {
-		if ( $this->is_sensitive && false === $this->log_sensitive ) {
-			/* @noinspection PhpFieldAssignmentTypeMismatchInspection */
-			$this->message = \preg_replace( '#(<sensitive>).*?(</sensitive>)#', '$1REDACTED FOR PRIVACY$2', $this->message );
-		} else {
-			$this->message = Strings::replace_placeholders(
-				array(
-					'<sensitive>'  => '',
-					'</sensitive>' => '',
-				),
-				$this->message
-			);
-		}
-
 		$this->handler->log( $this->log_level, $this->message, $this->context );
 		if ( ! \is_null( $this->doing_it_wrong_function ) && ! \is_null( $this->doing_it_wrong_version ) ) {
 			\_doing_it_wrong( $this->doing_it_wrong_function, $this->message, $this->doing_it_wrong_version ); // phpcs:ignore
 		}
 
 		return $this->return_throwable;
+	}
+
+	// endregion
+
+	// region HELPERS
+
+	/**
+	 * Sanitizes a string that will be outputted somewhere.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $outputtable    String that could be outputted.
+	 *
+	 * @return  string
+	 */
+	protected function sanitize_outputtable( string $outputtable ): string {
+		return \wp_kses(
+			$outputtable,
+			array(
+				'p'         => array(),
+				'strong'    => array(),
+				'br'        => array(),
+				'sensitive' => array(),
+			)
+		);
+	}
+
+	/**
+	 * Based on privacy settings, maybe redact sensitive parts of the message out.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   string  $message    Message to redact.
+	 *
+	 * @return  string
+	 */
+	protected function maybe_redact_sensitive_content( string $message ): string {
+		if ( false === $this->log_sensitive ) {
+			$message = \preg_replace( '#(<sensitive>).*?(</sensitive>)#', '$1REDACTED FOR PRIVACY$2', $message );
+		} else {
+			$message = Strings::replace_placeholders(
+				array(
+					'<sensitive>'  => '',
+					'</sensitive>' => '',
+				),
+				$message
+			);
+		}
+
+		return $message;
 	}
 
 	// endregion

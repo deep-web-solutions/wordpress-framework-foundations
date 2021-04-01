@@ -3,11 +3,12 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreableInterface;
 use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreableObject;
 use WpunitTester;
 
 /**
- * Tests for the Stores abstractions and implementations.
+ * Tests for the Storeable abstraction.
  *
  * @since   1.0.0
  * @version 1.0.0
@@ -40,9 +41,11 @@ class StoreableTest extends WPTestCase {
 	 */
 	public function test_storeable_object() {
 		$storeable = new StoreableObject( 'my-storing-id-1' );
+		$this->assertInstanceOf( StoreableInterface::class, $storeable );
 		$this->assertEquals( 'my-storing-id-1', $storeable->get_id() );
 
 		$storeable = new StoreableObject( 'my-storing-id-2' );
+		$this->assertInstanceOf( StoreableInterface::class, $storeable );
 		$this->assertEquals( 'my-storing-id-2', $storeable->get_id() );
 	}
 

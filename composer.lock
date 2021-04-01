@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e8cbb23cb7eff0f937bb6c32e4dd98c",
+    "content-hash": "a0de23e24ae3dd8c017a0306c2be49c0",
     "packages": [
         {
             "name": "deep-web-solutions/wp-framework-bootstrapper",
@@ -6271,12 +6271,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "28be64a901c2c9f25f29da411b880d4ff8fd6c07"
+                "reference": "49de3a5320094d7d0a3b441e28f8c6e4c7744cc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/28be64a901c2c9f25f29da411b880d4ff8fd6c07",
-                "reference": "28be64a901c2c9f25f29da411b880d4ff8fd6c07",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/49de3a5320094d7d0a3b441e28f8c6e4c7744cc1",
+                "reference": "49de3a5320094d7d0a3b441e28f8c6e4c7744cc1",
                 "shasum": ""
             },
             "require": {
@@ -6325,7 +6325,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-31T16:52:38+00:00"
+            "time": "2021-04-01T14:32:14+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

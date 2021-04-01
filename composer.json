@@ -44,7 +44,7 @@
     "codeception/module-phpbrowser": "^1.0",
     "codeception/module-db": "^1.1",
     "codeception/module-filesystem": "^1.0",
-    "codeception/mockery-module": ">=0.4.0"
+    "codeception/mockery-module": "^0.4"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -60,10 +60,8 @@
   "autoload-dev": {
     "psr-4": {
       "DeepWebSolutions\\Framework\\Tests\\Foundations\\Support\\": "tests/_support",
-      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Acceptance\\": "tests/acceptance",
       "DeepWebSolutions\\Framework\\Tests\\Foundations\\Functional\\": "tests/functional",
-      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Integration\\": "tests/wpunit",
-      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Unit\\": "tests/unit"
+      "DeepWebSolutions\\Framework\\Tests\\Foundations\\Integration\\": "tests/wpunit"
     }
   },
 

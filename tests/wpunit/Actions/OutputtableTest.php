@@ -4,6 +4,7 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Actions;
 
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputFailureException;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\Outputtable\OutputtableExtensionObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\Outputtable\OutputtableLocalObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\Outputtable\OutputtableObject;
 use WpunitTester;
@@ -88,6 +89,33 @@ class OutputtableTest extends WPTestCase {
 		$this->assertEquals( $example['output_result'], $outputtable_object->get_output_result() );
 	}
 
+	/**
+	 * Test for the extension outputtable trait.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   array   $example    Example to run the test on.
+	 *
+	 * @dataProvider    _outputtable_extension_trait_provider
+	 */
+	public function test_outputtable_extension_trait( array $example ) {
+		$outputtable_object = new OutputtableExtensionObject( $example['output_result_local'], $example['output_result_extension'] );
+
+		$this->assertEquals( null, $outputtable_object->is_outputted() );
+		try {
+			/* @noinspection PhpExpressionResultUnusedInspection */
+			$outputtable_object->get_output_result();
+			$this->fail( 'Accessed output result before running the object' );
+		} catch ( \Error $e ) {
+			$this->assertStringStartsWith( 'Typed property', $e->getMessage() );
+		}
+
+		$outputtable_object->output();
+		$this->assertEquals( $example['is_outputted'], $outputtable_object->is_outputted() );
+		$this->assertEquals( $example['output_result'], $outputtable_object->get_output_result() );
+	}
+
 	// endregion
 
 	// region HELPERS
@@ -114,6 +142,51 @@ class OutputtableTest extends WPTestCase {
 					'output_result_local' => ( $local_result = new OutputFailureException() ), // phpcs:ignore
 					'output_result'       => $local_result,
 					'is_outputted'        => false,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'outputtable_extension_trait' tester.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _outputtable_extension_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'output_result_local'     => null,
+					'output_result_extension' => null,
+					'output_result'           => null,
+					'is_outputted'            => true,
+				),
+			),
+			array(
+				array(
+					'output_result_local'     => ( $local_result = new OutputFailureException( 'Local failure' ) ), // phpcs:ignore
+					'output_result_extension' => null,
+					'output_result'           => $local_result,
+					'is_outputted'            => false,
+				),
+			),
+			array(
+				array(
+					'output_result_local'     => null,
+					'output_result_extension' => ( $extension_result = new OutputFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'output_result'           => $extension_result,
+					'is_outputted'            => false,
+				),
+			),
+			array(
+				array(
+					'output_result_local'     => ( $local_result = new OutputFailureException( 'Local failure' ) ), // phpcs:ignore
+					'output_result_extension' => ( $extension_result = new OutputFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'output_result'           => $local_result,
+					'is_outputted'            => false,
 				),
 			),
 		);

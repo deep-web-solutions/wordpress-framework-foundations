@@ -7,10 +7,13 @@ use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetFailureExcept
 use DeepWebSolutions\Framework\Foundations\Actions\ResettableInterface;
 use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunFailureException;
 use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\ResettableExtensionObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\ResettableLocalObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\ResettableObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\RunnableExtensionObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\RunnableLocalObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\RunnableObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\RunnableResettableExtensionObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\RunnableResettableLocalObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable\RunnableResettableObject;
 use WpunitTester;
@@ -99,6 +102,34 @@ class RunnableResettableTest extends WPTestCase {
 	}
 
 	/**
+	 * Test for the extension runnable trait.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   array                       $example            Example to run the test on.
+	 * @param   RunnableInterface|null      $runnable_object    Object to run tests against.
+	 *
+	 * @dataProvider    _runnable_extension_trait_provider
+	 */
+	public function test_runnable_extension_trait( array $example, ?RunnableInterface $runnable_object = null ) {
+		$runnable_object = $runnable_object ?? new RunnableExtensionObject( $example['run_result_local'], $example['run_result_extension'] );
+
+		$this->assertEquals( null, $runnable_object->is_run() );
+		try {
+			/* @noinspection PhpExpressionResultUnusedInspection */
+			$runnable_object->get_run_result();
+			$this->fail( 'Accessed run result before running the object' );
+		} catch ( \Error $e ) {
+			$this->assertStringStartsWith( 'Typed property', $e->getMessage() );
+		}
+
+		$runnable_object->run();
+		$this->assertEquals( $example['is_run'], $runnable_object->is_run() );
+		$this->assertEquals( $example['run_result'], $runnable_object->get_run_result() );
+	}
+
+	/**
 	 * Tests the default resettable trait.
 	 *
 	 * @since   1.0.0
@@ -156,6 +187,34 @@ class RunnableResettableTest extends WPTestCase {
 	}
 
 	/**
+	 * Test for the extension resettable trait.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   array                       $example                Example to run the test on.
+	 * @param   ResettableInterface|null    $resettable_object      Object to run tests against.
+	 *
+	 * @dataProvider    _resettable_extension_trait_provider
+	 */
+	public function test_resettable_extension_trait( array $example, ?ResettableInterface $resettable_object = null ) {
+		$resettable_object = $resettable_object ?? new ResettableExtensionObject( $example['reset_result_local'], $example['reset_result_extension'] );
+
+		$this->assertEquals( null, $resettable_object->is_reset() );
+		try {
+			/* @noinspection PhpExpressionResultUnusedInspection */
+			$resettable_object->get_reset_result();
+			$this->fail( 'Accessed reset result before running the object' );
+		} catch ( \Error $e ) {
+			$this->assertStringStartsWith( 'Typed property', $e->getMessage() );
+		}
+
+		$resettable_object->reset();
+		$this->assertEquals( $example['is_reset'], $resettable_object->is_reset() );
+		$this->assertEquals( $example['reset_result'], $resettable_object->get_reset_result() );
+	}
+
+	/**
 	 * Test that a runnable and resettable object can only be run->reset->run->reset etc.
 	 *
 	 * @since   1.0.0
@@ -187,6 +246,25 @@ class RunnableResettableTest extends WPTestCase {
 		$this->test_resettable_local_trait( $example, $test_object );
 		$this->test_runnable_local_trait( $example, $test_object );
 		$this->test_resettable_local_trait( $example, $test_object );
+	}
+
+	/**
+	 * Test of an object that's both runnable and resettable and has local and extension logic.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param   array   $example    Example to run the test on.
+	 *
+	 * @dataProvider    _runnable_resettable_extension_trait_provider
+	 */
+	public function test_runnable_resettable_extension_traits( array $example ) {
+		$test_object = new RunnableResettableExtensionObject( $example['run_result_local'], $example['reset_result_local'], $example['run_result_extension'], $example['reset_result_extension'] );
+
+		$this->test_runnable_extension_trait( $example, $test_object );
+		$this->test_resettable_extension_trait( $example, $test_object );
+		$this->test_runnable_extension_trait( $example, $test_object );
+		$this->test_resettable_extension_trait( $example, $test_object );
 	}
 
 	// endregion
@@ -221,6 +299,51 @@ class RunnableResettableTest extends WPTestCase {
 	}
 
 	/**
+	 * Provides examples for the 'runnable_extension_trait' tester.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _runnable_extension_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'run_result_local'     => null,
+					'run_result_extension' => null,
+					'run_result'           => null,
+					'is_run'               => true,
+				),
+			),
+			array(
+				array(
+					'run_result_local'     => ( $local_result = new RunFailureException( 'Local failure' ) ), // phpcs:ignore
+					'run_result_extension' => null,
+					'run_result'           => $local_result,
+					'is_run'               => false,
+				),
+			),
+			array(
+				array(
+					'run_result_local'     => null,
+					'run_result_extension' => ( $extension_result = new RunFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'run_result'           => $extension_result,
+					'is_run'               => false,
+				),
+			),
+			array(
+				array(
+					'run_result_local'     => ( $local_result = new RunFailureException( 'Local failure' ) ), // phpcs:ignore
+					'run_result_extension' => ( $extension_result = new RunFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'run_result'           => $local_result,
+					'is_run'               => false,
+				),
+			),
+		);
+	}
+
+	/**
 	 * Provides examples for the 'resettable_local_trait' tester.
 	 *
 	 * @since   1.0.0
@@ -242,6 +365,51 @@ class RunnableResettableTest extends WPTestCase {
 					'reset_result_local' => ( $local_result = new ResetFailureException() ), // phpcs:ignore
 					'reset_result'       => $local_result,
 					'is_reset'           => false,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'resettable_extension_trait' tester.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _resettable_extension_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'reset_result_local'     => null,
+					'reset_result_extension' => null,
+					'reset_result'           => null,
+					'is_reset'               => true,
+				),
+			),
+			array(
+				array(
+					'reset_result_local'     => ( $local_result = new ResetFailureException( 'Local failure' ) ), // phpcs:ignore
+					'reset_result_extension' => null,
+					'reset_result'           => $local_result,
+					'is_reset'               => false,
+				),
+			),
+			array(
+				array(
+					'reset_result_local'     => null,
+					'reset_result_extension' => ( $extension_result = new ResetFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'reset_result'           => $extension_result,
+					'is_reset'               => false,
+				),
+			),
+			array(
+				array(
+					'reset_result_local'     => ( $local_result = new ResetFailureException( 'Local failure' ) ), // phpcs:ignore
+					'reset_result_extension' => ( $extension_result = new ResetFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'reset_result'           => $local_result,
+					'is_reset'               => false,
 				),
 			),
 		);
@@ -295,6 +463,127 @@ class RunnableResettableTest extends WPTestCase {
 					'reset_result_local' => ( $local_reset_result = new ResetFailureException() ), // phpcs:ignore
 					'reset_result'       => $local_reset_result,
 					'is_reset'           => false,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'resettable_extension_trait' tester.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _runnable_resettable_extension_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'run_result_local'       => null,
+					'run_result_extension'   => null,
+					'run_result'             => null,
+					'is_run'                 => true,
+					'reset_result_local'     => null,
+					'reset_result_extension' => null,
+					'reset_result'           => null,
+					'is_reset'               => true,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => null,
+					'run_result_extension'   => null,
+					'run_result'             => null,
+					'is_run'                 => true,
+					'reset_result_local'     => ( $local_result = new ResetFailureException( 'Local failure' ) ), // phpcs:ignore
+					'reset_result_extension' => null,
+					'reset_result'           => $local_result,
+					'is_reset'               => false,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => null,
+					'run_result_extension'   => null,
+					'run_result'             => null,
+					'is_run'                 => true,
+					'reset_result_local'     => null,
+					'reset_result_extension' => ( $extension_result = new ResetFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'reset_result'           => $extension_result,
+					'is_reset'               => false,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => ( $local_result = new RunFailureException( 'Local failure' ) ), // phpcs:ignore
+					'run_result_extension'   => null,
+					'run_result'             => $local_result,
+					'is_run'                 => false,
+					'reset_result_local'     => null,
+					'reset_result_extension' => null,
+					'reset_result'           => null,
+					'is_reset'               => true,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => null,
+					'run_result_extension'   => ( $extension_result = new RunFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'run_result'             => $extension_result,
+					'is_run'                 => false,
+					'reset_result_local'     => null,
+					'reset_result_extension' => null,
+					'reset_result'           => null,
+					'is_reset'               => true,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => ( $local_run_result = new RunFailureException( 'Local failure' ) ), // phpcs:ignore
+					'run_result_extension'   => null,
+					'run_result'             => $local_run_result,
+					'is_run'                 => false,
+					'reset_result_local'     => ( $local_reset_result = new ResetFailureException( 'Local failure' ) ), // phpcs:ignore
+					'reset_result_extension' => null,
+					'reset_result'           => $local_reset_result,
+					'is_reset'               => false,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => ( $local_run_result = new RunFailureException( 'Local failure' ) ), // phpcs:ignore
+					'run_result_extension'   => null,
+					'run_result'             => $local_run_result,
+					'is_run'                 => false,
+					'reset_result_local'     => null,
+					'reset_result_extension' => ( $extension_reset_result = new ResetFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'reset_result'           => $extension_reset_result,
+					'is_reset'               => false,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => null,
+					'run_result_extension'   => ( $extension_run_result = new RunFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'run_result'             => $extension_run_result,
+					'is_run'                 => false,
+					'reset_result_local'     => ( $local_reset_result = new ResetFailureException( 'Local failure' ) ), // phpcs:ignore
+					'reset_result_extension' => null,
+					'reset_result'           => $local_reset_result,
+					'is_reset'               => false,
+				),
+			),
+			array(
+				array(
+					'run_result_local'       => null,
+					'run_result_extension'   => ( $extension_run_result = new RunFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'run_result'             => $extension_run_result,
+					'is_run'                 => false,
+					'reset_result_local'     => null,
+					'reset_result_extension' => ( $extension_reset_result = new ResetFailureException( 'Extension failure' ) ), // phpcs:ignore
+					'reset_result'           => $extension_reset_result,
+					'is_reset'               => false,
 				),
 			),
 		);

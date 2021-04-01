@@ -17,10 +17,6 @@
 
 ## Running Tests
 
-#### Unit tests
-
-From the test plugin's directory, run `./vendor/bin/codeception run unit` or `composer run-script test:unit`.
-
 #### Integration tests
 
 From the test plugin's directory, run `./vendor/bin/codeception run wpunit` or `composer run-script test:integration`.
@@ -28,7 +24,3 @@ From the test plugin's directory, run `./vendor/bin/codeception run wpunit` or `
 #### Functional tests
 
 From the test plugin's directory, run `./vendor/bin/codeception run functional` or `composer run-script test:functional`.
-
-#### Acceptance tests
-
-From the test plugin's directory, run `./vendor/bin/codeception run acceptance` or `composer run-script test:acceptance`.

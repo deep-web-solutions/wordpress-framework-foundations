@@ -92,10 +92,6 @@
     "test:clean": [
       "@php ./vendor/bin/codecept clean"
     ],
-    "test:acceptance": [
-      "Composer\\Config::disableProcessTimeout",
-      "@php ./vendor/bin/codecept run acceptance"
-    ],
     "test:functional": [
       "Composer\\Config::disableProcessTimeout",
       "@php ./vendor/bin/codecept run functional"
@@ -103,10 +99,6 @@
     "test:integration": [
       "Composer\\Config::disableProcessTimeout",
       "@php ./vendor/bin/codecept run wpunit"
-    ],
-    "test:unit": [
-      "Composer\\Config::disableProcessTimeout",
-      "@php ./vendor/bin/codecept run unit"
     ],
     "test:coverage": [
       "Composer\\Config::disableProcessTimeout",

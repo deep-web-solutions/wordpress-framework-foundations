@@ -62,8 +62,8 @@ class HelpersTest extends WPTestCase {
 		$this->assertEquals( 'dws_wp_foundations_test_plugin-my_custom_root-test-extra_test', $plugin_component->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
 
 		$plugin_component = new PluginComponent( $plugin, 'test-id', 'Test Näme Curaçao' );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_name_curacao-test', $plugin_component->get_hook_tag( 'test' ) );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_name_curacao-test-extra', $plugin_component->get_hook_tag( 'test', array( 'extra' ) ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_nme_curaao-test', $plugin_component->get_hook_tag( 'test' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_nme_curaao-test-extra', $plugin_component->get_hook_tag( 'test', array( 'extra' ) ) );
 		$this->assertEquals( 'dws_wp_foundations_test_plugin-my_custom_root-test-extra_test', $plugin_component->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
 	}
 

@@ -4,6 +4,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Resettable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunnableTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 
@@ -20,6 +21,7 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 trait ResettableTrait {
 	// region TRAITS
 
+	use ActionExtensionHelpersTrait;
 	use ActionLocalExtensionHelpersTrait;
 
 	// endregion
@@ -89,6 +91,9 @@ trait ResettableTrait {
 	public function reset(): ?ResetFailureException {
 		if ( \is_null( $this->is_reset ) ) {
 			if ( ! \is_null( $result = $this->maybe_execute_local_trait( ResetLocalTrait::class, 'reset' ) ) ) { // phpcs:ignore
+				$this->is_reset     = false;
+				$this->reset_result = $result;
+			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( ResettableExtensionTrait::class ) ) ) { // phpcs:ignore
 				$this->is_reset     = false;
 				$this->reset_result = $result;
 			} else {

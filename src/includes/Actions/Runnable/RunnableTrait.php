@@ -4,6 +4,7 @@ namespace DeepWebSolutions\Framework\Foundations\Actions\Runnable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResettableTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\ResettableInterface;
+use DeepWebSolutions\Framework\Foundations\Helpers\ActionExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 
@@ -20,6 +21,7 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 trait RunnableTrait {
 	// region TRAITS
 
+	use ActionExtensionHelpersTrait;
 	use ActionLocalExtensionHelpersTrait;
 
 	// endregion
@@ -89,6 +91,9 @@ trait RunnableTrait {
 	public function run(): ?RunFailureException {
 		if ( \is_null( $this->is_run ) ) {
 			if ( ! \is_null( $result = $this->maybe_execute_local_trait( RunLocalTrait::class, 'run' ) ) ) { // phpcs:ignore
+				$this->is_run     = false;
+				$this->run_result = $result;
+			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( RunnableExtensionTrait::class ) ) ) { // phpcs:ignore
 				$this->is_run     = false;
 				$this->run_result = $result;
 			} else {

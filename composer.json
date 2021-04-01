@@ -100,7 +100,8 @@
     ],
     "test:coverage": [
       "Composer\\Config::disableProcessTimeout",
-      "@php ./vendor/bin/codecept run wpunit --coverage --coverage-xml --coverage-html"
+      "@php ./vendor/bin/codecept run wpunit --coverage --coverage-xml --coverage-html",
+      "@php ./vendor/bin/codecept run functional --coverage --coverage-xml --coverage-html"
     ]
   }
 }

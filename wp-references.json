@@ -8,6 +8,7 @@
         "add_action",
         "wp_kses_post",
         "_doing_it_wrong",
+        "get_file_data",
         "sanitize_key",
         "get_option",
         "update_option",

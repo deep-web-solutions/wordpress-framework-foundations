@@ -78,7 +78,7 @@ trait MemoryStoreTrait {
 	 * @return  bool
 	 */
 	public function has( string $entry_id ): bool {
-		return isset( $this->stored_objects[ $entry_id ] );
+		return isset( $this->stored_objects[ $entry_id ] ) || \array_key_exists( $entry_id, $this->stored_objects );
 	}
 
 	// endregion

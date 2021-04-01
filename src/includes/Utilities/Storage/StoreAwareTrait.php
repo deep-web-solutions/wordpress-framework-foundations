@@ -127,13 +127,13 @@ trait StoreAwareTrait {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   StoreableInterface  $storeable  Object to remove.
+	 * @param   string  $entry_id   The ID of the entry to remove from the store.
 	 *
 	 * @return  bool
 	 */
-	public function remove_store_entry( StoreableInterface $storeable ): bool {
+	public function remove_store_entry( string $entry_id ): bool {
 		try {
-			$this->get_store()->remove( $storeable );
+			$this->get_store()->remove( $entry_id );
 			return true;
 		} catch ( ContainerExceptionInterface $exception ) {
 			return false;

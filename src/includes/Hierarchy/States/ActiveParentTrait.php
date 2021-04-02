@@ -12,11 +12,11 @@ use DeepWebSolutions\Framework\Foundations\States\ActiveableInterface;
  * Activeable extension trait for making the activation state dependent on the parent's activation state.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\States
  */
-trait ActiveParent {
+trait ActiveParentTrait {
 	// region TRAITS
 
 	use ActiveableExtensionTrait;

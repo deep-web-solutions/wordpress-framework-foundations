@@ -2,9 +2,9 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Utilities\Handlers\Actions;
 
-use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResettableExtensionTrait;
-use DeepWebSolutions\Framework\Foundations\Actions\ResettableInterface;
+use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputFailureException;
+use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputtableExtensionTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\OutputtableInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareInterface;
@@ -12,51 +12,51 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareI
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Run extension trait for running handlers in the same-go.
+ * Output extension trait for outputting handlers in the same-go.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Handlers\Actions
  */
-trait ResetHandlers {
+trait OutputHandlersTrait {
 	// region TRAITS
 
-	use ResettableExtensionTrait;
+	use OutputtableExtensionTrait;
 
 	// endregion
 
 	// region METHODS
 
 	/**
-	 * Makes one's own successful reset dependent on that of one's handlers.
+	 * Makes one's own successful output dependent on that of one's handlers.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @return  ResetFailureException|null
+	 * @return  OutputFailureException|null
 	 */
-	public function reset_handlers(): ?ResetFailureException {
-		$reset_result = null;
+	public function output_handlers(): ?OutputFailureException {
+		$output_result = null;
 
 		if ( $this instanceof HandlerAwareInterface || $this instanceof MultiHandlerAwareInterface ) {
 			$handlers = ( $this instanceof HandlerAwareInterface ) ? array( $this->get_handler() ) : $this->get_handlers();
 			$handlers = \array_filter(
 				$handlers,
 				function ( HandlerInterface $handler ) {
-					return \is_a( $handler, ResettableInterface::class );
+					return \is_a( $handler, OutputtableInterface::class );
 				}
 			);
 
 			foreach ( $handlers as $handler ) {
-				$reset_result = $handler->reset();
-				if ( ! \is_null( $reset_result ) ) {
+				$output_result = $handler->output();
+				if ( ! \is_null( $output_result ) ) {
 					break;
 				}
 			}
 		}
 
-		return $reset_result;
+		return $output_result;
 	}
 
 	// endregion

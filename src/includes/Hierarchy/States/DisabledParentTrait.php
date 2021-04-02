@@ -12,11 +12,11 @@ use DeepWebSolutions\Framework\Foundations\States\DisableableInterface;
  * Disableable extension trait for making the disablement state dependent on the parent's disablement state.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\States
  */
-trait DisabledParent {
+trait DisabledParentTrait {
 	// region TRAITS
 
 	use DisableableExtensionTrait;

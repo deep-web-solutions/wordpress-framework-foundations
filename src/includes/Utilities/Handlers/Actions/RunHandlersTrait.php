@@ -2,9 +2,9 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Utilities\Handlers\Actions;
 
-use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Outputtable\OutputtableExtensionTrait;
-use DeepWebSolutions\Framework\Foundations\Actions\OutputtableInterface;
+use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunFailureException;
+use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunnableExtensionTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareInterface;
@@ -12,51 +12,51 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareI
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Output extension trait for outputting handlers in the same-go.
+ * Run extension trait for running handlers in the same-go.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Handlers\Actions
  */
-trait OutputHandlers {
+trait RunHandlersTrait {
 	// region TRAITS
 
-	use OutputtableExtensionTrait;
+	use RunnableExtensionTrait;
 
 	// endregion
 
 	// region METHODS
 
 	/**
-	 * Makes one's own successful output dependent on that of one's handlers.
+	 * Makes one's own successful run dependent on that of one's handlers.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @return  OutputFailureException|null
+	 * @return  RunFailureException|null
 	 */
-	public function output_handlers(): ?OutputFailureException {
-		$output_result = null;
+	public function run_handlers(): ?RunFailureException {
+		$run_result = null;
 
 		if ( $this instanceof HandlerAwareInterface || $this instanceof MultiHandlerAwareInterface ) {
 			$handlers = ( $this instanceof HandlerAwareInterface ) ? array( $this->get_handler() ) : $this->get_handlers();
 			$handlers = \array_filter(
 				$handlers,
 				function ( HandlerInterface $handler ) {
-					return \is_a( $handler, OutputtableInterface::class );
+					return \is_a( $handler, RunnableInterface::class );
 				}
 			);
 
 			foreach ( $handlers as $handler ) {
-				$output_result = $handler->output();
-				if ( ! \is_null( $output_result ) ) {
+				$run_result = $handler->run();
+				if ( ! \is_null( $run_result ) ) {
 					break;
 				}
 			}
 		}
 
-		return $output_result;
+		return $run_result;
 	}
 
 	// endregion

@@ -13,11 +13,11 @@ use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
  * Setup extension trait for setting up children in the same-go.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\Actions
  */
-trait SetupChildren {
+trait SetupChildrenTrait {
 	// region TRAITS
 
 	use SetupableExtensionTrait;

@@ -4,7 +4,7 @@
 **Requires at least:** 5.5  
 **Tested up to:** 5.7  
 **Requires PHP:** 7.4  
-**Stable tag:** 1.0.0  
+**Stable tag:** 1.1.0  
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -48,6 +48,9 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 
 ## Changelog 
+
+### 1.1.0 (April 2nd, 2021)
+* Renamed some traits for consistency with the rest of the modules.
 
 ### 1.0.0 (April 1st, 2021) 
 * First official release.

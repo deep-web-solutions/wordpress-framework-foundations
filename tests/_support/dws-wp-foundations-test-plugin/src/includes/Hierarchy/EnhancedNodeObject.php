@@ -8,10 +8,10 @@ use DeepWebSolutions\Framework\Foundations\Actions\InitializableInterface;
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupFailureException;
 use DeepWebSolutions\Framework\Foundations\Actions\SetupableInterface;
-use DeepWebSolutions\Framework\Foundations\Hierarchy\Actions\InitializeChildren;
-use DeepWebSolutions\Framework\Foundations\Hierarchy\Actions\SetupChildren;
-use DeepWebSolutions\Framework\Foundations\Hierarchy\States\ActiveParent;
-use DeepWebSolutions\Framework\Foundations\Hierarchy\States\DisabledParent;
+use DeepWebSolutions\Framework\Foundations\Hierarchy\Actions\InitializeChildrenTrait;
+use DeepWebSolutions\Framework\Foundations\Hierarchy\Actions\SetupChildrenTrait;
+use DeepWebSolutions\Framework\Foundations\Hierarchy\States\ActiveParentTrait;
+use DeepWebSolutions\Framework\Foundations\Hierarchy\States\DisabledParentTrait;
 use DeepWebSolutions\Framework\Foundations\States\Activeable\ActiveLocalTrait;
 use DeepWebSolutions\Framework\Foundations\States\ActiveableInterface;
 use DeepWebSolutions\Framework\Foundations\States\Disableable\DisabledLocalTrait;
@@ -31,16 +31,16 @@ class EnhancedNodeObject extends NodeObject implements ActiveableInterface, Disa
 	// region TRAITS
 
 	use ActiveLocalTrait;
-	use ActiveParent;
+	use ActiveParentTrait;
 
 	use DisabledLocalTrait;
-	use DisabledParent;
+	use DisabledParentTrait;
 
 	use InitializeLocalTrait;
-	use InitializeChildren;
+	use InitializeChildrenTrait;
 
 	use SetupLocalTrait;
-	use SetupChildren;
+	use SetupChildrenTrait;
 
 	// endregion
 

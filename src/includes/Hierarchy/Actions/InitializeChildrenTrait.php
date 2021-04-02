@@ -13,11 +13,11 @@ use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
  * Initialization extension trait for initializing children in the same-go.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\Actions
  */
-trait InitializeChildren {
+trait InitializeChildrenTrait {
 	// region TRAITS
 
 	use InitializableExtensionTrait;

@@ -11,7 +11,7 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
  * Basic implementation of the plugin component interface.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\PluginComponent
  */
@@ -110,13 +110,13 @@ trait PluginComponentTrait {
 	 * Gets a PHP-friendly version of the public name of the using class.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.1.0
 	 *
 	 * @return  string
 	 */
 	public function get_safe_name(): string {
 		return Strings::to_safe_string(
-			\filter_var( $this->get_name(), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH ),
+			$this->get_name(),
 			array(
 				'-' => '_',
 				' ' => '_',

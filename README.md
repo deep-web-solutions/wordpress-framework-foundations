@@ -51,6 +51,7 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 ### 1.1.0 (April 2nd, 2021)
 * Renamed some traits for consistency with the rest of the modules.
+* Updated Helpers module.
 
 ### 1.0.0 (April 1st, 2021) 
 * First official release.

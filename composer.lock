@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd5455f41f61b07ba5f206a3387a8779",
+    "content-hash": "5234f55dcd083bedaea5d698a26e3e66",
     "packages": [
         {
             "name": "deep-web-solutions/wp-framework-bootstrapper",
@@ -76,16 +76,16 @@
         },
         {
             "name": "deep-web-solutions/wp-framework-helpers",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-helpers.git",
-                "reference": "e29c405914d9fbd0400b092fcddb485674bd51b6"
+                "reference": "a7fd3854a093029c4b6171cd64b8d7a4fdd28c2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/e29c405914d9fbd0400b092fcddb485674bd51b6",
-                "reference": "e29c405914d9fbd0400b092fcddb485674bd51b6",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/a7fd3854a093029c4b6171cd64b8d7a4fdd28c2f",
+                "reference": "a7fd3854a093029c4b6171cd64b8d7a4fdd28c2f",
                 "shasum": ""
             },
             "require": {
@@ -143,9 +143,9 @@
             ],
             "support": {
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-helpers/issues",
-                "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/v1.0.2"
+                "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/v1.1.0"
             },
-            "time": "2021-03-19T16:18:23+00:00"
+            "time": "2021-04-02T10:26:00+00:00"
         },
         {
             "name": "psr/container",
@@ -6271,12 +6271,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "49de3a5320094d7d0a3b441e28f8c6e4c7744cc1"
+                "reference": "a278c68f3cebbae43526f70b0e37b9cd09412612"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/49de3a5320094d7d0a3b441e28f8c6e4c7744cc1",
-                "reference": "49de3a5320094d7d0a3b441e28f8c6e4c7744cc1",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/a278c68f3cebbae43526f70b0e37b9cd09412612",
+                "reference": "a278c68f3cebbae43526f70b0e37b9cd09412612",
                 "shasum": ""
             },
             "require": {
@@ -6325,7 +6325,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-01T14:32:14+00:00"
+            "time": "2021-04-01T20:18:45+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

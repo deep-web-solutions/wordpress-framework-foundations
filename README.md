@@ -52,6 +52,7 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 ### 1.1.0 (April 2nd, 2021)
 * Renamed some traits for consistency with the rest of the modules.
 * Updated Helpers module.
+* Added a new initialization extension trait for hierarchical objects that use a DI container.
 
 ### 1.0.0 (April 1st, 2021) 
 * First official release.

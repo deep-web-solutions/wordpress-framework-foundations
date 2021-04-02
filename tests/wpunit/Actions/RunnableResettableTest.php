@@ -269,7 +269,7 @@ class RunnableResettableTest extends WPTestCase {
 
 	// endregion
 
-	// region HELPERS
+	// region PROVIDERS
 
 	/**
 	 * Provides examples for the 'runnable_local_trait' tester.

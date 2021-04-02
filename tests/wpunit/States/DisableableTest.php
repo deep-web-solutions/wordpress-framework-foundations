@@ -80,7 +80,7 @@ class DisableableTest extends WPTestCase {
 
 	// endregion
 
-	// region HELPERS
+	// region PROVIDERS
 
 	/**
 	 * Provides examples for the 'disableable_local_trait' tester.

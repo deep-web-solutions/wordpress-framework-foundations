@@ -7,6 +7,7 @@ use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializeLocal
 use DeepWebSolutions\Framework\Foundations\Actions\InitializableInterface;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareTrait;
+use DeepWebSolutions\Framework\Helpers\FileSystem\Objects\PathsTrait;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +15,7 @@ use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareTrait;
  * Template for encapsulating some of the most often required abilities of a plugin instance.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Plugin
  */
@@ -23,6 +24,7 @@ abstract class AbstractPlugin implements InitializableInterface, LoggingServiceA
 
 	use InitializeLocalTrait;
 	use LoggingServiceAwareTrait;
+	use PathsTrait;
 	use PluginTrait;
 
 	// endregion

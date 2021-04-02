@@ -34,7 +34,7 @@ trait InitializeChildrenTrait {
 	 *
 	 * @return  InitializationFailureException|null
 	 */
-	public function initialize_children(): ?InitializationFailureException {
+	protected function initialize_children(): ?InitializationFailureException {
 		$init_result = null;
 
 		if ( $this instanceof ParentInterface ) {

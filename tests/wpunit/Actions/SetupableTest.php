@@ -119,7 +119,7 @@ class SetupableTest extends WPTestCase {
 
 	// endregion
 
-	// region HELPERS
+	// region PROVIDERS
 
 	/**
 	 * Provides examples for the 'setupable_local_trait' tester.

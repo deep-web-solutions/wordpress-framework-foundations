@@ -118,7 +118,7 @@ class InitializableTest extends WPTestCase {
 
 	// endregion
 
-	// region HELPERS
+	// region PROVIDERS
 
 	/**
 	 * Provides examples for the 'initializable_local_trait' tester.

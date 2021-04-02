@@ -118,7 +118,7 @@ class OutputtableTest extends WPTestCase {
 
 	// endregion
 
-	// region HELPERS
+	// region PROVIDERS
 
 	/**
 	 * Provides examples for the 'outputtable_local_trait' tester.

@@ -34,7 +34,7 @@ trait SetupChildrenTrait {
 	 *
 	 * @return  SetupFailureException|null
 	 */
-	public function setup_children(): ?SetupFailureException {
+	protected function setup_children(): ?SetupFailureException {
 		$setup_result = null;
 
 		if ( $this instanceof ParentInterface ) {

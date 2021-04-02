@@ -13,7 +13,7 @@ use DeepWebSolutions\Framework\Foundations\Plugin\AbstractPlugin;
  * Template for encapsulating some of the most often required abilities of a tree-like plugin's root.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\Plugin
  */
@@ -34,7 +34,7 @@ abstract class AbstractPluginRoot extends AbstractPlugin implements NodeInterfac
 	 *
 	 * @return  $this
 	 */
-	public function get_plugin(): AbstractPluginRoot {
+	final public function get_plugin(): AbstractPluginRoot {
 		return $this;
 	}
 
@@ -42,11 +42,11 @@ abstract class AbstractPluginRoot extends AbstractPlugin implements NodeInterfac
 	 * Return null. The root has no parent by definition.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.1.0
 	 *
 	 * @return  ParentInterface|null
 	 */
-	public function get_parent(): ?ParentInterface {
+	final public function get_parent(): ?ParentInterface {
 		return null;
 	}
 
@@ -54,13 +54,18 @@ abstract class AbstractPluginRoot extends AbstractPlugin implements NodeInterfac
 	 * Set the parent to null. Roots have no parent by definition.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.1.0
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 *
 	 * @param   ParentInterface|null    $parent     New parent.
 	 */
-	public function set_parent( ?ParentInterface $parent = null ) {
+	final public function set_parent( ?ParentInterface $parent = null ) {
+		if ( ! \is_null( $parent ) ) {
+			$this->log_event( 'The plugin root cannot have a parent', array(), 'framework' )
+				->doing_it_wrong( __FUNCTION__, '1.1.0' )->finalize();
+		}
+
 		$this->parent = null;
 	}
 

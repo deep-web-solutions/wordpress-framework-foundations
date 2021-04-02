@@ -9,16 +9,19 @@ use DeepWebSolutions\Framework\Foundations\Hierarchy\ChildInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ChildObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ContainerNodeObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\EnhancedNodeObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\NodeObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ParentObject;
+use Mockery;
+use Psr\Container\ContainerInterface;
 use WpunitTester;
 
 /**
  * Tests for the Hierarchy objects and traits.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration
  */
@@ -155,9 +158,40 @@ class HierarchyTest extends WPTestCase {
 		$this->assertEquals( $example['is_setup3'], $enhanced_node3->is_setup() );
 	}
 
+	/**
+	 * Tests a node that has DI children.
+	 *
+	 * @since   1.1.0
+	 * @version 1.1.0
+	 */
+	public function test_container_node() {
+		$node = new ContainerNodeObject();
+
+		$child_1 = Mockery::mock( NodeInterface::class );
+		$child_1->allows()->has_parent()->andReturns( false );
+		$child_1->allows()->set_parent( $node );
+
+		$child_2 = Mockery::mock( NodeInterface::class );
+		$child_2->allows()->has_parent()->andReturns( false );
+		$child_2->allows()->set_parent( $node );
+
+		$di_container = Mockery::mock( ContainerInterface::class );
+		$di_container->allows()->get( 'dummy-child-1' )->andReturns( $child_1 );
+		$di_container->allows()->get( 'dummy-child-2' )->andReturns( $child_2 );
+
+		$node->set_container( $di_container );
+		$this->assertEquals( $di_container, $node->get_container() );
+
+		$this->assertEmpty( $node->get_children() );
+		$node->initialize();
+		$this->assertEquals( 2, count( $node->get_children() ) );
+		$this->assertEquals( $child_1, $node->get_children()[0] );
+		$this->assertEquals( $child_2, $node->get_children()[1] );
+	}
+
 	// endregion
 
-	// region HELPERS
+	// region PROVIDERS
 
 	/**
 	 * Provides examples for the 'enhanced_node' tester.

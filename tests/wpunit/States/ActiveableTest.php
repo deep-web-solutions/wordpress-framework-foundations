@@ -80,7 +80,7 @@ class ActiveableTest extends WPTestCase {
 
 	// endregion
 
-	// region HELPERS
+	// region PROVIDERS
 
 	/**
 	 * Provides examples for the 'activeable_local_trait' tester.

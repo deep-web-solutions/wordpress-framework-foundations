@@ -3,7 +3,7 @@
  * The DWS WordPress Framework Foundations bootstrap file.
  *
  * @since               1.0.0
- * @version             1.0.0
+ * @version             1.1.1
  * @package             DeepWebSolutions\WP-Foundations
  * @author              Deep Web Solutions GmbH
  * @copyright           2021 Deep Web Solutions GmbH
@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:         DWS WordPress Framework Foundations
  * Description:         A set of related foundational classes to kick-start WordPress plugin development.
- * Version:             1.1.0
+ * Version:             1.1.1
  * Requires at least:   5.5
  * Requires PHP:        7.4
  * Author:              Deep Web Solutions GmbH
@@ -40,7 +40,7 @@ require_once __DIR__ . '/bootstrap-functions.php';
 
 // Define foundations constants.
 \define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_NAME', dws_wp_framework_get_whitelabel_name() . ': Framework Foundations' );
-\define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_VERSION', '1.0.0' );
+\define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_VERSION', '1.1.1' );
 
 // Define minimum environment requirements.
 \define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_MIN_PHP', '7.4' );

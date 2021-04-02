@@ -121,7 +121,9 @@ class PluginAbstractionsTest extends WPTestCase {
 	 * @version 1.0.0
 	 */
 	public function test_plugin_tree() {
-		$plugin_root       = new GenericPluginRoot();
+		$plugin_root = new GenericPluginRoot();
+		$plugin_root->set_logging_service( new LoggingService( $plugin_root ) );
+
 		$plugin_component1 = new GenericPluginNode( new LoggingService( $plugin_root ), 'component-1', 'Component 1' );
 		$plugin_component2 = new GenericPluginNode( new LoggingService( $plugin_root ), 'component-2', 'Component 2' );
 

@@ -90,8 +90,8 @@ class HelpersTest extends WPTestCase {
 		$this->assertEquals( 'dws-wp-foundations-test-plugin_my-custom-root_test_extra-test', $plugin_component->get_asset_handle( 'test', array( 'extra-test' ), 'my-custom-root' ) );
 
 		$plugin_component = new PluginComponent( $plugin, 'test-id', 'Test Näme Curaçao' );
-		$this->assertEquals( 'dws-wp-foundations-test-plugin_test-näme-curaçao_test', $plugin_component->get_asset_handle( 'test' ) );
-		$this->assertEquals( 'dws-wp-foundations-test-plugin_test-näme-curaçao_test_extra', $plugin_component->get_asset_handle( 'test', array( 'extra' ) ) );
+		$this->assertEquals( 'dws-wp-foundations-test-plugin_test-nme-curaao_test', $plugin_component->get_asset_handle( 'test' ) );
+		$this->assertEquals( 'dws-wp-foundations-test-plugin_test-nme-curaao_test_extra', $plugin_component->get_asset_handle( 'test', array( 'extra' ) ) );
 		$this->assertEquals( 'dws-wp-foundations-test-plugin_my-custom-root_test_extra-test', $plugin_component->get_asset_handle( 'test', array( 'extra-test' ), 'my-custom-root' ) );
 	}
 

@@ -5,6 +5,9 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Actions;
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationFailureException;
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupFailureException;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable\EnhancedInitializableDisabledObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable\EnhancedInitializableInactiveObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable\EnhancedInitializableObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable\InitializableExtensionObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable\InitializableIntegrationsObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Actions\Initializable\InitializableLocalObject;
@@ -161,6 +164,57 @@ class InitializableTest extends WPTestCase {
 		$this->assertEquals( $example['init_result'], $initializable_object->get_initialization_result() );
 	}
 
+	/**
+	 * Test for the 'maybe_setup_on_initialization' integration trait.
+	 *
+	 * @since   1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param   array   $example    Example to run the test on.
+	 *
+	 * @dataProvider    _maybe_setup_on_initialization_trait_provider
+	 */
+	public function test_conditional_setup_on_initialization_trait( array $example ) {
+		$initializable_object = new EnhancedInitializableObject( null, null, $example['is_active_local'], $example['is_disabled_local'] );
+
+		$initializable_object->initialize();
+		$this->assertEquals( $example['is_setup'], $initializable_object->is_setup() );
+	}
+
+	/**
+	 * Test for the 'maybe_setup_on_initialization' integration trait when it should setup on inactive as well.
+	 *
+	 * @since   1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param   array   $example    Example to run the test on.
+	 *
+	 * @dataProvider    _maybe_setup_on_inactive_initialization_trait_provider
+	 */
+	public function test_conditional_setup_on_inactive_initialization_trait( array $example ) {
+		$initializable_object = new EnhancedInitializableInactiveObject( null, null, $example['is_active_local'], $example['is_disabled_local'] );
+
+		$initializable_object->initialize();
+		$this->assertEquals( $example['is_setup'], $initializable_object->is_setup() );
+	}
+
+	/**
+	 * Test for the 'maybe_setup_on_initialization' integration trait when it should setup on disabled as well.
+	 *
+	 * @since   1.2.0
+	 * @version 1.2.0
+	 *
+	 * @param   array   $example    Example to run the test on.
+	 *
+	 * @dataProvider    _maybe_setup_on_disabled_initialization_trait_provider
+	 */
+	public function test_conditional_setup_on_disabled_initialization_trait( array $example ) {
+		$initializable_object = new EnhancedInitializableDisabledObject( null, null, $example['is_active_local'], $example['is_disabled_local'] );
+
+		$initializable_object->initialize();
+		$this->assertEquals( $example['is_setup'], $initializable_object->is_setup() );
+	}
+
 	// endregion
 
 	// region PROVIDERS
@@ -309,6 +363,129 @@ class InitializableTest extends WPTestCase {
 					'setup_result_local2' => ( $setup_result = new SetupFailureException( 'Setup failure 2' ) ), // phpcs:ignore
 					'init_result'         => new InitializationFailureException( $setup_result->getMessage(), $setup_result->getCode(), $setup_result ),
 					'is_init'             => false,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'maybe_setup_on_initialization' tester.
+	 *
+	 * @since   1.2.0
+	 * @version 1.2.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _maybe_setup_on_initialization_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'is_active_local'   => true,
+					'is_disabled_local' => false,
+					'is_setup'          => true,
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => false,
+					'is_disabled_local' => false,
+					'is_setup'          => null,
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => true,
+					'is_disabled_local' => true,
+					'is_setup'          => null,
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => false,
+					'is_disabled_local' => true,
+					'is_setup'          => null,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'maybe_setup_on_initialization' tester when setting up on inactive.
+	 *
+	 * @since   1.2.0
+	 * @version 1.2.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _maybe_setup_on_inactive_initialization_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'is_active_local'   => true,
+					'is_disabled_local' => false,
+					'is_setup'          => true,
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => false,
+					'is_disabled_local' => false,
+					'is_setup'          => true, // THIS IS NOT NULL
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => true,
+					'is_disabled_local' => true,
+					'is_setup'          => null,
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => false,
+					'is_disabled_local' => true,
+					'is_setup'          => null,
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'maybe_setup_on_initialization' tester when setting up on disabled.
+	 *
+	 * @since   1.2.0
+	 * @version 1.2.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _maybe_setup_on_disabled_initialization_trait_provider(): array {
+		return array(
+			array(
+				array(
+					'is_active_local'   => true,
+					'is_disabled_local' => false,
+					'is_setup'          => true,
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => false,
+					'is_disabled_local' => false,
+					'is_setup'          => null,
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => true,
+					'is_disabled_local' => true,
+					'is_setup'          => true, // THIS IS NOT NULL
+				),
+			),
+			array(
+				array(
+					'is_active_local'   => false,
+					'is_disabled_local' => true,
+					'is_setup'          => null,
 				),
 			),
 		);

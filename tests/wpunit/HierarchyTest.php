@@ -9,6 +9,9 @@ use DeepWebSolutions\Framework\Foundations\Hierarchy\ChildInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ChildObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ConditionalSetupDisabledNodeObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ConditionalSetupInactiveNodeObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ConditionalSetupNodeObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ContainerNodeObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\EnhancedNodeObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\NodeObject;
@@ -21,7 +24,7 @@ use WpunitTester;
  * Tests for the Hierarchy objects and traits.
  *
  * @since   1.0.0
- * @version 1.1.0
+ * @version 1.2.1
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration
  */
@@ -117,7 +120,7 @@ class HierarchyTest extends WPTestCase {
 	}
 
 	/**
-	 * Tests node that have inheritable actions and states.
+	 * Tests nodes that have inheritable actions and states.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -187,6 +190,30 @@ class HierarchyTest extends WPTestCase {
 		$this->assertEquals( 2, count( $node->get_children() ) );
 		$this->assertEquals( $child_1, $node->get_children()[0] );
 		$this->assertEquals( $child_2, $node->get_children()[1] );
+	}
+
+	/**
+	 * Tests nodes that setup conditionally.
+	 *
+	 * @since   1.2.1
+	 * @version 1.2.1
+	 *
+	 * @param   array   $example    Example to run the test on.
+	 *
+	 * @dataProvider    _conditional_setup_node_provider
+	 */
+	public function test_conditional_setup_node( array $example ) {
+		$enhanced_node1 = new ConditionalSetupNodeObject( true, false, null );
+		$enhanced_node2 = new ConditionalSetupInactiveNodeObject( $example['is_active_local2'], $example['is_disabled_local2'], $example['setup_result_local2'] );
+		$enhanced_node3 = new ConditionalSetupDisabledNodeObject( $example['is_active_local3'], $example['is_disabled_local3'], $example['setup_result_local3'] );
+
+		$this->test_node_trait( $enhanced_node1, $enhanced_node2, $enhanced_node3 );
+
+		$enhanced_node1->setup();
+		$this->assertEquals( $example['setup_result'], $enhanced_node1->get_setup_result() );
+		$this->assertEquals( $example['is_setup1'], $enhanced_node1->is_setup() );
+		$this->assertEquals( $example['is_setup2'], $enhanced_node2->is_setup() );
+		$this->assertEquals( $example['is_setup3'], $enhanced_node3->is_setup() );
 	}
 
 	// endregion
@@ -648,6 +675,98 @@ class HierarchyTest extends WPTestCase {
 						'is_setup1'           => false,
 						'is_setup2'           => false,
 						'is_setup3'           => false,
+					),
+					$default
+				),
+			),
+		);
+	}
+
+	/**
+	 * Provides examples for the 'conditional_setup_node' tester.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.0
+	 *
+	 * @return  array[][][]
+	 */
+	public function _conditional_setup_node_provider(): array {
+		$default = array(
+			'is_active_local2'    => true,
+			'is_active_local3'    => true,
+
+			'is_disabled_local2'  => false,
+			'is_disabled_local3'  => false,
+
+			'setup_result'        => null,
+			'setup_result_local2' => null,
+			'setup_result_local3' => null,
+			'is_setup1'           => true,
+			'is_setup2'           => true,
+			'is_setup3'           => true,
+		);
+
+		return array(
+			array( $default ),
+
+			array(
+				wp_parse_args(
+					array(
+						'is_active_local2' => false,
+						'is_setup3'        => null,
+					),
+					$default
+				),
+			),
+			array(
+				wp_parse_args(
+					array(
+						'is_disabled_local2' => true,
+						'is_setup2'          => null,
+						'is_setup3'          => null,
+					),
+					$default
+				),
+			),
+			array(
+				wp_parse_args(
+					array(
+						'is_disabled_local3' => true,
+					),
+					$default
+				),
+			),
+			array(
+				wp_parse_args(
+					array(
+						'is_active_local3' => false,
+						'is_setup3'        => null,
+					),
+					$default
+				),
+			),
+			array(
+				wp_parse_args(
+					array(
+						'setup_result_local3' => ( $local_setup_result = new SetupFailureException( 'Local failure 3' ) ), // phpcs:ignore
+						'setup_result'        => $local_setup_result,
+						'is_setup1'           => false,
+						'is_setup2'           => false,
+						'is_setup3'           => false,
+					),
+					$default
+				),
+			),
+			array(
+				wp_parse_args(
+					array(
+						'setup_result_local2' => ( $local_setup_result = new SetupFailureException( 'Local failure 2' ) ), // phpcs:ignore
+						'setup_result'        => $local_setup_result,
+						'is_setup1'           => false,
+						'is_setup2'           => false,
+						'is_setup3'           => null,
 					),
 					$default
 				),

@@ -4,7 +4,7 @@
 **Requires at least:** 5.5  
 **Tested up to:** 5.7  
 **Requires PHP:** 7.4  
-**Stable tag:** 1.2.0  
+**Stable tag:** 1.2.1  
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -48,6 +48,9 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 
 ## Changelog 
+
+### 1.2.1 (April 3rd, 2021)
+* Added a conditional children setup trait.
 
 ### 1.2.0 (April 3rd, 2021)
 * Enhanced the Actions traits with the piping functionality from the Core module.

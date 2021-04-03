@@ -123,16 +123,16 @@ class SetupableTest extends WPTestCase {
 	}
 
 	/**
-	 * Test for the setup integration trait.
+	 * Test for the 'run_on_setup' integration trait.
 	 *
 	 * @since   1.2.0
 	 * @version 1.2.0
 	 *
 	 * @param   array   $example    Example to run the test on.
 	 *
-	 * @dataProvider    _setup_integration_trait_provider
+	 * @dataProvider    _run_on_setup_trait_provider
 	 */
-	public function test_setup_integrations_trait( array $example ) {
+	public function test_run_on_setup_trait( array $example ) {
 		$setupable_object = new SetupableIntegrationsObject( $example['setup_result_local'], $example['run_result_local'] );
 
 		$setupable_object->setup();
@@ -142,7 +142,7 @@ class SetupableTest extends WPTestCase {
 	}
 
 	/**
-	 * Test for the 'runnables_on_setup' trait.
+	 * Test for the 'runnables_on_setup' integration trait.
 	 *
 	 * @since   1.2.0
 	 * @version 1.2.0
@@ -248,7 +248,7 @@ class SetupableTest extends WPTestCase {
 	 *
 	 * @return  array[][][]
 	 */
-	public function _setup_integration_trait_provider(): array {
+	public function _run_on_setup_trait_provider(): array {
 		return array(
 			array(
 				array(

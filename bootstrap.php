@@ -3,7 +3,7 @@
  * The DWS WordPress Framework Foundations bootstrap file.
  *
  * @since               1.0.0
- * @version             1.2.1
+ * @version             1.0.0
  * @package             DeepWebSolutions\WP-Foundations
  * @author              Deep Web Solutions GmbH
  * @copyright           2021 Deep Web Solutions GmbH

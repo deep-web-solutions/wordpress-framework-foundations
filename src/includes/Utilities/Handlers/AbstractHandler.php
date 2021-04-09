@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Utilities\Handlers;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStoreable;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStorable;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -10,11 +10,11 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStoreable;
  * Template for encapsulating the most-often needed functionality of a handler.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Handlers
  */
-abstract class AbstractHandler extends AbstractStoreable implements HandlerInterface {
+abstract class AbstractHandler extends AbstractStorable implements HandlerInterface {
 	// region MAGIC METHODS
 
 	/**

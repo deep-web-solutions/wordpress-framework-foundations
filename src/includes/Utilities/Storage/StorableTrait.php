@@ -5,18 +5,18 @@ namespace DeepWebSolutions\Framework\Foundations\Utilities\Storage;
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Basic implementation of the storeable interface.
+ * Basic implementation of the storable interface.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage
  */
-trait StoreableTrait {
+trait StorableTrait {
 	// region FIELDS AND CONSTANTS
 
 	/**
-	 * Type ID of the storeable instance.
+	 * Type ID of the storable instance.
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
@@ -24,7 +24,7 @@ trait StoreableTrait {
 	 * @access  protected
 	 * @var     string
 	 */
-	protected string $storeable_id;
+	protected string $storable_id;
 
 	// endregion
 
@@ -39,7 +39,7 @@ trait StoreableTrait {
 	 * @return  string
 	 */
 	public function get_id(): string {
-		return $this->storeable_id;
+		return $this->storable_id;
 	}
 
 	// endregion

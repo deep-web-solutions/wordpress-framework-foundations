@@ -11,7 +11,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * Basic implementation of the multi-store-aware interface.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage
  */
@@ -146,11 +146,11 @@ trait MultiStoreAwareTrait {
 	 * Returns an object from the store or null on failure.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
 	 * @param   string  $entry_id   The ID of the entry to retrieve from the store.
 	 *
-	 * @return  StoreableInterface|null
+	 * @return  StorableInterface|null
 	 */
 	public function get_stores_store_entry( string $entry_id ): ?StoreInterface {
 		try {

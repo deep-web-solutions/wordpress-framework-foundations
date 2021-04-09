@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores;
 
 use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreableInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StorableInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
 
 \defined( 'ABSPATH' ) || exit;
@@ -12,7 +12,7 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
  * Basic implementation of a user-meta store.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage\Stores
  */
@@ -91,11 +91,11 @@ trait UserMetaStoreTrait {
 	 * Returns all the entries stored.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
 	 * @param   int|null    $user_id        The ID of the user to retrieve the stored objects for.
 	 *
-	 * @return  StoreableInterface[]
+	 * @return  StorableInterface[]
 	 */
 	public function get_all( ?int $user_id = null ): array {
 		$user_id = $this->parse_user_id( $user_id );
@@ -106,16 +106,16 @@ trait UserMetaStoreTrait {
 	 * Returns an entry from the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
 	 * @param   string      $entry_id       The identifier of the entry.
 	 * @param   int|null    $user_id        The ID of the user to retrieve the stored object for.
 	 *
 	 * @throws  NotFoundException   Thrown when the entry does not exist.
 	 *
-	 * @return  StoreableInterface
+	 * @return  StorableInterface
 	 */
-	public function get( string $entry_id, ?int $user_id = null ): StoreableInterface {
+	public function get( string $entry_id, ?int $user_id = null ): StorableInterface {
 		$user_id = $this->parse_user_id( $user_id );
 
 		if ( $this->has( $entry_id, $user_id ) ) {
@@ -130,37 +130,37 @@ trait UserMetaStoreTrait {
 	 * Adds an entry to the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @param   StoreableInterface  $storeable      Object to store.
-	 * @param   int|null            $user_id        The ID of the user to add the object to.
+	 * @param   StorableInterface   $storable   Object to store.
+	 * @param   int|null            $user_id    The ID of the user to add the object to.
 	 *
 	 * @throws  StoreException      Error while adding the entry.
 	 */
-	public function add( StoreableInterface $storeable, ?int $user_id = null ) {
-		$entry_id = $storeable->get_id();
+	public function add( StorableInterface $storable, ?int $user_id = null ) {
+		$entry_id = $storable->get_id();
 		$user_id  = $this->parse_user_id( $user_id );
 
 		if ( $this->has( $entry_id, $user_id ) ) {
 			throw new StoreException( \sprintf( 'Entry %1$s already exists in store %2$s of type %3$s for user %4$s', $entry_id, $this->get_id(), $this->get_storage_type(), $user_id ) );
 		}
 
-		$this->update( $storeable, $user_id );
+		$this->update( $storable, $user_id );
 	}
 
 	/**
 	 * Updates (or adds if it doesn't exist) an entry in the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @param   StoreableInterface  $storeable      Object to add or update.
-	 * @param   int|null            $user_id        The ID of the user to add or update the object to.
+	 * @param   StorableInterface   $storable   Object to add or update.
+	 * @param   int|null            $user_id    The ID of the user to add or update the object to.
 	 *
 	 * @return  bool
 	 */
-	public function update( StoreableInterface $storeable, ?int $user_id = null ): bool {
-		$entry_id = $this->sanitize_entry_id( $storeable->get_id() );
+	public function update( StorableInterface $storable, ?int $user_id = null ): bool {
+		$entry_id = $this->sanitize_entry_id( $storable->get_id() );
 		$user_id  = $this->parse_user_id( $user_id );
 
 		return \update_user_meta(
@@ -168,7 +168,7 @@ trait UserMetaStoreTrait {
 			$this->get_key(),
 			\array_merge(
 				$this->get_all(),
-				array( $entry_id => $storeable )
+				array( $entry_id => $storable )
 			)
 		);
 	}

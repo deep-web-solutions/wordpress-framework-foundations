@@ -5,14 +5,14 @@ namespace DeepWebSolutions\Framework\Foundations\Utilities\Storage;
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Describes a storeable instance. Storeables are objects that can be passed on to stores to perform operations on.
+ * Describes a storable instance. Storables are objects that can be passed on to stores to perform operations on.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage
  */
-interface StoreableInterface {
+interface StorableInterface {
 	/**
 	 * Returns the ID of the instance.
 	 *

@@ -13,11 +13,11 @@ use Psr\Container\NotFoundExceptionInterface;
  * like RAM or the database.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage
  */
-interface StoreInterface extends ContainerInterface, StoreableInterface {
+interface StoreInterface extends ContainerInterface, StorableInterface {
 	// region METHODS
 
 	/**
@@ -48,11 +48,11 @@ interface StoreInterface extends ContainerInterface, StoreableInterface {
 	 * Returns all the objects stored.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
 	 * @throws  ContainerExceptionInterface     Error while retrieving the entries.
 	 *
-	 * @return  StoreableInterface[]
+	 * @return  StorableInterface[]
 	 */
 	public function get_all(): array;
 
@@ -60,25 +60,25 @@ interface StoreInterface extends ContainerInterface, StoreableInterface {
 	 * Adds an object to the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @param   StoreableInterface  $storeable  Object to store.
+	 * @param   StorableInterface   $storable   Object to store.
 	 *
 	 * @throws  ContainerExceptionInterface     Error while adding the entry.
 	 */
-	public function add( StoreableInterface $storeable );
+	public function add( StorableInterface $storable );
 
 	/**
 	 * Updates (or adds if it doesn't exist) an object in the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @param   StoreableInterface  $storeable  Object to store.
+	 * @param   StorableInterface   $storable   Object to store.
 	 *
 	 * @throws  ContainerExceptionInterface     Error while updating the entry.
 	 */
-	public function update( StoreableInterface $storeable );
+	public function update( StorableInterface $storable );
 
 	/**
 	 * Removes an object from the store.

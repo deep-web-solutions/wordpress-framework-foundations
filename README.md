@@ -49,6 +49,11 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 ## Changelog 
 
+### 1.3.0 (April 9th, 2021)
+* Updated development tools.
+* Renamed the StoreableInterface to StorableInterface.
+* Renamed all instances of 'storeable' with 'storable'.
+
 ### 1.2.1 (April 3rd, 2021)
 * Added a conditional children setup trait.
 

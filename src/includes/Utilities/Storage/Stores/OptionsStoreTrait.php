@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores;
 
 use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreableInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StorableInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
 
 \defined( 'ABSPATH' ) || exit;
@@ -12,7 +12,7 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
  * Basic implementation of an options table store.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage\Stores
  */
@@ -86,9 +86,9 @@ trait OptionsStoreTrait {
 	 * Returns all the entries stored.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @return  StoreableInterface[]
+	 * @return  StorableInterface[]
 	 */
 	public function get_all(): array {
 		return \get_option( $this->get_key(), array() );
@@ -98,15 +98,15 @@ trait OptionsStoreTrait {
 	 * Returns an entry from the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
 	 * @param   string  $entry_id   The identifier of the entry.
 	 *
 	 * @throws  NotFoundException   Thrown when the entry does not exist.
 	 *
-	 * @return  StoreableInterface
+	 * @return  StorableInterface
 	 */
-	public function get( string $entry_id ): StoreableInterface {
+	public function get( string $entry_id ): StorableInterface {
 		if ( $this->has( $entry_id ) ) {
 			$entry_id = $this->sanitize_entry_id( $entry_id );
 			return $this->get_all()[ $entry_id ];
@@ -119,38 +119,38 @@ trait OptionsStoreTrait {
 	 * Adds an entry to the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @param   StoreableInterface  $storeable  Object to store.
+	 * @param   StorableInterface   $storable   Object to store.
 	 *
 	 * @throws  StoreException      Error while adding the entry.
 	 */
-	public function add( StoreableInterface $storeable ) {
-		if ( $this->has( $storeable->get_id() ) ) {
-			throw new StoreException( \sprintf( 'Entry %1$s already exists in store %2$s of type %3$s', $storeable->get_id(), $this->get_id(), $this->get_storage_type() ) );
+	public function add( StorableInterface $storable ) {
+		if ( $this->has( $storable->get_id() ) ) {
+			throw new StoreException( \sprintf( 'Entry %1$s already exists in store %2$s of type %3$s', $storable->get_id(), $this->get_id(), $this->get_storage_type() ) );
 		}
 
-		$this->update( $storeable );
+		$this->update( $storable );
 	}
 
 	/**
 	 * Updates (or adds if it doesn't exist) an entry in the store.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @param   StoreableInterface  $storeable  Object to add or update.
+	 * @param   StorableInterface   $storable   Object to add or update.
 	 *
 	 * @return  bool
 	 */
-	public function update( StoreableInterface $storeable ): bool {
-		$entry_id = $this->sanitize_entry_id( $storeable->get_id() );
+	public function update( StorableInterface $storable ): bool {
+		$entry_id = $this->sanitize_entry_id( $storable->get_id() );
 
 		return \update_option(
 			$this->get_key(),
 			\array_merge(
 				$this->get_all(),
-				array( $entry_id => $storeable )
+				array( $entry_id => $storable )
 			)
 		);
 	}

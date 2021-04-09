@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStoreable;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStorable;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -10,10 +10,10 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStoreable;
  * Class StoreableObject
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Utilities
  */
-class StoreableObject extends AbstractStoreable {
+class StoreableObject extends AbstractStorable {
 	/* empty on purpose */
 }

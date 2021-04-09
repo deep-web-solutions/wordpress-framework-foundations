@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Foundations\Utilities\Services;
 
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreableInterface;
+use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StorableInterface;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -13,10 +13,10 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreableInterface;
  * Typically the implementation logic should be left to a handler.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Services
  */
-interface ServiceInterface extends LoggingServiceAwareInterface, PluginAwareInterface, StoreableInterface {
+interface ServiceInterface extends LoggingServiceAwareInterface, PluginAwareInterface, StorableInterface {
 	/* empty on purpose */
 }

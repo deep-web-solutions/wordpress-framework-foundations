@@ -10,7 +10,7 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStore;
  * Reusable implementation of a basic options-table store.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage\Stores
  */
@@ -42,13 +42,13 @@ class OptionsStore extends AbstractStore {
 	 * OptionsStore constructor.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.0
 	 *
-	 * @param   string  $storeable_id   The ID of the store.
+	 * @param   string  $storable_id    The ID of the store.
 	 * @param   string  $key            The key used to store the objects in the database.
 	 */
-	public function __construct( string $storeable_id, string $key ) {
-		parent::__construct( $storeable_id );
+	public function __construct( string $storable_id, string $key ) {
+		parent::__construct( $storable_id );
 		$this->key = \sanitize_key( $key );
 	}
 

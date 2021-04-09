@@ -14,7 +14,7 @@
 [![Build Status](https://travis-ci.com/deep-web-solutions/wordpress-framework-foundations.svg?branch=master)](https://travis-ci.com/deep-web-solutions/wordpress-framework-foundations)
 [![Maintainability](https://api.codeclimate.com/v1/badges/75fcacbb8919d442a664/maintainability)](https://codeclimate.com/github/deep-web-solutions/wordpress-framework-foundations/maintainability)
 
-A set of related foundational classes to kick-start WordPress plugin development. Documentation can be found at https://docs.deep-web-solutions.com/
+A set of related foundational classes to kick-start WordPress plugin development. Documentation can be found at https://framework.deep-web-solutions.com/
 
 
 ## Installation

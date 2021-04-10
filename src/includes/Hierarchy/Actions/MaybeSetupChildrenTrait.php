@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Foundations\Hierarchy\Actions;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\Integrations\SetupableDisabledTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\Integrations\SetupableInactiveTrait;
-use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupableExtensionTrait;
+use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupableIntegrationTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Setupable\SetupFailureException;
 use DeepWebSolutions\Framework\Foundations\Actions\SetupableInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
@@ -25,7 +25,7 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
 trait MaybeSetupChildrenTrait {
 	// region TRAITS
 
-	use SetupableExtensionTrait;
+	use SetupableIntegrationTrait;
 
 	// endregion
 

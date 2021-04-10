@@ -11,7 +11,7 @@ use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTr
  * Basic implementation of the initializable interface.
  *
  * @since   1.0.0
- * @version 1.2.0
+ * @version 1.4.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Initializable
  */
@@ -83,7 +83,7 @@ trait InitializableTrait {
 	 * Simple initialization logic.
 	 *
 	 * @since   1.0.0
-	 * @version 1.2.0
+	 * @version 1.4.0
 	 */
 	public function initialize(): ?InitializationFailureException {
 		if ( \is_null( $this->is_initialized ) ) {
@@ -95,7 +95,7 @@ trait InitializableTrait {
 				$this->initialization_result = $result;
 			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( InitializableIntegrationTrait::class, null, 'integrate' ) ) ) { // phpcs:ignore
 				$this->is_initialized        = false;
-				$this->initialization_result = new InitializationFailureException(
+				$this->initialization_result = ( $result instanceof InitializationFailureException ) ? $result : new InitializationFailureException(
 					$result->getMessage(),
 					$result->getCode(),
 					$result

@@ -4,7 +4,7 @@
 **Requires at least:** 5.5  
 **Tested up to:** 5.7  
 **Requires PHP:** 7.4  
-**Stable tag:** 1.3.2  
+**Stable tag:** 1.4.0  
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -48,6 +48,9 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 
 ## Changelog 
+
+### 1.4.0 (April 10th, 2021)
+* Some action extension traits are now integration traits.
 
 ### 1.3.2 (April 10th, 2021)
 * Updated composer.json to support any version of the PSR packages.

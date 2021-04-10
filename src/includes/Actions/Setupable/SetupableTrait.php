@@ -11,7 +11,7 @@ use DeepWebSolutions\Framework\Foundations\Helpers\ActionLocalExtensionHelpersTr
  * Basic implementation of the setupable interface.
  *
  * @since   1.0.0
- * @version 1.2.0
+ * @version 1.4.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Actions\Setupable
  */
@@ -83,7 +83,7 @@ trait SetupableTrait {
 	 * Simple setup logic.
 	 *
 	 * @since   1.0.0
-	 * @version 1.2.0
+	 * @version 1.4.0
 	 */
 	public function setup(): ?SetupFailureException {
 		if ( \is_null( $this->is_setup ) ) {
@@ -95,7 +95,7 @@ trait SetupableTrait {
 				$this->setup_result = $result;
 			} elseif ( ! \is_null( $result = $this->maybe_execute_extension_traits( SetupableIntegrationTrait::class, null, 'integrate' ) ) ) { // phpcs:ignore
 				$this->is_setup     = false;
-				$this->setup_result = new SetupFailureException(
+				$this->setup_result = ( $result instanceof SetupFailureException ) ? $result : new SetupFailureException(
 					$result->getMessage(),
 					$result->getCode(),
 					$result

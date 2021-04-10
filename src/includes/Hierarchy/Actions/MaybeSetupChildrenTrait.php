@@ -18,7 +18,7 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Objects;
  * Setup extension trait for setting up children in the same-go.
  *
  * @since   1.2.1
- * @version 1.2.1
+ * @version 1.4.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\Actions
  */
@@ -35,11 +35,11 @@ trait MaybeSetupChildrenTrait {
 	 * Makes one's own successful setup dependent on that of one's children, conditionally.
 	 *
 	 * @since   1.2.1
-	 * @version 1.2.1
+	 * @version 1.4.0
 	 *
 	 * @return  SetupFailureException|null
 	 */
-	protected function maybe_setup_children(): ?SetupFailureException {
+	protected function integrate_maybe_setup_children(): ?SetupFailureException {
 		$setup_result = null;
 
 		if ( $this instanceof ParentInterface ) {

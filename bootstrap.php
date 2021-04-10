@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:         DWS WordPress Framework Foundations
  * Description:         A set of related foundational classes to kick-start WordPress plugin development.
- * Version:             1.3.2
+ * Version:             1.4.0
  * Requires at least:   5.5
  * Requires PHP:        7.4
  * Author:              Deep Web Solutions GmbH
@@ -40,7 +40,7 @@ require_once __DIR__ . '/bootstrap-functions.php';
 
 // Define foundations constants.
 \define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_NAME', dws_wp_framework_get_whitelabel_name() . ': Framework Foundations' );
-\define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_VERSION', '1.3.2' );
+\define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_VERSION', '1.4.0' );
 
 // Define minimum environment requirements.
 \define( __NAMESPACE__ . '\DWS_WP_FRAMEWORK_FOUNDATIONS_MIN_PHP', '7.4' );

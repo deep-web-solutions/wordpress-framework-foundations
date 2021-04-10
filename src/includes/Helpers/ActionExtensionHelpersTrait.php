@@ -11,7 +11,7 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
  * Provides some useful helpers for working with extension traits.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.3.1
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Helpers
  */
@@ -20,7 +20,7 @@ trait ActionExtensionHelpersTrait {
 	 * Execute any potential extension trait action logic.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.3.1
 	 *
 	 * @param   string  $extension_trait    The name of the extension trait to look for.
 	 * @param   mixed   $success_return     Default return value on success.
@@ -41,8 +41,7 @@ trait ActionExtensionHelpersTrait {
 
 				if ( \method_exists( $this, $method_name ) ) {
 					$result = $this->{$method_name}();
-
-					if ( ! \is_null( $result ) ) {
+					if ( $success_return !== $result ) {
 						return $result;
 					}
 				}

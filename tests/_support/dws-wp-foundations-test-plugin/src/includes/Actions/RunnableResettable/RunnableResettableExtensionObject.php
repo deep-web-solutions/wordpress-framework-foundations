@@ -3,10 +3,8 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Actions\RunnableResettable;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Resettable\ResetLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\ResettableInterface;
 use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunFailureException;
-use DeepWebSolutions\Framework\Foundations\Actions\Runnable\RunLocalTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
 
 \defined( 'ABSPATH' ) || exit;

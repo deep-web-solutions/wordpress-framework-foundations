@@ -20,7 +20,7 @@ trait ActionExtensionHelpersTrait {
 	 * Execute any potential extension trait action logic.
 	 *
 	 * @since   1.0.0
-	 * @version 1.3.1
+	 * @version 1.4.1
 	 *
 	 * @param   string  $extension_trait    The name of the extension trait to look for.
 	 * @param   mixed   $success_return     Default return value on success.
@@ -30,12 +30,12 @@ trait ActionExtensionHelpersTrait {
 	 */
 	protected function maybe_execute_extension_traits( string $extension_trait, $success_return = null, string $prefix = '' ) {
 		if ( Objects::has_trait_deep( $extension_trait, $this ) ) {
-			foreach ( Objects::class_uses_deep( $this ) as $trait_name => $deep_used_traits ) {
-				if ( false === \array_search( $extension_trait, $deep_used_traits, true ) ) {
+			foreach ( Objects::class_uses_deep_list( $this ) as $trait ) {
+				if ( ! isset( Objects::trait_uses_deep_list( $trait )[ $extension_trait ] ) ) {
 					continue;
 				}
 
-				$trait_boom  = \explode( '\\', $trait_name );
+				$trait_boom  = \explode( '\\', $trait );
 				$method_name = \ltrim( $prefix . \strtolower( \preg_replace( '/([A-Z]+)/', '_${1}', \end( $trait_boom ) ) ), '_' );
 				$method_name = Strings::ends_with( $method_name, '_trait' ) ? \str_replace( '_trait', '', $method_name ) : $method_name;
 

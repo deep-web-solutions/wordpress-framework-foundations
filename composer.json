@@ -21,14 +21,15 @@
 
   "require": {
     "php": ">=7.4",
-    "deep-web-solutions/wp-framework-bootstrapper": "^1.1.5",
-    "deep-web-solutions/wp-framework-helpers": "^1.2.0",
-    "psr/container": "^1.0.0",
+    "deep-web-solutions/wp-framework-bootstrapper": "^1.1.6",
+    "deep-web-solutions/wp-framework-helpers": "^1.2.1",
+    "psr/container": "^1.0.0 || ^2.0.0",
     "psr/log": "^1.0.0"
   },
   "require-dev": {
     "deep-web-solutions/wordpress-configs": "master@dev",
-    "php-stubs/wordpress-stubs": ">=v5.5.3",
+    "php-stubs/wordpress-stubs": "5.5.*",
+    "johnpbloch/wordpress-core": "5.5.*",
 
     "phpmd/phpmd": "2.*",
     "squizlabs/php_codesniffer": "3.*",
@@ -79,7 +80,7 @@
       "@php ./vendor/bin/phpmd . json phpmd.xml.dist"
     ],
     "coding-standards:check": [
-      "@php ./vendor/bin/phpcs --standard=phpcs.xml.dist"
+      "@php ./vendor/bin/phpcs --standard=phpcs.xml.dist -v"
     ],
     "coding-standards:fix": [
       "@php ./vendor/bin/phpcbf --standard=phpcs.xml.dist"
@@ -88,13 +89,13 @@
     "test:clean": [
       "@php ./vendor/bin/codecept clean"
     ],
-    "test:functional": [
-      "Composer\\Config::disableProcessTimeout",
-      "@php ./vendor/bin/codecept run functional"
-    ],
     "test:integration": [
       "Composer\\Config::disableProcessTimeout",
-      "@php ./vendor/bin/codecept run wpunit"
+      "@php ./vendor/bin/codecept run wpunit --debug"
+    ],
+    "test:functional": [
+      "Composer\\Config::disableProcessTimeout",
+      "@php ./vendor/bin/codecept run functional --debug"
     ]
   }
 }

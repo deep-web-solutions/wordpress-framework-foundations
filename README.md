@@ -4,17 +4,26 @@
 **Requires at least:** 5.5  
 **Tested up to:** 5.7  
 **Requires PHP:** 7.4  
-**Stable tag:** 1.4.1  
+**Stable tag:** 1.4.2  
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
 
 ## Description 
 
-[![Build Status](https://travis-ci.com/deep-web-solutions/wordpress-framework-foundations.svg?branch=master)](https://travis-ci.com/deep-web-solutions/wordpress-framework-foundations)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![PHP Syntax Errors](https://github.com/deep-web-solutions/wordpress-framework-foundations/actions/workflows/php-syntax-errors.yml/badge.svg)](https://github.com/deep-web-solutions/wordpress-framework-foundations/actions/workflows/php-syntax-errors.yml)
+[![WordPress Coding Standards](https://github.com/deep-web-solutions/wordpress-framework-foundations/actions/workflows/wordpress-coding-standards.yml/badge.svg)](https://github.com/deep-web-solutions/wordpress-framework-foundations/actions/workflows/wordpress-coding-standards.yml)
+[![Codeception Tests](https://github.com/deep-web-solutions/wordpress-framework-foundations/actions/workflows/codeception-tests.yml/badge.svg)](https://github.com/deep-web-solutions/wordpress-framework-foundations/actions/workflows/codeception-tests.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/75fcacbb8919d442a664/maintainability)](https://codeclimate.com/github/deep-web-solutions/wordpress-framework-foundations/maintainability)
 
-A set of related foundational classes to kick-start WordPress plugin development. Documentation can be found at https://framework.deep-web-solutions.com/
+A set of related foundational classes to kick-start WordPress plugin development. This package contains many abstractions useful
+for building a WordPress plugin.
+
+
+## Documentation
+
+Documentation for this module and the rest of the DWS WP Framework can be found [here](https://framework.deep-web-solutions.com/foundations-module/motivation-and-how-to-use).
 
 
 ## Installation
@@ -49,17 +58,18 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 ## Changelog 
 
+### 1.4.2 (April 23rd, 2021)
+* Consolidated changelog.
+* Documentation updates.
+* Migrated from Travis CI to Github Actions.
+
 ### 1.4.1 (April 11th, 2021)
 * Compatibility with Helpers 1.2.
 
-### 1.4.0 (April 10th, 2021)
-* Some action extension traits are now integration traits.
-
-### 1.3.2 (April 10th, 2021)
-* Updated composer.json to support any version of the PSR packages.
-
-### 1.3.1 (April 10th, 2021)
+### 1.3.1, 1.3.2, 1.4.0 (April 10th, 2021)
 * Fixed a bug that caused only a maximum of 1 status extension trait to be executed.
+* Updated composer.json to support any version of the PSR packages.
+* Some action extension traits are now integration traits.
 
 ### 1.3.0 (April 9th, 2021)
 * Updated development tools.

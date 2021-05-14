@@ -23,8 +23,8 @@
     "php": ">=7.4",
     "deep-web-solutions/wp-framework-bootstrapper": "^1.1.6",
     "deep-web-solutions/wp-framework-helpers": "^1.2.1",
-    "psr/container": "^1.0.0 || ^2.0.0",
-    "psr/log": "^1.0.0"
+    "psr/container": "^1.0 || ^2.0",
+    "psr/log": "^1.0"
   },
   "require-dev": {
     "deep-web-solutions/wordpress-configs": "master@dev",
@@ -45,8 +45,6 @@
     "codeception/module-filesystem": "^1.0",
     "codeception/mockery-module": "^0.4"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
 
   "autoload": {
     "psr-4": {

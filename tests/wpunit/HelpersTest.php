@@ -17,7 +17,7 @@ use WpunitTester;
  * Tests for the Helpers traits.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.4.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration
  */
@@ -43,28 +43,28 @@ class HelpersTest extends WPTestCase {
 	 * Tests the HooksHelpers trait.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.4.3
 	 */
 	public function test_hooks_helpers_trait() {
 		$plugin = dws_foundations_test_plugin_instance();
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test', $plugin->get_hook_tag( 'test' ) );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test-extra', $plugin->get_hook_tag( 'test', array( 'extra' ) ) );
-		$this->assertEquals( 'my_custom_root-test-extra_test', $plugin->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test', $plugin->get_hook_tag( 'test' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test/extra', $plugin->get_hook_tag( 'test', array( 'extra' ) ) );
+		$this->assertEquals( 'my_custom_root/test/extra_test', $plugin->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
 
 		$plugin_aware_object = new PluginAwareObject( $plugin );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test', $plugin_aware_object->get_hook_tag( 'test' ) );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test-extra', $plugin_aware_object->get_hook_tag( 'test', array( 'extra' ) ) );
-		$this->assertEquals( 'my_custom_root-test-extra_test', $plugin_aware_object->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test', $plugin_aware_object->get_hook_tag( 'test' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test/extra', $plugin_aware_object->get_hook_tag( 'test', array( 'extra' ) ) );
+		$this->assertEquals( 'my_custom_root/test/extra_test', $plugin_aware_object->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
 
 		$plugin_component = new PluginComponent( $plugin, 'test-id', 'Test NAME' );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_name-test', $plugin_component->get_hook_tag( 'test' ) );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_name-test-extra', $plugin_component->get_hook_tag( 'test', array( 'extra' ) ) );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-my_custom_root-test-extra_test', $plugin_component->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test_name/test', $plugin_component->get_hook_tag( 'test' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test_name/test/extra', $plugin_component->get_hook_tag( 'test', array( 'extra' ) ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/my_custom_root/test/extra_test', $plugin_component->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
 
 		$plugin_component = new PluginComponent( $plugin, 'test-id', 'Test Näme Curaçao' );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_nme_curaao-test', $plugin_component->get_hook_tag( 'test' ) );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-test_nme_curaao-test-extra', $plugin_component->get_hook_tag( 'test', array( 'extra' ) ) );
-		$this->assertEquals( 'dws_wp_foundations_test_plugin-my_custom_root-test-extra_test', $plugin_component->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test_nme/curaao-test', $plugin_component->get_hook_tag( 'test' ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/test_nme/curaao-test/extra', $plugin_component->get_hook_tag( 'test', array( 'extra' ) ) );
+		$this->assertEquals( 'dws_wp_foundations_test_plugin/my_custom_root/test/extra_test', $plugin_component->get_hook_tag( 'test', array( 'extra_test' ), 'my_custom_root' ) );
 	}
 
 	/**

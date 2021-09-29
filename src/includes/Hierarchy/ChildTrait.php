@@ -8,7 +8,7 @@ namespace DeepWebSolutions\Framework\Foundations\Hierarchy;
  * Basic implementation of the child interface.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.4.4
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy
  */
@@ -34,12 +34,12 @@ trait ChildTrait {
 	 * Returns whether the using instance has a parent or not.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.4.4
 	 *
 	 * @return  bool
 	 */
 	public function has_parent(): bool {
-		return null !== $this->parent;
+		return null !== $this->get_parent();
 	}
 
 	/**

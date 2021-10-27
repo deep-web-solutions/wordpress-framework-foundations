@@ -5,6 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores;
 use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StorableInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
+use DeepWebSolutions\Framework\Helpers\DataTypes\Arrays;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -12,7 +13,7 @@ use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
  * Basic implementation of a user-meta store.
  *
  * @since   1.0.0
- * @version 1.3.0
+ * @version 1.5.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Utilities\Storage\Stores
  */
@@ -91,7 +92,7 @@ trait UserMetaStoreTrait {
 	 * Returns all the entries stored.
 	 *
 	 * @since   1.0.0
-	 * @version 1.3.0
+	 * @version 1.5.0
 	 *
 	 * @param   int|null    $user_id        The ID of the user to retrieve the stored objects for.
 	 *
@@ -99,7 +100,7 @@ trait UserMetaStoreTrait {
 	 */
 	public function get_all( ?int $user_id = null ): array {
 		$user_id = $this->parse_user_id( $user_id );
-		return \get_user_meta( $user_id, $this->get_key(), true ) ?: array(); // phpcs:ignore
+		return Arrays::validate( \get_user_meta( $user_id, $this->get_key(), true ), array() );
 	}
 
 	/**

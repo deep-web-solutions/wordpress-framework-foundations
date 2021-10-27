@@ -53,9 +53,7 @@ trait ParentTrait {
 	public function get_children(): array {
 		return \array_filter(
 			$this->children,
-			function( $child ) {
-				return \is_a( $child, ChildInterface::class );
-			}
+			fn( $child ) => \is_a( $child, ChildInterface::class )
 		);
 	}
 
@@ -74,9 +72,7 @@ trait ParentTrait {
 	public function set_children( array $children ) {
 		$this->children = \array_filter(
 			$children,
-			function( $child ) {
-				return \is_object( $child ) && \is_a( $child, ChildInterface::class );
-			}
+			fn( $child ) => \is_object( $child ) && \is_a( $child, ChildInterface::class )
 		);
 	}
 

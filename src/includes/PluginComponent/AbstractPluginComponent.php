@@ -40,8 +40,8 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 	 */
 	public function __construct( LoggingService $logging_service, ?string $component_id = null, ?string $component_name = null ) {
 		$this->set_logging_service( $logging_service );
-		$this->set_id( $component_id ?: \hash( 'md5', static::class ) ); // phpcs:ignore
-		$this->set_name( $component_name ?: static::class ); // phpcs:ignore
+		$this->set_id( $component_id ?: \hash( 'md5', static::class ) );
+		$this->set_name( $component_name ?: static::class );
 	}
 
 	/**
@@ -52,15 +52,14 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 	 *
 	 * @param   string  $name   Name of the property that should be retrieved.
 	 *
-	 * @noinspection PhpMissingReturnTypeInspection
 	 * @return  InexistentPropertyException|mixed
 	 */
 	public function __get( string $name ) {
-		if ( \method_exists( $this, ( $function = "get_{$name}" ) ) || \method_exists( $this, ( $function = 'get' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, ( $function = "get_$name" ) ) || \method_exists( $this, ( $function = 'get' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
 			return $this->{$function}();
 		}
 
-		if ( \method_exists( $this, ( $function = "is_{$name}" ) ) || \method_exists( $this, ( $function = 'is' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, ( $function = "is_$name" ) ) || \method_exists( $this, ( $function = 'is' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
 			return $this->{$function}();
 		}
 
@@ -87,12 +86,12 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 	 * @return  mixed
 	 */
 	public function __set( string $name, $value ) {
-		if ( \method_exists( $this, ( $function = "set_{$name}" ) ) || \method_exists( $this, ( $function = 'set' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, ( $function = "set_$name" ) ) || \method_exists( $this, ( $function = 'set' . \ucfirst( $name ) ) ) ) { // phpcs:ignore
 			return $this->{$function}( $value );
 		}
 
-		$has_get_getter = \method_exists( $this, "get_{$name}" ) || \method_exists( $this, 'get' . \ucfirst( $name ) );
-		$has_is_getter  = \method_exists( $this, "is_{$name}" ) || \method_exists( $this, 'is' . \ucfirst( $name ) );
+		$has_get_getter = \method_exists( $this, "get_$name" ) || \method_exists( $this, 'get' . \ucfirst( $name ) );
+		$has_is_getter  = \method_exists( $this, "is_$name" ) || \method_exists( $this, 'is' . \ucfirst( $name ) );
 		if ( $has_get_getter || $has_is_getter ) {
 			/* @noinspection PhpUnhandledExceptionInspection */
 			throw $this->log_event( \sprintf( 'Property %s is ready-only', $name ), array(), 'framework' )->set_log_level( LogLevel::ERROR )
@@ -119,11 +118,11 @@ abstract class AbstractPluginComponent implements LoggingServiceAwareInterface, 
 	 * @return  bool
 	 */
 	public function __isset( string $name ): bool {
-		if ( \method_exists( $this, "get_{$name}" ) || \method_exists( $this, 'get' . \ucfirst($name) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, "get_$name" ) || \method_exists( $this, 'get' . \ucfirst($name) ) ) { // phpcs:ignore
 			return true;
 		}
 
-		if ( \method_exists( $this, "is_{$name}" ) || \method_exists( $this, 'is' . \ucfirst($name) ) ) { // phpcs:ignore
+		if ( \method_exists( $this, "is_$name" ) || \method_exists( $this, 'is' . \ucfirst($name) ) ) { // phpcs:ignore
 			return true;
 		}
 

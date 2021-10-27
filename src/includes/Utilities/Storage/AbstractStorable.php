@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\Utilities\Storage;
 \defined( 'ABSPATH' ) || exit;
 
 /**
- * Template for encapsulating some of the most often needed required abilities of a storable object.
+ * Template for encapsulating some of the most often needed abilities of a storable object.
  *
  * @since   1.0.0
  * @version 1.3.0

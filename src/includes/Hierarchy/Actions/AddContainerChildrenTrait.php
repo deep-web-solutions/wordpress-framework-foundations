@@ -4,9 +4,9 @@ namespace DeepWebSolutions\Framework\Foundations\Hierarchy\Actions;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializableExtensionTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationFailureException;
+use DeepWebSolutions\Framework\Foundations\DependencyInjection\ContainerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
+use DeepWebSolutions\Framework\Foundations\PluginAwareInterface;
 use Psr\Container\ContainerInterface;
 
 \defined( 'ABSPATH' ) || exit;

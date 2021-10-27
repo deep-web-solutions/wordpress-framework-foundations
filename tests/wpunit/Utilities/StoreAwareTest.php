@@ -4,8 +4,8 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreException;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreInterface;
 use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreableObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreAwareObject;
 use Mockery;

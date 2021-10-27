@@ -3,10 +3,10 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\MultiStoreAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores\MemoryStore;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\HandlerObject;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\MultiStoreAwareObject;
+use DeepWebSolutions\Framework\Foundations\Storage\MultiStoreAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\Stores\MemoryStore;
+use DeepWebSolutions\Framework\Tests\FoundationsHandlerObject;
+use DeepWebSolutions\Framework\Tests\FoundationsMultiStoreAwareObject;
 use WpunitTester;
 
 /**

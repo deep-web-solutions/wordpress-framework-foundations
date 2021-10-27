@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\AbstractService;
+use DeepWebSolutions\Framework\Foundations\Services\AbstractService;
 
 \defined( 'ABSPATH' ) || exit;
 

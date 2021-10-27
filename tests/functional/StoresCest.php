@@ -2,12 +2,12 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Functional;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores\MemoryStore;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores\OptionsStore;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\Stores\UserMetaStore;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreableObject;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreException;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\Stores\MemoryStore;
+use DeepWebSolutions\Framework\Foundations\Storage\Stores\OptionsStore;
+use DeepWebSolutions\Framework\Foundations\Storage\Stores\UserMetaStore;
+use DeepWebSolutions\Framework\Tests\FoundationsStoreableObject;
 use FunctionalTester;
 use Psr\Container\NotFoundExceptionInterface;
 

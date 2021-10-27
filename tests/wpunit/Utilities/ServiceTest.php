@@ -4,8 +4,8 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\ServiceInterface;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\ServiceObject;
+use DeepWebSolutions\Framework\Foundations\Services\ServiceInterface;
+use DeepWebSolutions\Framework\Tests\FoundationsServiceObject;
 use WpunitTester;
 
 /**

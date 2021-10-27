@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\ServiceAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\ServiceAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Services\ServiceAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Services\ServiceAwareTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\MultiStoreAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\MultiStoreAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Storage\MultiStoreAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\MultiStoreAwareTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

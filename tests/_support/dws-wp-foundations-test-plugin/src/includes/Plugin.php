@@ -4,8 +4,8 @@ namespace DeepWebSolutions\Framework\Tests\Foundations;
 
 use DeepWebSolutions\Framework\Foundations\Helpers\AssetsHelpersTrait;
 use DeepWebSolutions\Framework\Foundations\Helpers\HooksHelpersTrait;
-use DeepWebSolutions\Framework\Foundations\Plugin\AbstractPlugin;
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginTrait;
+use DeepWebSolutions\Framework\Foundations\AbstractPlugin;
+use DeepWebSolutions\Framework\Foundations\PluginTrait;
 use function DeepWebSolutions\Plugins\dws_foundations_test_base_path;
 
 \defined( 'ABSPATH' ) || exit;

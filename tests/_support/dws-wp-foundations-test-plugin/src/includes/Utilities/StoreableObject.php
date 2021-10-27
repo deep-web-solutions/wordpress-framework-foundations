@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\AbstractStorable;
+use DeepWebSolutions\Framework\Foundations\Storage\AbstractStorable;
 
 \defined( 'ABSPATH' ) || exit;
 

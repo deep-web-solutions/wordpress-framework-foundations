@@ -3,9 +3,9 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
-use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StorableInterface;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\HandlerObject;
+use DeepWebSolutions\Framework\Foundations\Services\HandlerInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\StorableInterface;
+use DeepWebSolutions\Framework\Tests\FoundationsHandlerObject;
 use WpunitTester;
 
 /**

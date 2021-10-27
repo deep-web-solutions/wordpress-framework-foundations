@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\AbstractMultiHandlerService;
+use DeepWebSolutions\Framework\Foundations\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\Services\AbstractMultiHandlerService;
 use Psr\Log\LogLevel;
 
 \defined( 'ABSPATH' ) || exit;
@@ -68,7 +68,6 @@ class LoggingService extends AbstractMultiHandlerService {
 	public function get_handler( string $handler_id ): LoggingHandlerInterface {
 		$handler = parent::get_handler( $handler_id );
 
-		/* @noinspection PhpIncompatibleReturnTypeInspection */
 		return $handler ?? parent::get_handler( 'null' );
 	}
 

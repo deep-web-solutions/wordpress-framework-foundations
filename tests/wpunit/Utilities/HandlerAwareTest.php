@@ -3,10 +3,8 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
-use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\HandlerInterface;
 use DeepWebSolutions\Framework\Tests\Foundations\Utilities\HandlerAwareObject;
 use DeepWebSolutions\Framework\Tests\Foundations\Utilities\HandlerObject;
-use Mockery;
 use WpunitTester;
 
 /**

@@ -5,9 +5,9 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 use DeepWebSolutions\Framework\Foundations\Actions\OutputtableInterface;
 use DeepWebSolutions\Framework\Foundations\Actions\ResettableInterface;
 use DeepWebSolutions\Framework\Foundations\Actions\RunnableInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\Actions\OutputHandlersTrait;
-use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\Actions\ResetHandlersTrait;
-use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\Actions\RunHandlersTrait;
+use DeepWebSolutions\Framework\Foundations\Services\Actions\OutputHandlersTrait;
+use DeepWebSolutions\Framework\Foundations\Services\Actions\ResetHandlersTrait;
+use DeepWebSolutions\Framework\Foundations\Services\Actions\RunHandlersTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreAwareTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

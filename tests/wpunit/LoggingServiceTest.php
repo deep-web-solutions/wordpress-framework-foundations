@@ -3,20 +3,12 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration;
 
 use Codeception\TestCase\WPTestCase;
-use DeepWebSolutions\Framework\Foundations\Exceptions\InexistentPropertyException;
-use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
-use DeepWebSolutions\Framework\Foundations\Exceptions\ReadOnlyPropertyException;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingHandler;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
 use DeepWebSolutions\Framework\Foundations\Logging\LogMessageBuilder;
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
-use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginComponent;
-use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginNode;
-use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginRoot;
 use LogicException;
 use Mockery;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use WpunitTester;
 
 /**

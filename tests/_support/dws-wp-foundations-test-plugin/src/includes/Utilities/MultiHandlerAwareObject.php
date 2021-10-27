@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Handlers\MultiHandlerAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

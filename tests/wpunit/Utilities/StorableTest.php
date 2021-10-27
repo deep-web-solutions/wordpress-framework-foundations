@@ -3,8 +3,8 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StorableInterface;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreableObject;
+use DeepWebSolutions\Framework\Foundations\Storage\StorableInterface;
+use DeepWebSolutions\Framework\Tests\FoundationsStoreableObject;
 use WpunitTester;
 
 /**

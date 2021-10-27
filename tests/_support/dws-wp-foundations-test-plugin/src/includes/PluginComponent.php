@@ -4,9 +4,9 @@ namespace DeepWebSolutions\Framework\Tests\Foundations;
 
 use DeepWebSolutions\Framework\Foundations\Helpers\AssetsHelpersTrait;
 use DeepWebSolutions\Framework\Foundations\Helpers\HooksHelpersTrait;
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
-use DeepWebSolutions\Framework\Foundations\PluginComponent\PluginComponentInterface;
-use DeepWebSolutions\Framework\Foundations\PluginComponent\PluginComponentTrait;
+use DeepWebSolutions\Framework\Foundations\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\PluginComponentInterface;
+use DeepWebSolutions\Framework\Foundations\PluginComponentTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

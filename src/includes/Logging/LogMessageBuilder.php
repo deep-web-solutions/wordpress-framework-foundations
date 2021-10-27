@@ -263,6 +263,7 @@ class LogMessageBuilder {
 		if ( false === $this->log_sensitive ) {
 			$message = \preg_replace( '#(<sensitive>).*?(</sensitive>)#', '$1REDACTED FOR PRIVACY$2', $message );
 		} else {
+			/* @noinspection HtmlUnknownTag */
 			$message = Strings::replace_placeholders(
 				array(
 					'<sensitive>'  => '',

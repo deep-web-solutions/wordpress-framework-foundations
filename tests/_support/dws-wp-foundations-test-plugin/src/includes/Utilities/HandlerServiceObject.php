@@ -2,7 +2,7 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\AbstractHandlerService;
+use DeepWebSolutions\Framework\Foundations\Services\AbstractHandlerService;
 
 \defined( 'ABSPATH' ) || exit;
 

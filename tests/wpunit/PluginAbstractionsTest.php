@@ -6,7 +6,7 @@ use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Exceptions\InexistentPropertyException;
 use DeepWebSolutions\Framework\Foundations\Exceptions\ReadOnlyPropertyException;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\PluginInterface;
 use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginComponent;
 use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginNode;
 use DeepWebSolutions\Framework\Tests\Foundations\PluginComponents\GenericPluginRoot;

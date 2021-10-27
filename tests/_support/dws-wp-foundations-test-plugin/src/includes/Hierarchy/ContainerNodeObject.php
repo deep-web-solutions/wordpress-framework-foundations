@@ -3,8 +3,8 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Hierarchy;
 
 use DeepWebSolutions\Framework\Foundations\Hierarchy\Actions\AddContainerChildrenTrait;
-use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareTrait;
+use DeepWebSolutions\Framework\FoundationsDependencyInjection\ContainerAwareInterface;
+use DeepWebSolutions\Framework\FoundationsDependencyInjection\ContainerAwareTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

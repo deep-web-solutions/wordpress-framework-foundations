@@ -3,12 +3,6 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration;
 
 use Codeception\TestCase\WPTestCase;
-use DeepWebSolutions\Framework\Foundations\Hierarchy\ChildInterface;
-use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
-use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ChildObject;
-use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\NodeObject;
-use DeepWebSolutions\Framework\Tests\Foundations\Hierarchy\ParentObject;
-use DeepWebSolutions\Framework\Tests\Foundations\Plugin;
 use DeepWebSolutions\Framework\Tests\Foundations\PluginAwareObject;
 use DeepWebSolutions\Framework\Tests\Foundations\PluginComponent;
 use WpunitTester;

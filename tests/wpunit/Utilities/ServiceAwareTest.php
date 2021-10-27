@@ -4,13 +4,13 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\ServiceAwareInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Services\ServiceInterface;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreException;
-use DeepWebSolutions\Framework\Foundations\Utilities\Storage\StoreInterface;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\ServiceAwareObject;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreableObject;
-use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreAwareObject;
+use DeepWebSolutions\Framework\Foundations\Services\ServiceAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Services\ServiceInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreException;
+use DeepWebSolutions\Framework\Foundations\Storage\StoreInterface;
+use DeepWebSolutions\Framework\Tests\FoundationsServiceAwareObject;
+use DeepWebSolutions\Framework\Tests\FoundationsStoreableObject;
+use DeepWebSolutions\Framework\Tests\FoundationsStoreAwareObject;
 use Mockery;
 use WpunitTester;
 

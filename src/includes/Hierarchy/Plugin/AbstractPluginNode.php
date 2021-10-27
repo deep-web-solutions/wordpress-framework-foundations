@@ -2,10 +2,10 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Hierarchy\Plugin;
 
+use DeepWebSolutions\Framework\Foundations\AbstractPluginComponent;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeTrait;
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginInterface;
-use DeepWebSolutions\Framework\Foundations\PluginComponent\AbstractPluginComponent;
+use DeepWebSolutions\Framework\Foundations\PluginInterface;
 use Psr\Log\LogLevel;
 
 \defined( 'ABSPATH' ) || exit;

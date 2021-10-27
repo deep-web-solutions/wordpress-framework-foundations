@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\Plugin;
+namespace DeepWebSolutions\Framework\Foundations;
 
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationFailureException;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializeLocalTrait;
@@ -17,9 +17,9 @@ use DeepWebSolutions\Framework\Helpers\FileSystem\Objects\PathsTrait;
  * @since   1.0.0
  * @version 1.1.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\Plugin
+ * @package DeepWebSolutions\WP-Framework\Foundations
  */
-abstract class AbstractPlugin implements InitializableInterface, LoggingServiceAwareInterface, PluginInterface {
+abstract class AbstractPlugin implements PluginInterface, InitializableInterface, LoggingServiceAwareInterface {
 	// region TRAITS
 
 	use InitializeLocalTrait;

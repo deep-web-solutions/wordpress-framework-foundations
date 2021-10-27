@@ -1,8 +1,7 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\PluginComponent;
+namespace DeepWebSolutions\Framework\Foundations;
 
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareTrait;
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
 \defined( 'ABSPATH' ) || exit;

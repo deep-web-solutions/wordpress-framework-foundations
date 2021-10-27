@@ -1,6 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\Plugin;
+namespace DeepWebSolutions\Framework\Foundations;
 
 use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
 
@@ -12,7 +12,7 @@ use DeepWebSolutions\Framework\Helpers\DataTypes\Strings;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\Plugin
+ * @package DeepWebSolutions\WP-Framework\Foundations
  */
 trait PluginTrait {
 	// region FIELDS AND CONSTANTS

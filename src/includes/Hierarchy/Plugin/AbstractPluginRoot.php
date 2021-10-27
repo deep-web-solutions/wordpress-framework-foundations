@@ -2,10 +2,10 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Hierarchy\Plugin;
 
+use DeepWebSolutions\Framework\Foundations\AbstractPlugin;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeInterface;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\NodeTrait;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
-use DeepWebSolutions\Framework\Foundations\Plugin\AbstractPlugin;
 
 \defined( 'ABSPATH' ) || exit;
 

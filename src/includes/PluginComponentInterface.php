@@ -1,8 +1,6 @@
 <?php
 
-namespace DeepWebSolutions\Framework\Foundations\PluginComponent;
-
-use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
+namespace DeepWebSolutions\Framework\Foundations;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -13,7 +11,7 @@ use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
  * @since   1.0.0
  * @version 1.0.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
- * @package DeepWebSolutions\WP-Framework\Foundations\PluginComponent
+ * @package DeepWebSolutions\WP-Framework\Foundations
  */
 interface PluginComponentInterface extends PluginAwareInterface {
 	/**

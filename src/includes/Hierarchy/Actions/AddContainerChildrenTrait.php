@@ -5,7 +5,9 @@ namespace DeepWebSolutions\Framework\Foundations\Hierarchy\Actions;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializableExtensionTrait;
 use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializationFailureException;
 use DeepWebSolutions\Framework\Foundations\Hierarchy\ParentInterface;
+use DeepWebSolutions\Framework\Foundations\Plugin\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\ContainerAwareInterface;
+use Psr\Container\ContainerInterface;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -13,7 +15,7 @@ use DeepWebSolutions\Framework\Foundations\Utilities\DependencyInjection\Contain
  * Initialization extension trait for adding children to oneself from the DI container.
  *
  * @since   1.1.0
- * @version 1.1.0
+ * @version 1.5.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Hierarchy\Actions
  */
@@ -30,21 +32,30 @@ trait AddContainerChildrenTrait {
 	 * During the initialization process, adds children to one's self from the dependency injection container.
 	 *
 	 * @since   1.1.0
-	 * @version 1.1.0
+	 * @version 1.5.0
 	 *
 	 * @return  InitializationFailureException|null
 	 */
 	protected function add_container_children(): ?InitializationFailureException {
 		$init_result = null;
 
-		if ( $this instanceof ParentInterface && $this instanceof ContainerAwareInterface ) {
-			$children = \array_filter( $this->get_di_container_children(), '\is_string' );
-			foreach ( $children as $child ) {
-				$child  = $this->get_container()->get( $child );
-				$result = $this->add_child( $child );
-				if ( $result instanceof InitializationFailureException ) {
-					$init_result = $result;
-					break;
+		if ( $this instanceof ParentInterface ) {
+			$di_container = null;
+
+			if ( $this instanceof ContainerAwareInterface ) {
+				$di_container = $this->get_container();
+			} elseif ( $this instanceof PluginAwareInterface && $this->get_plugin() instanceof ContainerAwareInterface ) {
+				$di_container = $this->get_plugin()->get_container();
+			}
+
+			if ( $di_container instanceof ContainerInterface ) {
+				$children = \array_filter( $this->get_di_container_children(), '\is_string' );
+				foreach ( $children as $child ) {
+					$result = $this->add_child( $di_container->get( $child ) );
+					if ( $result instanceof InitializationFailureException ) {
+						$init_result = $result;
+						break;
+					}
 				}
 			}
 		}

@@ -16,7 +16,7 @@ use WpunitTester;
  * Tests for the Plugin and PluginComponents abstractions.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration
  */
@@ -118,7 +118,7 @@ class PluginAbstractionsTest extends WPTestCase {
 	 * Tests for the hierarchical plugins.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.0
 	 */
 	public function test_plugin_tree() {
 		$plugin_root = new GenericPluginRoot();
@@ -145,13 +145,11 @@ class PluginAbstractionsTest extends WPTestCase {
 		$plugin_component1->add_child( $plugin_component2 );
 
 		// Make sure everyone can identify the plugin root.
-		$this->assertEquals( $plugin_root, $plugin_root->get_plugin() );
 		$this->assertEquals( $plugin_root, $plugin_component1->get_plugin() );
 		$this->assertEquals( $plugin_root, $plugin_component2->get_plugin() );
 
 		// Make sure the root simply cannot have a parent.
 		$plugin_root->set_parent( $plugin_component1 );
-		$this->assertEquals( $plugin_root, $plugin_root->get_plugin() );
 		$this->assertNull( $plugin_root->get_parent() );
 
 		// Test the 'get_closest' method.

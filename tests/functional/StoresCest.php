@@ -7,7 +7,7 @@ use DeepWebSolutions\Framework\Foundations\Storage\StoreInterface;
 use DeepWebSolutions\Framework\Foundations\Storage\Stores\MemoryStore;
 use DeepWebSolutions\Framework\Foundations\Storage\Stores\OptionsStore;
 use DeepWebSolutions\Framework\Foundations\Storage\Stores\UserMetaStore;
-use DeepWebSolutions\Framework\Tests\FoundationsStoreableObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Utilities\StoreableObject;
 use FunctionalTester;
 use Psr\Container\NotFoundExceptionInterface;
 

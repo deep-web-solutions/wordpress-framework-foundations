@@ -4,7 +4,7 @@ namespace DeepWebSolutions\Framework\Tests\Foundations\Integration\Utilities;
 
 use Codeception\TestCase\WPTestCase;
 use DeepWebSolutions\Framework\Foundations\Exceptions\NotFoundException;
-use DeepWebSolutions\Framework\Tests\FoundationsContainerAwareObject;
+use DeepWebSolutions\Framework\Tests\Foundations\Utilities\ContainerAwareObject;
 use Mockery;
 use Psr\Container\ContainerInterface;
 use WpunitTester;

@@ -9,13 +9,14 @@ use DeepWebSolutions\Framework\Foundations\Logging\LogMessageBuilder;
 use LogicException;
 use Mockery;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use WpunitTester;
 
 /**
  * Tests for the LoggingService.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration
  */
@@ -84,14 +85,14 @@ class LoggingServiceTest extends WPTestCase {
 	 * Tests the LoggingHandler class.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.0
 	 */
 	public function test_logging_handler() {
-		$logging_handler = new ExternalLoggerHandler();
+		$logging_handler = new ExternalLoggerHandler( 'null', new NullLogger() );
 		$this->assertInstanceOf( LoggerInterface::class, $logging_handler );
 		$this->assertEquals( 'null', $logging_handler->get_id() );
 
-		$logging_handler = new ExternalLoggerHandler( 'non-default value' );
+		$logging_handler = new ExternalLoggerHandler( 'non-default value', new NullLogger() );
 		$this->assertEquals( 'non-default value', $logging_handler->get_id() );
 	}
 
@@ -99,16 +100,16 @@ class LoggingServiceTest extends WPTestCase {
 	 * Tests the LoggingService class.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.0
 	 */
 	public function test_logging_service() {
 		$plugin_instance = dws_foundations_test_plugin_instance();
 
 		$logging_service = new LoggingService( $plugin_instance );
-		$this->assertFalse( $logging_service->log_sensitive_messages() );
+		$this->assertFalse( $logging_service->should_log_sensitive_messages() );
 
 		$logging_service = new LoggingService( $plugin_instance, array(), true );
-		$this->assertTrue( $logging_service->log_sensitive_messages() );
+		$this->assertTrue( $logging_service->should_log_sensitive_messages() );
 
 		$logging_service = new LoggingService( $plugin_instance );
 		$this->assertEquals( 'null', $logging_service->get_handler( 'random-name' )->get_id() );

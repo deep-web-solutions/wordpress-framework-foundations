@@ -5,7 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\Helpers;
 use DeepWebSolutions\Framework\Foundations\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\PluginComponentInterface;
 use DeepWebSolutions\Framework\Foundations\PluginInterface;
-use DeepWebSolutions\Framework\Helpers\WordPress\Assets\AssetsHelpersTrait as HelpersModuleTrait;
+use DeepWebSolutions\Framework\Helpers\AssetsHelpersTrait as HelpersModuleTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

@@ -61,7 +61,6 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 ### 1.5.0 (October 28th, 2021)
 * Plugin component abstractions are now at the namespace root.
 * Utilities sub-namespace was removed.
-* Moved the hooks service here from the utilities module.
 * More use of helpers from the Helpers module.
 * More use of PHP7.4 features.
 

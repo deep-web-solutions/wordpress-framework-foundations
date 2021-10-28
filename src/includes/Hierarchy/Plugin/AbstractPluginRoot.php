@@ -27,18 +27,6 @@ abstract class AbstractPluginRoot extends AbstractPlugin implements NodeInterfac
 	// region INHERITED METHODS
 
 	/**
-	 * Returns the plugin instance.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  $this
-	 */
-	final public function get_plugin(): AbstractPluginRoot {
-		return $this;
-	}
-
-	/**
 	 * Return null. The root has no parent by definition.
 	 *
 	 * @since   1.0.0
@@ -55,8 +43,6 @@ abstract class AbstractPluginRoot extends AbstractPlugin implements NodeInterfac
 	 *
 	 * @since   1.0.0
 	 * @version 1.1.0
-	 *
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 *
 	 * @param   ParentInterface|null    $parent     New parent.
 	 */

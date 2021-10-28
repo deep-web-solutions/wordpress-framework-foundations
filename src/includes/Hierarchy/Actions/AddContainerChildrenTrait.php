@@ -45,6 +45,7 @@ trait AddContainerChildrenTrait {
 			if ( $this instanceof ContainerAwareInterface ) {
 				$di_container = $this->get_container();
 			} elseif ( $this instanceof PluginAwareInterface && $this->get_plugin() instanceof ContainerAwareInterface ) {
+				/* @noinspection PhpUndefinedMethodInspection */
 				$di_container = $this->get_plugin()->get_container();
 			}
 

@@ -95,6 +95,7 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 			$handler->set_logging_service( $this->get_logging_service() );
 		}
 
+		/* @noinspection PhpIncompatibleReturnTypeInspection */
 		return $this->register_handler_trait( $handler );
 	}
 

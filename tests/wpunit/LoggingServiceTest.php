@@ -42,10 +42,10 @@ class LoggingServiceTest extends WPTestCase {
 	 * Tests the LogMessageBuilder class.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.0
 	 */
 	public function test_log_message_builder() {
-		$null_handler = new ExternalLoggerHandler();
+		$null_handler = new ExternalLoggerHandler( 'null', new NullLogger() );
 
 		// Test null return by default.
 		$builder = new LogMessageBuilder( $null_handler, false, 'My test message' );

@@ -57,12 +57,10 @@ class UserMetaStore extends AbstractStore {
 	// region INHERITED METHODS
 
 	/**
-	 * Returns the key used to store the objects in the database.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @return  string
 	 */
 	public function get_key(): string {
 		return $this->key;

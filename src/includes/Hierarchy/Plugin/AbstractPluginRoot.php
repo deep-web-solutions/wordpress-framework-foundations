@@ -27,12 +27,10 @@ abstract class AbstractPluginRoot extends AbstractPlugin implements NodeInterfac
 	// region INHERITED METHODS
 
 	/**
-	 * Return null. The root has no parent by definition.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.1.0
-	 *
-	 * @return  ParentInterface|null
 	 */
 	final public function get_parent(): ?ParentInterface {
 		return null;

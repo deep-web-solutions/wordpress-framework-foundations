@@ -51,14 +51,10 @@ abstract class AbstractHandlerService extends AbstractService implements Service
 	// region INHERITED METHODS
 
 	/**
-	 * Sets a handler instance on the object.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @param   HandlerInterface    $handler    Handler instance to use from now on.
-	 *
-	 * @return  bool
 	 */
 	public function set_handler( HandlerInterface $handler ): bool {
 		if ( ! \is_a( $handler, $this->get_handler_class() ) ) {

@@ -63,6 +63,7 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 * Utilities sub-namespace was removed.
 * More use of helpers from the Helpers module.
 * More use of PHP7.4 features.
+* Removed recursiveness from the logging service.
 
 ### 1.4.4 (September 29th, 2021)
 * ChildTrait is now consistent with ParentTrait when checking for relations.

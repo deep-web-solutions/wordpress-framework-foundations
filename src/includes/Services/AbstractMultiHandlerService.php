@@ -57,14 +57,10 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	// region INHERITED METHODS
 
 	/**
-	 * Returns a given registered handler.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @param   string  $handler_id     The ID of the handler.
-	 *
-	 * @return  HandlerInterface|null
 	 */
 	public function get_handler( string $handler_id ): ?HandlerInterface {
 		$entry = $this->get_handler_trait( $handler_id );
@@ -72,16 +68,12 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	}
 
 	/**
-	 * Registers a new handler with the service.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param   HandlerInterface    $handler    The new handler to register with the service.
-	 *
 	 * @throws  \LogicException     Thrown if the handler passed on is of the wrong type.
-	 *
-	 * @return  $this
 	 */
 	public function register_handler( HandlerInterface $handler ): self {
 		if ( ! \is_a( $handler, $this->get_handler_class() ) ) {

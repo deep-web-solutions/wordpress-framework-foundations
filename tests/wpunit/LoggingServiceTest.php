@@ -3,7 +3,7 @@
 namespace DeepWebSolutions\Framework\Tests\Foundations\Integration;
 
 use Codeception\TestCase\WPTestCase;
-use DeepWebSolutions\Framework\Foundations\Logging\LoggingHandler;
+use DeepWebSolutions\Framework\Foundations\Logging\ExternalLoggerHandler;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
 use DeepWebSolutions\Framework\Foundations\Logging\LogMessageBuilder;
 use LogicException;
@@ -44,7 +44,7 @@ class LoggingServiceTest extends WPTestCase {
 	 * @version 1.0.0
 	 */
 	public function test_log_message_builder() {
-		$null_handler = new LoggingHandler();
+		$null_handler = new ExternalLoggerHandler();
 
 		// Test null return by default.
 		$builder = new LogMessageBuilder( $null_handler, false, 'My test message' );
@@ -87,11 +87,11 @@ class LoggingServiceTest extends WPTestCase {
 	 * @version 1.0.0
 	 */
 	public function test_logging_handler() {
-		$logging_handler = new LoggingHandler();
+		$logging_handler = new ExternalLoggerHandler();
 		$this->assertInstanceOf( LoggerInterface::class, $logging_handler );
 		$this->assertEquals( 'null', $logging_handler->get_id() );
 
-		$logging_handler = new LoggingHandler( 'non-default value' );
+		$logging_handler = new ExternalLoggerHandler( 'non-default value' );
 		$this->assertEquals( 'non-default value', $logging_handler->get_id() );
 	}
 
@@ -113,7 +113,7 @@ class LoggingServiceTest extends WPTestCase {
 		$logging_service = new LoggingService( $plugin_instance );
 		$this->assertEquals( 'null', $logging_service->get_handler( 'random-name' )->get_id() );
 
-		$logging_handler = new LoggingHandler( 'specific-name', Mockery::mock( LoggerInterface::class ) );
+		$logging_handler = new ExternalLoggerHandler( 'specific-name', Mockery::mock( LoggerInterface::class ) );
 		$logging_service = new LoggingService( $plugin_instance, array( $logging_handler ) );
 		$this->assertEquals( 'null', $logging_service->get_handler( 'random-name' )->get_id() );
 		$this->assertEquals( $logging_handler, $logging_service->get_handler( 'specific-name' ) );

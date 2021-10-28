@@ -2,9 +2,15 @@
 
 namespace DeepWebSolutions\Framework\Foundations\Logging;
 
+use DeepWebSolutions\Framework\Foundations\PluginAwareInterface;
+use DeepWebSolutions\Framework\Foundations\PluginAwareTrait;
 use DeepWebSolutions\Framework\Foundations\PluginInterface;
-use DeepWebSolutions\Framework\Foundations\Services\AbstractMultiHandlerService;
+use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareInterface;
+use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Storage\StorableInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\Stores\MemoryStore;
 use Psr\Log\LogLevel;
+use Psr\Log\NullLogger;
 
 \defined( 'ABSPATH' ) || exit;
 
@@ -12,11 +18,20 @@ use Psr\Log\LogLevel;
  * Logs messages at all PSR-3 levels. GDPR-appropriate + full logger choice flexibility.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
-class LoggingService extends AbstractMultiHandlerService {
+class LoggingService implements PluginAwareInterface, StorableInterface, MultiHandlerAwareInterface {
+	// region TRAITS
+
+	use MultiHandlerAwareTrait {
+		get_handler as protected get_handler_trait;
+	}
+	use PluginAwareTrait;
+
+	// endregion
+
 	// region FIELDS AND CONSTANTS
 
 	/**
@@ -32,41 +47,53 @@ class LoggingService extends AbstractMultiHandlerService {
 
 	// endregion
 
-	// region MAGIC FUNCTIONS
+	// region MAGIC METHODS
 
 	/**
 	 * LoggingService constructor.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.0
 	 *
-	 * @param   PluginInterface             $plugin             Instance of the plugin.
+	 * @param   PluginInterface             $plugin             The plugin instance.
 	 * @param   LoggingHandlerInterface[]   $handlers           Collection of logging handlers to use.
 	 * @param   bool                        $include_sensitive  Whether the logs should include sensitive information or not.
 	 */
 	public function __construct( PluginInterface $plugin, array $handlers = array(), bool $include_sensitive = false ) {
-		parent::__construct( $plugin, $this, $handlers );
+		$this->set_plugin( $plugin );
+
+		$this->set_stores_store( new MemoryStore( $this->get_id() ) );
+		$this->set_handlers_store( new MemoryStore( 'handlers' ) );
+
+		$fallback_logger = new ExternalLoggerHandler( 'null', new NullLogger() );
+		$this->set_handlers( \array_merge( array( $fallback_logger ), $handlers ) );
+
 		$this->log_sensitive = $include_sensitive;
 	}
 
 	// endregion
 
-	// region INHERITED FUNCTIONS
+	// region INHERITED METHODS
 
 	/**
-	 * Returns a given logging handler from the list of registered ones.
+	 * {@inheritDoc}
+	 *
+	 * @since   1.5.0
+	 * @version 1.5.0
+	 */
+	public function get_id(): string {
+		return static::class;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string      $handler_id         Unique name of the logging handler to retrieve.
-	 *
-	 * @return  LoggingHandlerInterface
+	 * @version 1.5.0
 	 */
 	public function get_handler( string $handler_id ): LoggingHandlerInterface {
-		$handler = parent::get_handler( $handler_id );
-
-		return $handler ?? parent::get_handler( 'null' );
+		/* @noinspection PhpIncompatibleReturnTypeInspection */
+		return $this->get_handler_trait( $handler_id ) ?? $this->get_handler_trait( 'null' );
 	}
 
 	// endregion
@@ -81,7 +108,7 @@ class LoggingService extends AbstractMultiHandlerService {
 	 *
 	 * @return  bool
 	 */
-	public function log_sensitive_messages(): bool {
+	public function should_log_sensitive_messages(): bool {
 		return $this->log_sensitive;
 	}
 
@@ -104,7 +131,7 @@ class LoggingService extends AbstractMultiHandlerService {
 	public function log_event( string $message, array $context = array(), string $handler = 'plugin' ): LogMessageBuilder {
 		return new LogMessageBuilder(
 			$this->get_handler( $handler ),
-			$this->log_sensitive_messages(),
+			$this->should_log_sensitive_messages(),
 			$message,
 			$context
 		);
@@ -123,34 +150,6 @@ class LoggingService extends AbstractMultiHandlerService {
 	 */
 	public function log_event_and_finalize( string $message, array $context = array(), string $log_level = LogLevel::DEBUG, string $handler = 'plugin' ): void {
 		$this->log_event( $message, $context, $handler )->set_log_level( $log_level )->finalize();
-	}
-
-	// endregion
-
-	// region HELPERS
-
-	/**
-	 * Returns a list of what the default handlers actually are for the inheriting service.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  array
-	 */
-	protected function get_default_handlers_classes(): array {
-		return array( LoggingHandler::class );
-	}
-
-	/**
-	 * Returns the class name of the used handler for better type-checking.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  string
-	 */
-	protected function get_handler_class(): string {
-		return LoggingHandlerInterface::class;
 	}
 
 	// endregion

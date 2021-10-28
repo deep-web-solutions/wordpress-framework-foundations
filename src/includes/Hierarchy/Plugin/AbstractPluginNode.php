@@ -43,15 +43,13 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 	// region INHERITED METHODS
 
 	/**
-	 * Returns the plugin instance that the current node belongs to.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @noinspection PhpDocMissingThrowsInspection
 	 * @throws  \LogicException     Thrown if the node does NOT belong to a plugin tree.
-	 *
-	 * @return  PluginInterface
 	 */
 	public function get_plugin(): PluginInterface {
 		if ( $this->set_plugin ) {
@@ -72,14 +70,10 @@ abstract class AbstractPluginNode extends AbstractPluginComponent implements Nod
 	}
 
 	/**
-	 * Sets the protected plugin variable.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 *
-	 * @param   PluginInterface|null    $plugin     NOT USED BY THIS IMPLEMENTATION.
 	 */
 	public function set_plugin( ?PluginInterface $plugin = null ) {
 		$this->plugin     = \is_null( $plugin ) ? $this->get_plugin() : $plugin;

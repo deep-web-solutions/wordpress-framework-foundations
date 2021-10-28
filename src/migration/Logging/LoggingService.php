@@ -40,8 +40,6 @@ class LoggingService extends AbstractMultiHandlerService {
 	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
-	 *
 	 * @param   PluginInterface             $plugin             Instance of the plugin.
 	 * @param   LoggingHandlerInterface[]   $handlers           Collection of logging handlers to use.
 	 * @param   bool                        $include_sensitive  Whether the logs should include sensitive information or not.

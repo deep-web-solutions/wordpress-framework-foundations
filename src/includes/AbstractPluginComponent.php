@@ -7,7 +7,7 @@ use DeepWebSolutions\Framework\Foundations\Exceptions\ReadOnlyPropertyException;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareTrait;
-use DeepWebSolutions\Framework\Helpers\FileSystem\Objects\PathsTrait;
+use DeepWebSolutions\Framework\Helpers\FileSystem\PathsTrait;
 use Psr\Log\LogLevel;
 
 \defined( 'ABSPATH' ) || exit;

@@ -7,7 +7,7 @@ use DeepWebSolutions\Framework\Foundations\Actions\Initializable\InitializeLocal
 use DeepWebSolutions\Framework\Foundations\Actions\InitializableInterface;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareTrait;
-use DeepWebSolutions\Framework\Helpers\FileSystem\Objects\PathsTrait;
+use DeepWebSolutions\Framework\Helpers\FileSystem\PathsTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

@@ -2,8 +2,8 @@
 
 namespace DeepWebSolutions\Framework\Tests\Foundations\Utilities;
 
-use DeepWebSolutions\Framework\FoundationsDependencyInjection\ContainerAwareInterface;
-use DeepWebSolutions\Framework\FoundationsDependencyInjection\ContainerAwareTrait;
+use DeepWebSolutions\Framework\Foundations\DependencyInjection\ContainerAwareInterface;
+use DeepWebSolutions\Framework\Foundations\DependencyInjection\ContainerAwareTrait;
 
 \defined( 'ABSPATH' ) || exit;
 

@@ -28,7 +28,7 @@ trait MultiContainerAwareTrait {
 	 * @access  protected
 	 * @var     ContainerInterface[]
 	 */
-	protected array $di_containers;
+	protected array $di_containers = array();
 
 	// endregion
 

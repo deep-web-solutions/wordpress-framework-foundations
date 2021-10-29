@@ -4,7 +4,7 @@
 **Requires at least:** 5.5  
 **Tested up to:** 5.7  
 **Requires PHP:** 7.4  
-**Stable tag:** 1.5.0  
+**Stable tag:** 1.5.1  
 **License:** GPLv3 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -58,12 +58,13 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 ## Changelog 
 
-### 1.5.0 (October 28th, 2021)
+### 1.5.0, 1.5.1 (October 28th, October 29th, 2021)
 * Plugin component abstractions are now at the namespace root.
 * Utilities sub-namespace was removed.
 * More use of helpers from the Helpers module.
 * More use of PHP7.4 features.
 * Removed recursiveness from the logging service.
+* Hooks and Assets helpers definition is now compatible with those from the Helpers module.
 
 ### 1.4.4 (September 29th, 2021)
 * ChildTrait is now consistent with ParentTrait when checking for relations.

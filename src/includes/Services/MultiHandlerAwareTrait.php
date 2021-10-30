@@ -12,6 +12,7 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * Basic implementation of the multi-handler-aware interface.
  *
+ * @see     MultiHandlerAwareInterface
  * @since   1.0.0
  * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
@@ -116,7 +117,7 @@ trait MultiHandlerAwareTrait {
 	 * @since   1.0.0
 	 * @version 1.5.3
 	 */
-	public function register_handler( HandlerInterface $handler ): MultiHandlerAwareInterface {
+	public function register_handler( HandlerInterface $handler ) {
 		$this->get_handlers_store()->update( $handler );
 		return $this;
 	}

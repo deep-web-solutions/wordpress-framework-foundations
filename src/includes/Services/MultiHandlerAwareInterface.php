@@ -8,7 +8,7 @@ namespace DeepWebSolutions\Framework\Foundations\Services;
  * Describes a multi-handler-aware-instance.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Services
  */
@@ -49,11 +49,9 @@ interface MultiHandlerAwareInterface {
 	 * Registers a new handler with the object.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 *
 	 * @param   HandlerInterface    $handler    Handler to register with the instance.
-	 *
-	 * @return  $this   Should return itself to enqueue multiple calls in one line.
 	 */
-	public function register_handler( HandlerInterface $handler ): MultiHandlerAwareInterface;
+	public function register_handler( HandlerInterface $handler );
 }

@@ -8,7 +8,7 @@ namespace DeepWebSolutions\Framework\Foundations\Storage;
  * Describes an instance aware of multiple stores.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Storage
  */
@@ -52,8 +52,6 @@ interface MultiStoreAwareInterface {
 	 * @version 1.0.0
 	 *
 	 * @param   StoreInterface      $store      Store to register with the instance.
-	 *
-	 * @return  $this   Should return itself to enqueue multiple calls in one line.
 	 */
-	public function register_store( StoreInterface $store ): MultiStoreAwareInterface;
+	public function register_store( StoreInterface $store );
 }

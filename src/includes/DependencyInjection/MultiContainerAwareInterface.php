@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
  * Describes an instance aware of multiple DI container.
  *
  * @since   1.5.2
- * @version 1.5.2
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\DependencyInjection
  */
@@ -51,12 +51,10 @@ interface MultiContainerAwareInterface {
 	 * Registers a new container with the object.
 	 *
 	 * @since   1.5.2
-	 * @version 1.5.2
+	 * @version 1.5.3
 	 *
 	 * @param   string                  $container_id   The ID of the new container.
 	 * @param   ContainerInterface      $container      Container to register with the instance.
-	 *
-	 * @return  $this   Should return itself to enqueue multiple calls in one line.
 	 */
-	public function register_container( string $container_id, ContainerInterface $container ): MultiContainerAwareInterface;
+	public function register_container( string $container_id, ContainerInterface $container );
 }

@@ -11,6 +11,7 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * Basic implementation of the multi-DI-container-aware interface.
  *
+ * @see     MultiContainerAwareInterface
  * @since   1.5.2
  * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
@@ -86,16 +87,15 @@ trait MultiContainerAwareTrait {
 	 * Registers a new container with the object.
 	 *
 	 * @since   1.5.2
-	 * @version 1.5.2
+	 * @version 1.5.3
 	 *
 	 * @param   string                  $container_id   The ID of the new container.
 	 * @param   ContainerInterface      $container      Container to register with the instance.
 	 *
-	 * @return  MultiContainerAwareInterface
+	 * @return  $this
 	 */
-	public function register_container( string $container_id, ContainerInterface $container ): MultiContainerAwareInterface {
+	public function register_container( string $container_id, ContainerInterface $container ) {
 		$this->di_containers[ $container_id ] = $container;
-		/* @noinspection PhpIncompatibleReturnTypeInspection */
 		return $this;
 	}
 

@@ -7,6 +7,7 @@ use DeepWebSolutions\Framework\Foundations\Logging\LoggingService;
 use DeepWebSolutions\Framework\Foundations\Logging\LoggingServiceAwareInterface;
 use DeepWebSolutions\Framework\Foundations\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\Storage\MultiStoreAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Storage\Stores\MemoryStore;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -21,7 +22,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Services
  */
-abstract class AbstractMultiHandlerService extends AbstractService implements ServiceInterface, MultiHandlerAwareInterface {
+abstract class AbstractMultiHandlerService extends AbstractService implements ServiceInterface, MultiHandlerAwareInterface, MultiStoreAwareInterface {
 	// region TRAITS
 
 	use MultiHandlerAwareTrait {

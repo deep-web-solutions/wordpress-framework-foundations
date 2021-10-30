@@ -7,6 +7,7 @@ use DeepWebSolutions\Framework\Foundations\PluginAwareTrait;
 use DeepWebSolutions\Framework\Foundations\PluginInterface;
 use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareTrait;
+use DeepWebSolutions\Framework\Foundations\Storage\MultiStoreAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Storage\StorableInterface;
 use DeepWebSolutions\Framework\Foundations\Storage\Stores\MemoryStore;
 use Psr\Log\LogLevel;
@@ -22,7 +23,7 @@ use Psr\Log\NullLogger;
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
-class LoggingService implements PluginAwareInterface, StorableInterface, MultiHandlerAwareInterface {
+class LoggingService implements PluginAwareInterface, StorableInterface, MultiHandlerAwareInterface, MultiStoreAwareInterface {
 	// region TRAITS
 
 	use MultiHandlerAwareTrait {

@@ -10,6 +10,7 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * Basic implementation of the multi-store-aware interface.
  *
+ * @see     MultiStoreAwareInterface
  * @since   1.0.0
  * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
@@ -64,12 +65,10 @@ trait MultiStoreAwareTrait {
 	// region SETTERS
 
 	/**
-	 * Replaces all stores set on the object with new ones.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.5.3
-	 *
-	 * @param   StoreInterface[]    $stores     Store instances to use from now on.
 	 */
 	public function set_stores( array $stores ) {
 		$this->stores = array();
@@ -82,16 +81,12 @@ trait MultiStoreAwareTrait {
 	}
 
 	/**
-	 * Registers a new store with the object.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.5.3
-	 *
-	 * @param   StoreInterface  $store  Store to register with the instance.
-	 *
-	 * @return  MultiStoreAwareInterface
 	 */
-	public function register_store( StoreInterface $store ): MultiStoreAwareInterface {
+	public function register_store( StoreInterface $store ) {
 		$this->stores[ $store->get_id() ] = $store;
 		return $this;
 	}

@@ -12,7 +12,7 @@ use WpunitTester;
  * Tests for the MultiStoreAware abstractions.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration\Utilities
  */
@@ -38,7 +38,7 @@ class MultiStoreAwareTest extends WPTestCase {
 	 * Tests the MultiStoreAware interface and trait.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 */
 	public function test_multi_store_aware_object() {
 		$store1 = new MemoryStore( 'test-store-1' );
@@ -46,10 +46,6 @@ class MultiStoreAwareTest extends WPTestCase {
 
 		$store_aware_object = new MultiStoreAwareObject();
 		$this->assertInstanceOf( MultiStoreAwareInterface::class, $store_aware_object );
-
-		$memory_store = new MemoryStore( MultiStoreAwareObject::class );
-		$store_aware_object->set_stores_store( $memory_store );
-		$this->assertEquals( $memory_store, $store_aware_object->get_stores_store() );
 
 		$this->assertEmpty( $store_aware_object->get_stores() );
 		$store_aware_object->register_store( $store1 );

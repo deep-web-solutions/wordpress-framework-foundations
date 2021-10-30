@@ -13,7 +13,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * Basic implementation of the multi-handler-aware interface.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Services
  */
@@ -39,12 +39,10 @@ trait MultiHandlerAwareTrait {
 	}
 
 	/**
-	 * Gets all handler instances set on the object.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @return  HandlerInterface[]
 	 */
 	public function get_handlers(): array {
 		try {
@@ -62,7 +60,7 @@ trait MultiHandlerAwareTrait {
 	 * Sets the handlers store on the instance.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 *
 	 * @param   StoreInterface      $store      Handlers store to set.
 	 *
@@ -73,18 +71,14 @@ trait MultiHandlerAwareTrait {
 			throw new \LogicException( 'The handlers store must have the ID "handlers"' );
 		}
 
-		$this->update_stores_store_entry( $store );
+		$this->register_store( $store );
 	}
 
 	/**
-	 * Replaces all handlers set on the object with new ones.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @param   HandlerInterface[]      $handlers       Handlers to be used by the service from now on.
-	 *
-	 * @return  $this
 	 */
 	public function set_handlers( array $handlers ): self {
 		$this->get_handlers_store()->empty();
@@ -103,14 +97,10 @@ trait MultiHandlerAwareTrait {
 	// region METHODS
 
 	/**
-	 * Returns a given handler set on the object by its ID.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
 	 * @version 1.0.0
-	 *
-	 * @param   string  $handler_id     The ID of the handler.
-	 *
-	 * @return  HandlerInterface|null
 	 */
 	public function get_handler( string $handler_id ): ?HandlerInterface {
 		try {
@@ -121,22 +111,12 @@ trait MultiHandlerAwareTrait {
 	}
 
 	/**
-	 * Registers a new handler with the service.
+	 * {@inheritDoc}
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   HandlerInterface    $handler    The new handler to register with the service.
-	 *
-	 * @throws  \LogicException     Thrown when the trait is used on a non-multi-handler-aware object.
-	 *
-	 * @return  MultiHandlerAwareInterface
+	 * @version 1.5.3
 	 */
 	public function register_handler( HandlerInterface $handler ): MultiHandlerAwareInterface {
-		if ( ! $this instanceof MultiHandlerAwareInterface ) {
-			throw new \LogicException( 'Using classes must be multi-handler aware objects.' );
-		}
-
 		$this->get_handlers_store()->update( $handler );
 		return $this;
 	}

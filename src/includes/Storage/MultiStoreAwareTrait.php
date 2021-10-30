@@ -11,7 +11,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * Basic implementation of the multi-store-aware interface.
  *
  * @since   1.0.0
- * @version 1.3.0
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Storage
  */
@@ -19,46 +19,44 @@ trait MultiStoreAwareTrait {
 	// region FIELDS AND CONSTANTS
 
 	/**
-	 * Store instance.
+	 * List of stores.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 *
 	 * @access  protected
-	 * @var     StoreInterface
+	 * @var     StoreInterface[]
 	 */
-	protected StoreInterface $stores_store;
+	protected array $stores = array();
 
 	// endregion
 
 	// region GETTERS
 
 	/**
-	 * Gets the stores store instance.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @return  StoreInterface
-	 */
-	public function get_stores_store(): StoreInterface {
-		return $this->stores_store;
-	}
-
-	/**
 	 * Gets all store instances set on the object.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 *
 	 * @return  StoreInterface[]
 	 */
 	public function get_stores(): array {
-		try {
-			return $this->get_stores_store()->get_all();
-		} catch ( ContainerExceptionInterface $exception ) {
-			return array();
-		}
+		return $this->stores;
+	}
+
+	/**
+	 * Gets an instance of a store by its ID.
+	 *
+	 * @since   1.5.3
+	 * @version 1.5.3
+	 *
+	 * @param   string  $store_id   The ID of the store to retrieve.
+	 *
+	 * @return  StoreInterface|null
+	 */
+	public function get_store( string $store_id ): ?StoreInterface {
+		return $this->stores[ $store_id ] ?? null;
 	}
 
 	// endregion
@@ -66,75 +64,35 @@ trait MultiStoreAwareTrait {
 	// region SETTERS
 
 	/**
-	 * Sets a stores store on the instance.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   StoreInterface      $store      Store to use from now on.
-	 */
-	public function set_stores_store( StoreInterface $store ) {
-		$this->stores_store = $store;
-	}
-
-	/**
 	 * Replaces all stores set on the object with new ones.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 *
 	 * @param   StoreInterface[]    $stores     Store instances to use from now on.
-	 *
-	 * @return  $this
 	 */
-	public function set_stores( array $stores ): self {
-		$this->get_stores_store()->empty();
+	public function set_stores( array $stores ) {
+		$this->stores = array();
 
 		foreach ( $stores as $store ) {
 			if ( $store instanceof StoreInterface ) {
 				$this->register_store( $store );
 			}
 		}
-
-		return $this;
-	}
-
-	// endregion
-
-	// region METHODS
-
-	/**
-	 * Returns a given store set on the object by its ID.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string  $store_id   The ID of the store.
-	 *
-	 * @return  StoreInterface|null
-	 */
-	public function get_store( string $store_id ): ?StoreInterface {
-		return $this->get_stores_store_entry( $store_id );
 	}
 
 	/**
 	 * Registers a new store with the object.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 *
 	 * @param   StoreInterface  $store  Store to register with the instance.
 	 *
-	 * @throws  \LogicException     Thrown if the trait is used in a non-compatible object.
-	 *
-	 * @return  MultiStoreAwareInterface    Should return itself to enqueue multiple calls in one line.
+	 * @return  MultiStoreAwareInterface
 	 */
 	public function register_store( StoreInterface $store ): MultiStoreAwareInterface {
-		if ( ! $this instanceof MultiStoreAwareInterface ) {
-			throw new \LogicException( 'Using classes must be multi-store aware objects.' );
-		}
-
-		$this->update_stores_store_entry( $store );
+		$this->stores[ $store->get_id() ] = $store;
 		return $this;
 	}
 
@@ -146,74 +104,19 @@ trait MultiStoreAwareTrait {
 	 * Returns an object from the store or null on failure.
 	 *
 	 * @since   1.0.0
-	 * @version 1.3.0
+	 * @version 1.5.3
 	 *
 	 * @param   string  $entry_id   The ID of the entry to retrieve from the store.
+	 * @param   string  $store_id   The ID of the store to retrieve the entry from.
 	 *
 	 * @return  StorableInterface|null
 	 */
-	public function get_stores_store_entry( string $entry_id ): ?StoreInterface {
+	public function get_store_entry( string $entry_id, string $store_id ): ?StorableInterface {
 		try {
-			return $this->get_stores_store()->get( $entry_id );
+			$store = $this->get_store( $store_id );
+			return $store ? $store->get( $entry_id ) : null;
 		} catch ( ContainerExceptionInterface | NotFoundExceptionInterface $exception ) {
 			return null;
-		}
-	}
-
-	/**
-	 * Adds a store to the stores store. Returns false on failure.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   StoreInterface      $store      Store to store.
-	 *
-	 * @return  bool
-	 */
-	public function add_stores_store_entry( StoreInterface $store ): bool {
-		try {
-			$this->get_stores_store()->add( $store );
-			return true;
-		} catch ( ContainerExceptionInterface $exception ) {
-			return false;
-		}
-	}
-
-	/**
-	 * Updates (or adds if it doesn't exist) a store to the stores store. Returns false on failure.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   StoreInterface      $store      Store to add/update.
-	 *
-	 * @return  bool
-	 */
-	public function update_stores_store_entry( StoreInterface $store ): bool {
-		try {
-			$this->get_stores_store()->update( $store );
-			return true;
-		} catch ( ContainerExceptionInterface $exception ) {
-			return false;
-		}
-	}
-
-	/**
-	 * Removes a store from the stores store. Returns false on failure.
-	 *
-	 * @since   1.0.0
-	 * @version 1.0.0
-	 *
-	 * @param   string  $entry_id   The ID of the entry to remove from the store.
-	 *
-	 * @return  bool
-	 */
-	public function remove_stores_store_entry( string $entry_id ): bool {
-		try {
-			$this->get_stores_store()->remove( $entry_id );
-			return true;
-		} catch ( ContainerExceptionInterface $exception ) {
-			return false;
 		}
 	}
 

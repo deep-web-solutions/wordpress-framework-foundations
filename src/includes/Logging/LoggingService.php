@@ -18,7 +18,7 @@ use Psr\Log\NullLogger;
  * Logs messages at all PSR-3 levels. GDPR-appropriate + full logger choice flexibility.
  *
  * @since   1.0.0
- * @version 1.5.0
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
@@ -53,7 +53,7 @@ class LoggingService implements PluginAwareInterface, StorableInterface, MultiHa
 	 * LoggingService constructor.
 	 *
 	 * @since   1.0.0
-	 * @version 1.5.0
+	 * @version 1.5.3
 	 *
 	 * @param   PluginInterface             $plugin             The plugin instance.
 	 * @param   LoggingHandlerInterface[]   $handlers           Collection of logging handlers to use.
@@ -62,9 +62,7 @@ class LoggingService implements PluginAwareInterface, StorableInterface, MultiHa
 	public function __construct( PluginInterface $plugin, array $handlers = array(), bool $include_sensitive = false ) {
 		$this->set_plugin( $plugin );
 
-		$this->set_stores_store( new MemoryStore( $this->get_id() ) );
 		$this->set_handlers_store( new MemoryStore( 'handlers' ) );
-
 		$fallback_logger = new ExternalLoggerHandler( 'null', new NullLogger() );
 		$this->set_handlers( \array_merge( array( $fallback_logger ), $handlers ) );
 

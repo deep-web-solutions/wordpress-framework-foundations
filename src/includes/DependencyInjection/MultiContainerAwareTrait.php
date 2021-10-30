@@ -12,7 +12,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * Basic implementation of the multi-DI-container-aware interface.
  *
  * @since   1.5.2
- * @version 1.5.2
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\DependencyInjection
  */
@@ -20,7 +20,7 @@ trait MultiContainerAwareTrait {
 	// region FIELDS AND CONSTANTS
 
 	/**
-	 * Dependency injection container.
+	 * Dependency injection containers.
 	 *
 	 * @since   1.5.2
 	 * @version 1.5.2
@@ -47,7 +47,7 @@ trait MultiContainerAwareTrait {
 	}
 
 	/**
-	 * Gets an instance of a dependency injection container.
+	 * Gets an instance of a dependency injection container by its ID.
 	 *
 	 * @since   1.5.2
 	 * @version 1.5.2
@@ -68,12 +68,18 @@ trait MultiContainerAwareTrait {
 	 * Replaces all the containers on the instance with new ones.
 	 *
 	 * @since   1.5.2
-	 * @version 1.5.2
+	 * @version 1.5.3
 	 *
 	 * @param   ContainerInterface[]    $containers     Container instances to use from now on.
 	 */
 	public function set_containers( array $containers ) {
-		$this->di_containers = $containers;
+		$this->di_containers = array();
+
+		foreach ( $containers as $id => $container ) {
+			if ( \is_string( $id ) && $container instanceof ContainerInterface ) {
+				$this->register_container( $id, $container );
+			}
+		}
 	}
 
 	/**
@@ -101,7 +107,7 @@ trait MultiContainerAwareTrait {
 	 * Returns an object from the DI container or null on failure.
 	 *
 	 * @since   1.5.2
-	 * @version 1.5.2
+	 * @version 1.5.3
 	 *
 	 * @param   string  $entry_id       The ID of the entry to retrieve from the container.
 	 * @param   string  $container_id   The ID of the container to retrieve from.
@@ -110,7 +116,8 @@ trait MultiContainerAwareTrait {
 	 */
 	public function get_container_entry( string $entry_id, string $container_id ) {
 		try {
-			return $this->get_container( $container_id )->get( $entry_id );
+			$container = $this->get_container( $container_id );
+			return $container ? $container->get( $entry_id ) : null;
 		} catch ( ContainerExceptionInterface | NotFoundExceptionInterface $exception ) {
 			return null;
 		}

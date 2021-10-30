@@ -17,7 +17,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * Template for encapsulating some of the most often required abilities of a multi-handler service.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.5.3
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Services
  */
@@ -37,7 +37,7 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	 * AbstractMultiHandlerService constructor.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.5.3
 	 *
 	 * @param   PluginInterface     $plugin             Instance of the plugin.
 	 * @param   LoggingService      $logging_service    Instance of the logging service.
@@ -46,9 +46,7 @@ abstract class AbstractMultiHandlerService extends AbstractService implements Se
 	public function __construct( PluginInterface $plugin, LoggingService $logging_service, array $handlers = array() ) {
 		parent::__construct( $plugin, $logging_service );
 
-		$this->set_stores_store( new MemoryStore( $this->get_id() ) );
 		$this->set_handlers_store( new MemoryStore( 'handlers' ) );
-
 		$this->set_default_handlers( $handlers );
 	}
 

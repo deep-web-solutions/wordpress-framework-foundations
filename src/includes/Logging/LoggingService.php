@@ -105,7 +105,7 @@ class LoggingService implements PluginAwareInterface, StorableInterface, MultiHa
 	 *
 	 * @throws  \LogicException     Thrown if the handler passed on is of the wrong type.
 	 */
-	public function register_handler( HandlerInterface $handler ) {
+	public function register_handler( HandlerInterface $handler ): LoggingService {
 		if ( ! \is_a( $handler, LoggingHandlerInterface::class ) ) {
 			throw new \LogicException( \sprintf( 'The handler registered must be of class %s', LoggingHandlerInterface::class ) );
 		}

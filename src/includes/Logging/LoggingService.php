@@ -5,6 +5,7 @@ namespace DeepWebSolutions\Framework\Foundations\Logging;
 use DeepWebSolutions\Framework\Foundations\PluginAwareInterface;
 use DeepWebSolutions\Framework\Foundations\PluginAwareTrait;
 use DeepWebSolutions\Framework\Foundations\PluginInterface;
+use DeepWebSolutions\Framework\Foundations\Services\HandlerInterface;
 use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareInterface;
 use DeepWebSolutions\Framework\Foundations\Services\MultiHandlerAwareTrait;
 use DeepWebSolutions\Framework\Foundations\Storage\MultiStoreAwareInterface;
@@ -19,7 +20,7 @@ use Psr\Log\NullLogger;
  * Logs messages at all PSR-3 levels. GDPR-appropriate + full logger choice flexibility.
  *
  * @since   1.0.0
- * @version 1.5.3
+ * @version 1.5.4
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
@@ -28,6 +29,7 @@ class LoggingService implements PluginAwareInterface, StorableInterface, MultiHa
 
 	use MultiHandlerAwareTrait {
 		get_handler as protected get_handler_trait;
+		register_handler as protected register_handler_trait;
 	}
 	use PluginAwareTrait;
 
@@ -93,6 +95,24 @@ class LoggingService implements PluginAwareInterface, StorableInterface, MultiHa
 	public function get_handler( string $handler_id ): LoggingHandlerInterface {
 		/* @noinspection PhpIncompatibleReturnTypeInspection */
 		return $this->get_handler_trait( $handler_id ) ?? $this->get_handler_trait( 'null' );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @since   1.0.0
+	 * @version 1.5.4
+	 */
+	public function register_handler( HandlerInterface $handler ) {
+		if ( ! \is_a( $handler, LoggingHandlerInterface::class ) ) {
+			throw new \LogicException( \sprintf( 'The handler registered must be of class %s', LoggingHandlerInterface::class ) );
+		}
+
+		if ( $handler instanceof PluginAwareInterface ) {
+			$handler->set_plugin( $this->get_plugin() );
+		}
+
+		return $this->register_handler_trait( $handler );
 	}
 
 	// endregion

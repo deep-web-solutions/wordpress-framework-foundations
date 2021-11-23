@@ -14,7 +14,7 @@ function dws_foundations_test_plugin_instance(): Plugin {
 	static $instance = null;
 
 	if ( \is_null( $instance ) ) {
-		$instance = new Plugin();
+		$instance = new Plugin( 'dws-wp-foundations-test-plugin' );
 	}
 
 	return $instance;

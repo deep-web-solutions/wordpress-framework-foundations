@@ -15,7 +15,7 @@ use DeepWebSolutions\Framework\Helpers\FileSystem\PathsTrait;
  * Template for encapsulating some of the most often required abilities of a plugin instance.
  *
  * @since   1.0.0
- * @version 1.1.0
+ * @version 1.6.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations
  */
@@ -29,13 +29,29 @@ abstract class AbstractPlugin implements PluginInterface, InitializableInterface
 
 	// endregion
 
+	// region MAGIC METHODS
+
+	/**
+	 * AbstractPlugin constructor.
+	 *
+	 * @since   1.6.0
+	 * @version 1.6.0
+	 *
+	 * @param   string  $plugin_slug    The plugin slug.
+	 */
+	public function __construct( string $plugin_slug ) {
+		$this->plugin_slug = $plugin_slug;
+	}
+
+	// endregion
+
 	// region INHERITED METHODS
 
 	/**
 	 * Uses the plugin file path to initialize the plugin data fields.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.6.0
 	 *
 	 * @return  InitializationFailureException|null
 	 */
@@ -58,7 +74,6 @@ abstract class AbstractPlugin implements PluginInterface, InitializableInterface
 		$this->plugin_author_name     = $plugin_data['Author'];
 		$this->plugin_author_uri      = $plugin_data['AuthorURI'];
 		$this->plugin_language_domain = $plugin_data['TextDomain'];
-		$this->plugin_slug            = $plugin_data['TextDomain'];
 
 		return null;
 	}

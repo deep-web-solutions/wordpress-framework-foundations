@@ -58,6 +58,9 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 ## Changelog 
 
+### 1.6.0 (November 23rd, 2021)
+* The AbstractPlugin class now requires the plugin slug to be passed on in the constructor.
+
 ### 1.5.4 (November 2nd, 2021)
 * Fixed regression: logging service not setting the plugin instance on plugin-aware handlers.
 

@@ -16,7 +16,7 @@ use WpunitTester;
  * Tests for the Plugin and PluginComponents abstractions.
  *
  * @since   1.0.0
- * @version 1.5.0
+ * @version 1.6.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Tests\Foundations\Integration
  */
@@ -118,10 +118,10 @@ class PluginAbstractionsTest extends WPTestCase {
 	 * Tests for the hierarchical plugins.
 	 *
 	 * @since   1.0.0
-	 * @version 1.5.0
+	 * @version 1.6.0
 	 */
 	public function test_plugin_tree() {
-		$plugin_root = new GenericPluginRoot();
+		$plugin_root = new GenericPluginRoot( '' );
 		$plugin_root->set_logging_service( new LoggingService( $plugin_root ) );
 
 		$plugin_component1 = new GenericPluginNode( new LoggingService( $plugin_root ), 'component-1', 'Component 1' );
@@ -159,7 +159,7 @@ class PluginAbstractionsTest extends WPTestCase {
 		$this->assertEquals( $plugin_root, $plugin_component2->get_closest( PluginInterface::class ) );
 
 		// Test the 'set_plugin' method.
-		$plugin_root2 = new GenericPluginRoot();
+		$plugin_root2 = new GenericPluginRoot( '' );
 		$plugin_component2->set_plugin( $plugin_root2 );
 		$this->assertEquals( $plugin_root2, $plugin_component2->get_plugin() );
 	}

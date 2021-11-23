@@ -22,7 +22,7 @@
   "require": {
     "php": ">=7.4",
     "deep-web-solutions/wp-framework-bootstrapper": "^1.2.0",
-    "deep-web-solutions/wp-framework-helpers": "^1.5.0",
+    "deep-web-solutions/wp-framework-helpers": "^1.5.5",
     "psr/container": "^1.0 || ^2.0",
     "psr/log": "^1.0"
   },
@@ -48,7 +48,7 @@
     "codeception/mockery-module": "^0.4",
     "codeception/util-universalframework": "^1.0",
     "hoa/console": "^3.17",
-    "vlucas/phpdotenv": "^5.3"
+    "vlucas/phpdotenv": "^5.4"
   },
 
   "autoload": {

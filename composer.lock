@@ -87,12 +87,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deep-web-solutions/wordpress-framework-helpers.git",
-                "reference": "5e7153dd37815cbccf48d06bbf04f26b22b8217b"
+                "reference": "5993dae90b9abf8709858babb6b8eed3f1e121f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/5e7153dd37815cbccf48d06bbf04f26b22b8217b",
-                "reference": "5e7153dd37815cbccf48d06bbf04f26b22b8217b",
+                "url": "https://api.github.com/repos/deep-web-solutions/wordpress-framework-helpers/zipball/5993dae90b9abf8709858babb6b8eed3f1e121f7",
+                "reference": "5993dae90b9abf8709858babb6b8eed3f1e121f7",
                 "shasum": ""
             },
             "require": {
@@ -157,7 +157,7 @@
                 "issues": "https://github.com/deep-web-solutions/wordpress-framework-helpers/issues",
                 "source": "https://github.com/deep-web-solutions/wordpress-framework-helpers/tree/v1.7.0"
             },
-            "time": "2022-01-13T20:42:24+00:00"
+            "time": "2022-01-13T20:59:39+00:00"
         },
         {
             "name": "psr/container",

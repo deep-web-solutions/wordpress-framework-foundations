@@ -58,7 +58,7 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 
 ## Changelog 
 
-### 1.7.0 (January 14th, 2022)
+### 1.7.0 (January 13th, 2022)
 * Updated hooks to conform to new format in the rest of the framework.
 
 ### 1.6.0 (November 23rd, 2021)
@@ -77,19 +77,13 @@ Hopefully yes, probably not. If you found any problems, please raise an issue on
 * Added a new MultiContainerAwareInterface and trait to go with it.
 * Simplified MultiStoreAwareTrait.
 
-### 1.4.4 (September 29th, 2021)
-* ChildTrait is now consistent with ParentTrait when checking for relations.
-
-### 1.4.3 (August 19th, 2021)
-* Changed the joining separator for hooks tags.
-
-### 1.4.2 (April 23rd, 2021)
+### 1.4.1, 1.4.2, 1.4.3, 1.4.4 (April 11th, April 23rd, August 19th, September 29th, 2021)
+* Compatibility with Helpers 1.2.
 * Consolidated changelog.
 * Documentation updates.
 * Migrated from Travis CI to Github Actions.
-
-### 1.4.1 (April 11th, 2021)
-* Compatibility with Helpers 1.2.
+* Changed the joining separator for hooks tags.
+* ChildTrait is now consistent with ParentTrait when checking for relations.
 
 ### 1.3.1, 1.3.2, 1.4.0 (April 10th, 2021)
 * Fixed a bug that caused only a maximum of 1 status extension trait to be executed.

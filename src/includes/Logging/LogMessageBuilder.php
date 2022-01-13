@@ -11,7 +11,7 @@ use Psr\Log\LogLevel;
  * Log message builder.
  *
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.7.0
  * @author  Antonius Hegyes <a.hegyes@deep-web-solutions.com>
  * @package DeepWebSolutions\WP-Framework\Foundations\Logging
  */
@@ -253,7 +253,7 @@ class LogMessageBuilder {
 	 * Based on privacy settings, maybe redact sensitive parts of the message out.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.0
+	 * @version 1.7.0
 	 *
 	 * @param   string  $message    Message to redact.
 	 *
@@ -265,11 +265,11 @@ class LogMessageBuilder {
 		} else {
 			/* @noinspection HtmlUnknownTag */
 			$message = Strings::replace_placeholders(
+				$message,
 				array(
 					'<sensitive>'  => '',
 					'</sensitive>' => '',
-				),
-				$message
+				)
 			);
 		}
 

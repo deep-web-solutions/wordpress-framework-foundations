@@ -13,7 +13,7 @@
  * Plugin Name:         DWS WordPress Framework Foundations Test Plugin
  * Description:         A WP plugin used to run automated tests against the DWS WP Framework Foundations package.
  * Version:             1.0.0
- * Requires PHP:        5.3
+ * Requires PHP:        7.4
  * Author:              Deep Web Solutions GmbH
  * Author URI:          https://www.deep-web-solutions.com
  * License:             GPL-3.0+
